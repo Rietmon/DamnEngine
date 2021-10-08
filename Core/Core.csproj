@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{A4720012-3181-4AEF-BECE-93D0BCFE6634}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>Core</RootNamespace>
+        <AssemblyName>Core</AssemblyName>
+        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>../_Binaries/Debug/</OutputPath>
+        <DefineConstants>DEBUG;
+TRACE;
+ENABLE_MEMORY_UTILITIES;
+ENABLE_WINDOWS_UTILITIES;</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>../_Binaries/Release/</OutputPath>
+        <DefineConstants>TRACE;
+ENABLE_MEMORY_UTILITIES;
+ENABLE_WINDOWS_UTILITIES;</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\ISpriteSequenceAnimator.cs" />
+        <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\SpriteSequenceAnimationType.cs" />
+        <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\SpriteSequenceAsyncAnimator.cs" />
+        <Compile Include="RietmonLibrary\Attributes\ReadOnlyFieldAttribute\Editor\ReadOnlyPropertyDrawer.cs" />
+        <Compile Include="RietmonLibrary\Attributes\ReadOnlyFieldAttribute\ReadOnlyAttribute.cs" />
+        <Compile Include="RietmonLibrary\Attributes\StaticSerializableAttribute\StaticSerializableAttribute.cs" />
+        <Compile Include="RietmonLibrary\Behaviours\SerializableUnityBehaviour.cs" />
+        <Compile Include="RietmonLibrary\Behaviours\Singleton.cs" />
+        <Compile Include="RietmonLibrary\Behaviours\SingletonBehaviour.cs" />
+        <Compile Include="RietmonLibrary\Behaviours\UIUnityBehaviour.cs" />
+        <Compile Include="RietmonLibrary\Behaviours\UnityBehaviour.cs" />
+        <Compile Include="RietmonLibrary\Behaviours\WindowBehaviour.cs" />
+        <Compile Include="RietmonLibrary\Debugging\DebugStopwatch.cs" />
+        <Compile Include="RietmonLibrary\Debugging\UniversalDebugger.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Arrays\ArrayExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Arrays\DictionaryExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Arrays\EnumerableExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Arrays\ListExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Assembly\AssemblyUtilities.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Assembly\Types\TypeExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Behaviours\ComponentExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Delegates\ActionUtilities.cs" />
+        <Compile Include="RietmonLibrary\Extensions\DOTweenExtensions\DOTweenTextAnimations.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Editor\SerializedPropertyExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Management\SignalExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Mathematics\RandomUtilities.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Mathematics\Vector2Extensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Mathematics\Vector3Extensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Mathematics\Vector4Extensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Memory\MemoryUtilities.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Memory\UnsafePointerArray.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Objects\GameObjectExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Objects\ObjectExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Primitivies\CompareUtilities.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Primitivies\DecimalUtilities.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Primitivies\EnumUtils.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Primitivies\FloatExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Primitivies\StringExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Rendering\ColorExtensions.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Tasks\TaskUtilities.cs" />
+        <Compile Include="RietmonLibrary\Extensions\Transform\TransformExtensions.cs" />
+        <Compile Include="RietmonLibrary\Game\CollisionSorting\ColliderSorting.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Compiling\Containers\ScriptCodeDataCompilingContainer.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Compiling\Containers\ScriptDataCompilingContainer.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Compiling\Containers\ScriptRegionDataCompilingContainer.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Compiling\ScriptCompiler.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Parsers\DamnScriptableAttribute.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Parsers\ScriptParser.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Data\ScriptCodeData.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Data\ScriptData.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Data\ScriptDatasManager.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Data\ScriptRegionData.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Executing\Script.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Executing\ScriptCode.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Executing\ScriptRegion.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\IScriptExecutor.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Native\NativeMethod.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\Native\NativeMethodsManager.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\ScriptEngine.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\Runtime\ScriptExecutor.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\UnityAssets\DamnScriptAsset.cs" />
+        <Compile Include="RietmonLibrary\Game\DamnScript\UnityAssets\DamnScriptImporter.cs" />
+        <Compile Include="RietmonLibrary\Game\DontDestroy\DontDestroy.cs" />
+        <Compile Include="RietmonLibrary\Game\Infoportions\Infoportions.cs" />
+        <Compile Include="RietmonLibrary\Game\Prefab\Editor\PrefabPropertyDrawer.cs" />
+        <Compile Include="RietmonLibrary\Game\Prefab\Prefab.cs" />
+        <Compile Include="RietmonLibrary\IO\FileSystemUtilities.cs" />
+        <Compile Include="RietmonLibrary\Linkers\HierarchyLinker\HierarchyLinker.cs" />
+        <Compile Include="RietmonLibrary\Linkers\HierarchyLinker\HierarchyLinkerContainer.cs" />
+        <Compile Include="RietmonLibrary\Management\AudioManager\AudioExecutor.cs" />
+        <Compile Include="RietmonLibrary\Management\AudioManager\AudioManager.cs" />
+        <Compile Include="RietmonLibrary\Management\InputManager\InputManager.cs" />
+        <Compile Include="RietmonLibrary\Management\PullManager\PullManager.cs" />
+        <Compile Include="RietmonLibrary\Management\ResourcesManagement\AddressableManager.cs" />
+        <Compile Include="RietmonLibrary\Management\ResourcesManagement\LocalizationManager.cs" />
+        <Compile Include="RietmonLibrary\Management\ResourcesManagement\ResourcesManager.cs" />
+        <Compile Include="RietmonLibrary\Management\SceneManager\SceneManager.cs" />
+        <Compile Include="RietmonLibrary\Management\SignalSystem\Signal.cs" />
+        <Compile Include="RietmonLibrary\Management\SignalSystem\SignalSystem.cs" />
+        <Compile Include="RietmonLibrary\Management\SignalSystem\SignalSystemId.cs" />
+        <Compile Include="RietmonLibrary\Management\WindowsManager\WindowsDataProviderType.cs" />
+        <Compile Include="RietmonLibrary\Management\WindowsManager\WindowsManager.cs" />
+        <Compile Include="RietmonLibrary\Mathematics\Angles.cs" />
+        <Compile Include="RietmonLibrary\Other\Id\Id.cs" />
+        <Compile Include="RietmonLibrary\Other\Id\Identifications\Identification.cs" />
+        <Compile Include="RietmonLibrary\Other\Id\Identifications\Identification128.cs" />
+        <Compile Include="RietmonLibrary\Other\Id\Identifications\Identification16.cs" />
+        <Compile Include="RietmonLibrary\Other\Id\Identifications\Identification32.cs" />
+        <Compile Include="RietmonLibrary\Other\Id\Identifications\Identification64.cs" />
+        <Compile Include="RietmonLibrary\Other\Id\Identifications\Identification8.cs" />
+        <Compile Include="RietmonLibrary\Other\Pair\Pair.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\DoubleRange.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\Editor\EditorRanged.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\FloatRange.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\IntRange.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\IRanged.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\Vector2IntRange.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\Vector2Range.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\Vector3IntRange.cs" />
+        <Compile Include="RietmonLibrary\Other\Ranged\Vector3Range.cs" />
+        <Compile Include="RietmonLibrary\Serialization\Extensions\SerializeGameObject.cs" />
+        <Compile Include="RietmonLibrary\Serialization\Extensions\SerializeTransform.cs" />
+        <Compile Include="RietmonLibrary\Serialization\Serializable\DontCreateInstanceAtDeserializationAttribute.cs" />
+        <Compile Include="RietmonLibrary\Serialization\Serializable\ISerializable.cs" />
+        <Compile Include="RietmonLibrary\Serialization\Serializable\Objects\Editor\SerializableObjectEditor.cs" />
+        <Compile Include="RietmonLibrary\Serialization\Serializable\Objects\SerializableObject.cs" />
+        <Compile Include="RietmonLibrary\Serialization\SerializationManager.cs" />
+        <Compile Include="RietmonLibrary\Serialization\Stream\SerializationStream.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="RietmonLibrary\3RD\TinyJson\Tiny-JSON.dll" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>

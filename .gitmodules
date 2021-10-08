@@ -1,0 +1,3 @@
+[submodule "Core/RietmonLibrary"]
+	path = Core/RietmonLibrary
+	url = https://github.com/Rietmon/RietmonLibrary
