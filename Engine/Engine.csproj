@@ -22,6 +22,7 @@
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,16 +32,37 @@
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="OpenTK, Version=3.3.2.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
+          <HintPath>..\packages\OpenTK.3.3.2\lib\net20\OpenTK.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Numerics" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Application.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Time\Time.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Core\Core.csproj">
+        <Project>{a4720012-3181-4aef-bece-93d0bcfe6634}</Project>
+        <Name>Core</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\Render\Render.csproj">
+        <Project>{0c52571f-e468-4979-8890-0be6320a887e}</Project>
+        <Name>Render</Name>
+      </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="OpenTK.dll.config" />
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

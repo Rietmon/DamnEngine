@@ -19,10 +19,7 @@
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
         <OutputPath>../_Binaries/Debug/</OutputPath>
-        <DefineConstants>DEBUG;
-TRACE;
-ENABLE_MEMORY_UTILITIES;
-ENABLE_WINDOWS_UTILITIES;</DefineConstants>
+        <DefineConstants>DEBUG;TRACE;ENABLE_MEMORY_UTILITIES;ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -40,13 +37,26 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="mscorlib" />
+        <Reference Include="OpenTK, Version=3.3.2.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
+          <HintPath>..\packages\OpenTK.3.3.2\lib\net20\OpenTK.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Drawing" />
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Windows.Forms" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Debugging\Debug.cs" />
+        <Compile Include="Objects\DamnObject.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Resources\ResourceContainers\ResourceContainer.cs" />
+        <Compile Include="Resources\ResourcesLoader.cs" />
+        <Compile Include="Window\RenderWindow.cs" />
         <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\ISpriteSequenceAnimator.cs" />
         <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\SpriteSequenceAnimationType.cs" />
         <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\SpriteSequenceAsyncAnimator.cs" />
@@ -158,6 +168,10 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
     </ItemGroup>
     <ItemGroup>
       <Content Include="RietmonLibrary\3RD\TinyJson\Tiny-JSON.dll" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="OpenTK.dll.config" />
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
