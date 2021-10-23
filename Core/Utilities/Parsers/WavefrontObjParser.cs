@@ -92,7 +92,7 @@ namespace DamnEngine.Utilities
                 }
             }
 
-            return new Mesh
+            return new Mesh(name)
             {
                 Name = name,
                 Vertices = vertices,

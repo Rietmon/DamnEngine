@@ -10,13 +10,9 @@ namespace DamnEngine
         
         public static Vector2 MousePosition => new(MouseState.X, MouseState.Y);
 
-        public static Vector2 MouseDeltaPosition => MousePosition - mousePreviousPosition;
-
         private static readonly List<Key> keysDown = new();
         private static readonly List<Key> keysPress = new();
         private static readonly List<Key> keysUp = new();
-
-        private static Vector2 mousePreviousPosition;
         
         public static void OnKeyDown(Key key)
         {
@@ -38,8 +34,6 @@ namespace DamnEngine
             keysDown.Clear();
             
             keysUp.Clear();
-
-            mousePreviousPosition = MousePosition;
         }
 
         public static bool IsKeyDown(Key key) => keysDown.Contains(key);

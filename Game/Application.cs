@@ -12,6 +12,8 @@ namespace DamnEngine
 
         public static void Initialize()
         {
+            Window.VSync = VSyncMode.On;
+            
             ScenesManager.SetScene(new Scene("New Scene"));
 
             var cameraObject = new GameObject("Camera");
@@ -21,7 +23,7 @@ namespace DamnEngine
 
             var quadObject = new GameObject("Quad");
             var meshRenderer = quadObject.AddComponent<MeshRenderer>();
-            meshRenderer.Mesh = WavefrontObjParser.Parse("GameData/Meshes/Cube.obj");
+            meshRenderer.Mesh = Mesh.CreateFromFile("Cube.obj");
 
             var texture = Texture2D.CreateFromFile("dark.png");
             var shader = Shader.CreateFromFile("Default");

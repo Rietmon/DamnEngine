@@ -53,13 +53,11 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <Compile Include="Components\Rendering\Camera.cs" />
         <Compile Include="Components\Rendering\Renderers\MeshRenderer.cs" />
         <Compile Include="Components\Rendering\Renderers\Renderer.cs" />
-        <Compile Include="Components\Rendering\Structures\Mesh.cs" />
         <Compile Include="Components\Transforming\Transform.cs" />
         <Compile Include="Objects\GameObject.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Scenes\Scene.cs" />
         <Compile Include="Scenes\ScenesManager.cs" />
-        <Compile Include="Utilities\Parsers\WavefrontObjParser.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Core\Core.csproj">
