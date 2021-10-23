@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using DamnEngine.Resources;
 
 namespace DamnEngine
 {
     public static class ResourcesLoader
     {
-        private static readonly Dictionary<string, ResourceContainer<Bitmap>> loadedBitmaps = new Dictionary<string, ResourceContainer<Bitmap>>();
+        private static readonly Dictionary<string, ResourceContainer<Bitmap>> loadedBitmaps = new();
 
         public static Bitmap UseBitmap(string name)
         {
@@ -39,13 +39,13 @@ namespace DamnEngine
 
         public static string GetVertexShaderCode(string name)
         {
-            var vertexShaderPath = $"GameData/Shaders/{name}.vs";
+            var vertexShaderPath = $"GameData/Shaders/{name}.vert";
             return File.ReadAllText(vertexShaderPath);
         }
 
         public static string GetFragmentShaderCode(string name)
         {
-            var fragmentShaderPath = $"GameData/Shaders/{name}.fs";
+            var fragmentShaderPath = $"GameData/Shaders/{name}.frag";
             return File.ReadAllText(fragmentShaderPath);
         }
     }

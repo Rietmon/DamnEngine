@@ -1,4 +1,4 @@
-﻿namespace DamnEngine.Resources
+﻿namespace DamnEngine
 {
     public class ResourceContainer<T> : DamnObject
     {

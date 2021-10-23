@@ -61,8 +61,6 @@ namespace DamnEngine.Render
             GL.DeleteBuffer(vertexBufferPointer);
             GL.DeleteBuffer(elementBufferPointer);
             GL.DeleteVertexArray(vertexArrayPointer);
-            
-            material.Destroy();
         }
 
         private static float[] GetVerticesAndUvs(Vector3[] vertices, Vector2[] uvs)

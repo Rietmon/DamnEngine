@@ -9,7 +9,7 @@
             return left == right;
         }
         
-        public void Destroy()
+        public virtual void Destroy()
         {
             OnDestroy();
         }

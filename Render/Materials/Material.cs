@@ -13,7 +13,7 @@ namespace DamnEngine.Render
         
         private readonly Shader shader;
 
-        private readonly Dictionary<int, Texture> textures = new Dictionary<int, Texture>();
+        private readonly Dictionary<int, Texture> textures = new();
 
         public Material(Shader shader)
         {

@@ -31,6 +31,8 @@ namespace DamnEngine
         internal int GetUniformLocation(string uniformLocation) => uniformLocations[uniformLocation];
         
         protected override void OnDestroy() => GL.DeleteProgram(shaderProgramPointer);
+
+        public static Shader CreateFromFile(string shaderName) => CreateFromFiles(shaderName, shaderName);
         
         public static Shader CreateFromFiles(string vertexShaderName, string fragmentShaderName)
         {

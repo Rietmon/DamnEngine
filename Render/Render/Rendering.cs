@@ -11,25 +11,31 @@ namespace DamnEngine.Render
         
         public static Matrix4 ProjectionMatrix { get; set; }
         
-        public static Action OnRenderFrame { get; set; }
+        public static Action OnPreRendering { get; set; }
+        
+        public static Action OnRendering { get; set; }
+        
+        public static Action OnPostRendering { get; set; }
 
         public static void Initialize()
         {
-            GL.ClearColor(Color.Black);
+            Graphics.ClearColor(Color.Black);
 
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.CullFace);
-            GL.CullFace(CullFaceMode.Back);
             GL.Enable(EnableCap.Blend);
         }
 
         public static void RenderFrame(RenderWindow window)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            OnPreRendering?.Invoke();
             
-            OnRenderFrame.Invoke();
+            OnRendering?.Invoke();
             
             window.SwapBuffers();
+            
+            OnPostRendering?.Invoke();
         }
     }
 }

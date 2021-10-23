@@ -11,7 +11,7 @@
         <AssemblyName>Core</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>9</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,10 +52,13 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Debugging\Debug.cs" />
+        <Compile Include="Input\Input.cs" />
+        <Compile Include="Mathematics\Mathf.cs" />
         <Compile Include="Objects\DamnObject.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Resources\ResourceContainers\ResourceContainer.cs" />
         <Compile Include="Resources\ResourcesLoader.cs" />
+        <Compile Include="Time\Time.cs" />
         <Compile Include="Window\RenderWindow.cs" />
         <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\ISpriteSequenceAnimator.cs" />
         <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\SpriteSequenceAnimationType.cs" />
