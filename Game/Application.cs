@@ -21,7 +21,7 @@ namespace DamnEngine
             camera.SetData(0.7853982f, 800f / 600f, 0.01f, 2000);
             camera.AddComponent<GameCamera>();
 
-            var quadObject = new GameObject("Quad");
+            var quadObject = new GameObject("Cube");
             var meshRenderer = quadObject.AddComponent<MeshRenderer>();
             meshRenderer.Mesh = Mesh.CreateFromFile("Cube.obj");
 

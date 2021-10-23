@@ -9,7 +9,7 @@ namespace DamnEngine
         
         private readonly List<Component> components = new();
 
-        public GameObject(string name = "New GameObject")
+        public GameObject(string name = "GameObject")
         {
             Name = name;
 

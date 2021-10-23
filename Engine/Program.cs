@@ -14,7 +14,7 @@ namespace DamnEngine
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Starting engine...");
             
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Creating window...");
-            renderWindow = new RenderWindow("DamnEngine", 800, 600);
+            renderWindow = new RenderWindow("DamnEngine 1.0", 800, 600);
             
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Registering callbacks...");
             renderWindow.Load += OnLoad;
