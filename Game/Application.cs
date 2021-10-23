@@ -1,5 +1,6 @@
 ﻿using System;
 using DamnEngine.Render;
+using DamnEngine.Utilities;
 using OpenTK;
 
 namespace DamnEngine
@@ -20,40 +21,7 @@ namespace DamnEngine
 
             var quadObject = new GameObject("Quad");
             var meshRenderer = quadObject.AddComponent<MeshRenderer>();
-            meshRenderer.Mesh = new Mesh
-            {
-                Vertices = new[]
-                {
-                    new Vector3(-1.0f, -1.0f, 1.0f),
-                    new Vector3( 1.0f, -1.0f, 1.0f),
-                    new Vector3( 1.0f, 1.0f, 1.0f),
-                    new Vector3(-1.0f, 1.0f, 1.0f),
-                    new Vector3(-1.0f, -1.0f, -1.0f),
-                    new Vector3(1.0f, -1.0f, -1.0f),
-                    new Vector3(1.0f, 1.0f, -1.0f),
-                    new Vector3(-1.0f, 1.0f, -1.0f)
-                },
-                Uv = new[]
-                {
-                    new Vector2(0, 0),
-                    new Vector2( 0, 1),
-                    new Vector2( 1, 1),
-                    new Vector2(1, 0),
-                    new Vector2(0, 0),
-                    new Vector2( 0, 1),
-                    new Vector2( 1, 1),
-                    new Vector2(1, 0),
-                },
-                Indices = new[] 
-                {
-                    0, 1, 2, 2, 3, 0,
-                    3, 2, 6, 6, 7, 3,
-                    7, 6, 5, 5, 4, 7,
-                    4, 0, 3, 3, 7, 4,
-                    0, 1, 5, 5, 4, 0,
-                    1, 5, 6, 6, 2, 1 
-                }
-            };
+            meshRenderer.Mesh = WavefrontObjParser.Parse("GameData/Meshes/Cube.obj");
 
             var texture = Texture2D.CreateFromFile("dark.png");
             var shader = Shader.CreateFromFile("Default");

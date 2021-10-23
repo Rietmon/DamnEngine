@@ -11,6 +11,7 @@ namespace DamnEngine.Utilities
         public static Mesh Parse(string path)
         {
             var lines = File.ReadAllLines(path);
+            var name = string.Empty;
             var parsedVertices = new List<Vector3>();
             var parsedUvs = new List<Vector2>();
             var parsedNormals = new List<Vector3>(); // NOT USED NOW
@@ -22,8 +23,10 @@ namespace DamnEngine.Utilities
                 {
                     case "#":
                     case "mtllib":
+                        break;
                     case "o":
-                        continue;
+                        name = arguments[1];
+                        break;
                     case "v":
                     {
                         var vertex = new Vector3(float.Parse(arguments[1]), float.Parse(arguments[2]),
@@ -48,7 +51,8 @@ namespace DamnEngine.Utilities
                     {
                         if (arguments.Length != 4)
                         {
-                            Debug.LogError($"[{nameof(WavefrontObjParser)}] ({nameof(Parse)}) Mesh is not triangulated!");
+                            Debug.LogError(
+                                $"[{nameof(WavefrontObjParser)}] ({nameof(Parse)}) Mesh is not triangulated!");
                             return null;
                         }
 
@@ -72,27 +76,25 @@ namespace DamnEngine.Utilities
             Vector2[] uvs = null;
             Vector3[] vertices = null;
             var indices = new int[parsedFaces.Count * 3];
-            if (parsedVertices.Count < parsedUvs.Count)
-            {
-                var uvsCount = parsedUvs.Count;
-                vertices = new Vector3[uvsCount];
-                uvs = new Vector2[uvsCount];
+            var uvsCount = parsedUvs.Count;
+            vertices = new Vector3[uvsCount];
+            uvs = new Vector2[uvsCount];
 
-                for (var i = 0; i < parsedFaces.Count; i++)
+            for (var i = 0; i < parsedFaces.Count; i++)
+            {
+                var face = parsedFaces[i];
+                for (var j = 0; j < 3; j++)
                 {
-                    var face = parsedFaces[i];
-                    for (var j = 0; j < 3; j++)
-                    {
-                        var vertex = face.vertices[j];
-                        indices[i + j] = parsedFaces[i].vertices[j].uvIndex;
-                        vertices[vertex.uvIndex] = parsedVertices[vertex.vertexIndex];
-                        uvs[vertex.uvIndex] = parsedUvs[vertex.uvIndex];
-                    }
+                    var vertex = face.vertices[j];
+                    indices[i * 3 + j] = parsedFaces[i].vertices[j].uvIndex;
+                    vertices[vertex.uvIndex] = parsedVertices[vertex.vertexIndex];
+                    uvs[vertex.uvIndex] = parsedUvs[vertex.uvIndex];
                 }
             }
 
             return new Mesh
             {
+                Name = name,
                 Vertices = vertices,
                 Uv = uvs,
                 Indices = indices
