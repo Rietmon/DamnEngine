@@ -13,6 +13,7 @@ namespace DamnEngine
         public Mesh(string name)
         {
             OriginalMeshName = name;
+            Name = name;
         }
 
         protected override void OnDestroy()
@@ -20,9 +21,9 @@ namespace DamnEngine
             ResourcesLoader.FreeMesh(OriginalMeshName);
         }
         
-        public static Mesh CreateFromFile(string meshName)
+        public static Mesh[] CreateFromFile(string meshName)
         {
-            return ResourcesLoader.UseMesh(meshName);
+            return ResourcesLoader.UseMeshes(meshName);
         }
     }
 }

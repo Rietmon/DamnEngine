@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace DamnEngine
 {
@@ -28,5 +29,13 @@ namespace DamnEngine
         public static float Cos(float value) => (float)Math.Cos(value);
         
         public static float Tan(float value) => (float)Math.Tan(value);
+
+        public static int Max(params int[] values) => values.Max();
+        
+        public static float Max(params float[] values) => values.Max();
+        
+        public static int Min(params int[] values) => values.Min();
+        
+        public static float Min(params float[] values) => values.Min();
     }
 }

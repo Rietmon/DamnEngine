@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DamnEngine.Render;
 using DamnEngine.Utilities;
 using OpenTK;
@@ -23,7 +24,7 @@ namespace DamnEngine
 
             var quadObject = new GameObject("Cube");
             var meshRenderer = quadObject.AddComponent<MeshRenderer>();
-            meshRenderer.Mesh = Mesh.CreateFromFile("Man.obj");
+            meshRenderer.Mesh = Mesh.CreateFromFile("Man.obj").First();
 
             var texture = Texture2D.CreateFromFile("dark.png");
             var shader = Shader.CreateFromFile("Light");

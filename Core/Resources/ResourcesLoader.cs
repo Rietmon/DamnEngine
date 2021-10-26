@@ -28,23 +28,22 @@ namespace DamnEngine
 
         public static void FreeBitMap(string name) => FreeLoadedResource($"Textures/{name}");
 
-        public static Mesh UseMesh(string name)
+        public static Mesh[] UseMeshes(string name)
         {
             var meshKey = $"Meshes/{name}";
-            if (TryGetLoadedResource<Mesh>(meshKey, out var mesh))
+            if (TryGetLoadedResource<Mesh[]>(meshKey, out var mesh))
                 return mesh;
             
             var meshPath = $"GameData/Meshes/{name}";
             switch (Path.GetExtension(name))
             {
                 case ".obj":
-                    mesh = WavefrontObjParser.Parse(meshPath);
+                    mesh = WavefrontObjParser.ParseObj(meshPath);
                     break;
                 default:
-                    Debug.LogError($"[{nameof(ResourcesLoader)}] ({nameof(UseMesh)}) Unsupported mesh format! Format: {Path.GetExtension(name)}");
+                    Debug.LogError($"[{nameof(ResourcesLoader)}] ({nameof(UseMeshes)}) Unsupported mesh format! Format: {Path.GetExtension(name)}");
                     return null;
             }
-            mesh.Name = name;
             
             RegisterLoadedResource(meshKey, mesh);
             

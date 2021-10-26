@@ -60,7 +60,8 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <Compile Include="Resources\ResourceContainers\ResourceContainer.cs" />
         <Compile Include="Resources\ResourcesLoader.cs" />
         <Compile Include="Time\Time.cs" />
-        <Compile Include="Utilities\Parsers\WavefrontObjParser.cs" />
+        <Compile Include="Utilities\Parsers\WavefrontObj\WavefrontObj.cs" />
+        <Compile Include="Utilities\Parsers\WavefrontObj\WavefrontObjParser.cs" />
         <Compile Include="Window\RenderWindow.cs" />
         <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\ISpriteSequenceAnimator.cs" />
         <Compile Include="RietmonLibrary\Animations\SpriteSequenceAnimations\SpriteSequenceAnimationType.cs" />
@@ -177,6 +178,9 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
     <ItemGroup>
       <None Include="OpenTK.dll.config" />
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Resources\ResourceContainers\Meshes" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
