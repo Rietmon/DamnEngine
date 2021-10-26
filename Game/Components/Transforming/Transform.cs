@@ -44,7 +44,7 @@ namespace DamnEngine
             }
         }
         public Vector3 Back => -Forward;
-        public Vector3 Right => Vector3.Cross(Forward, -Vector3.UnitY).Normalized();
+        public Vector3 Right => Vector3.Cross(Forward, Vector3.UnitY).Normalized();
         public Vector3 Left => -Right;
         public Vector3 Up => Vector3.Cross(Right, Forward).Normalized();
         public Vector3 Down => -Up;

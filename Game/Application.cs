@@ -23,10 +23,10 @@ namespace DamnEngine
 
             var quadObject = new GameObject("Cube");
             var meshRenderer = quadObject.AddComponent<MeshRenderer>();
-            meshRenderer.Mesh = Mesh.CreateFromFile("Cube.obj");
+            meshRenderer.Mesh = Mesh.CreateFromFile("Man.obj");
 
             var texture = Texture2D.CreateFromFile("dark.png");
-            var shader = Shader.CreateFromFile("Default");
+            var shader = Shader.CreateFromFile("Light");
             var material = new Material(shader);
             material.SetTexture(0, texture);
 

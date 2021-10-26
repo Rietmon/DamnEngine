@@ -11,9 +11,9 @@ namespace DamnEngine.Render
         private readonly Material material;
         private readonly int indicesCount;
         
-        public RenderTask(Vector3[] vertices, Vector2[] uv, int[] indices, Material material)
+        public RenderTask(Vector3[] vertices, Vector2[] uv, Vector3[] normals, int[] indices, Material material)
         {
-            var verticesAndUvs = GetVerticesAndUvs(vertices, uv);
+            var verticesAndUvs = GetVerticesAndUvs(vertices, uv, normals);
             vertexBufferPointer = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferPointer);
             GL.BufferData(BufferTarget.ArrayBuffer, verticesAndUvs.Length * sizeof(float), verticesAndUvs, BufferUsageHint.StaticDraw);
@@ -31,7 +31,7 @@ namespace DamnEngine.Render
             
             var vertexLocation = material.GetAttributeLocation("aPosition");
             GL.EnableVertexAttribArray(vertexLocation);
-            GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+            GL.VertexAttribPointer(vertexLocation, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
 
             material.Use();
 
@@ -40,8 +40,12 @@ namespace DamnEngine.Render
             {
                 var textureCoordinatesLocation = material.GetAttributeLocation($"aTexCoord{texturesPointers[i]}");
                 GL.EnableVertexAttribArray(textureCoordinatesLocation);
-                GL.VertexAttribPointer(textureCoordinatesLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
+                GL.VertexAttribPointer(textureCoordinatesLocation, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
             }
+            
+            var normalLocation = material.GetAttributeLocation("aNormal");
+            GL.EnableVertexAttribArray(normalLocation);
+            GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 5 * sizeof(float));
 
             this.material = material;
             indicesCount = indices.Length;
@@ -63,19 +67,23 @@ namespace DamnEngine.Render
             GL.DeleteVertexArray(vertexArrayPointer);
         }
 
-        private static float[] GetVerticesAndUvs(Vector3[] vertices, Vector2[] uvs)
+        private static float[] GetVerticesAndUvs(Vector3[] vertices, Vector2[] uvs, Vector3[] normals)
         {
-            var result = new float[vertices.Length * 3 + uvs.Length * 2];
-            for (var i = 0; i < result.Length; i += 5)
+            var result = new float[vertices.Length * 8];
+            for (var i = 0; i < result.Length; i += 8)
             {
-                var vertex = vertices[i / 5];
-                var uv = uvs[i / 5];
+                var vertex = vertices[i / 8];
+                var uv = uvs[i / 8];
+                var normal = normals[i / 8];
 
                 result[i + 0] = vertex.X;
                 result[i + 1] = vertex.Y;
                 result[i + 2] = vertex.Z;
                 result[i + 3] = uv.X;
                 result[i + 4] = uv.Y;
+                result[i + 5] = normal.X;
+                result[i + 6] = normal.Y;
+                result[i + 7] = normal.Z;
             }
 
             return result;

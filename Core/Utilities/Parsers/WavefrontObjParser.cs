@@ -73,12 +73,15 @@ namespace DamnEngine.Utilities
                 }
             }
 
-            Vector2[] uvs = null;
             Vector3[] vertices = null;
+            Vector2[] uvs = null;
+            Vector3[] normals = null;
+            
             var indices = new int[parsedFaces.Count * 3];
             var uvsCount = parsedUvs.Count;
             vertices = new Vector3[uvsCount];
             uvs = new Vector2[uvsCount];
+            normals = new Vector3[uvsCount];
 
             for (var i = 0; i < parsedFaces.Count; i++)
             {
@@ -89,6 +92,7 @@ namespace DamnEngine.Utilities
                     indices[i * 3 + j] = parsedFaces[i].vertices[j].uvIndex;
                     vertices[vertex.uvIndex] = parsedVertices[vertex.vertexIndex];
                     uvs[vertex.uvIndex] = parsedUvs[vertex.uvIndex];
+                    normals[vertex.uvIndex] = parsedNormals[vertex.normalIndex];
                 }
             }
 
@@ -97,6 +101,7 @@ namespace DamnEngine.Utilities
                 Name = name,
                 Vertices = vertices,
                 Uv = uvs,
+                Normals = normals,
                 Indices = indices
             };
         }

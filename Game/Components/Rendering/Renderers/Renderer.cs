@@ -7,12 +7,12 @@ namespace DamnEngine
     {
         protected RenderTask RenderTask { get; set; }
 
-        protected void CreateRenderTask(Vector3[] vertices, Vector2[] uv, int[] indices, Material material)
+        protected void CreateRenderTask(Vector3[] vertices, Vector2[] uv, Vector3[] normals, int[] indices, Material material)
         {
             if (RenderTask)
                 RenderTask.Destroy();
 
-            RenderTask = new RenderTask(vertices, uv, indices, material);
+            RenderTask = new RenderTask(vertices, uv, normals, indices, material);
             Rendering.OnPreRendering += OnPreRendering;
             Rendering.OnRendering += OnRendering;
             Rendering.OnRendering += OnPostRendering;
