@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using OpenTK.Graphics.OpenGL;
@@ -8,6 +9,8 @@ namespace DamnEngine.Render
 {
     public class Texture2D : Texture
     {
+        private static readonly Dictionary<Bitmap, BitmapData> bitmapBits = new();
+        
         public string OriginalTextureName { get; }
         public int Width { get; }
         public int Height { get; }
@@ -28,11 +31,15 @@ namespace DamnEngine.Render
             UseTexture(texturePointer, 0);
 
             var bitmap = ResourcesLoader.UseBitmap(name);
-            
-            var data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadOnly,
-                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            if (!bitmapBits.TryGetValue(bitmap, out var bitmapData))
+            {
+                bitmapData = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    ImageLockMode.ReadOnly,
+                    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                bitmapBits.Add(bitmap, bitmapData);
+            }
             
             GL.TexImage2D(TextureTarget.Texture2D,
                 0,
@@ -42,7 +49,7 @@ namespace DamnEngine.Render
                 0,
                 PixelFormat.Bgra,
                 PixelType.UnsignedByte,
-                data.Scan0);
+                bitmapData.Scan0);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);

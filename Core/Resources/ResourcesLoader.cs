@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using DamnEngine.Utilities;
 
@@ -9,12 +10,10 @@ namespace DamnEngine
     public static class ResourcesLoader
     {
         public static readonly Dictionary<string, ResourceContainer> loadedResources = new();
-        private static readonly Dictionary<string, ResourceContainer<Bitmap>> loadedBitmaps = new();
-        private static readonly Dictionary<string, ResourceContainer<Mesh>> loadedMeshes = new();
 
         public static Bitmap UseBitmap(string name)
         {
-            var bitmapKey = $"Textures/{name}";
+            var bitmapKey = $"GameData/Textures/{name}";
             if (TryGetLoadedResource<Bitmap>(bitmapKey, out var bitmap))
                 return bitmap;
 
@@ -26,11 +25,11 @@ namespace DamnEngine
             return bitmap;
         }
 
-        public static void FreeBitMap(string name) => FreeLoadedResource($"Textures/{name}");
+        public static void FreeBitMap(string name) => FreeLoadedResource($"GameData/Textures/{name}");
 
         public static Mesh[] UseMeshes(string name)
         {
-            var meshKey = $"Meshes/{name}";
+            var meshKey = $"GameData/Meshes/{name}";
             if (TryGetLoadedResource<Mesh[]>(meshKey, out var mesh))
                 return mesh;
             
@@ -50,7 +49,7 @@ namespace DamnEngine
             return mesh;
         }
 
-        public static void FreeMesh(string name) => FreeLoadedResource($"Meshes/{name}");
+        public static void FreeMesh(string name) => FreeLoadedResource($"GameData/Meshes/{name}");
 
         public static string GetVertexShaderCode(string name) => File.ReadAllText($"GameData/Shaders/{name}.vert");
 
@@ -58,7 +57,7 @@ namespace DamnEngine
 
         private static bool TryGetLoadedResource<T>(string name, out T result)
         {
-            if (loadedMeshes.TryGetValue(name, out var container))
+            if (loadedResources.TryGetValue(name, out var container))
             {
                 container.referencesCount++;
                 result = container.GetResource<T>();
@@ -80,12 +79,12 @@ namespace DamnEngine
 
         private static void FreeLoadedResource(string key)
         {
-            if (loadedMeshes.TryGetValue(key, out var container))
+            if (loadedResources.TryGetValue(key, out var container))
             {
                 container.referencesCount--;
                 if (container.referencesCount == 0)
                 {
-                    loadedMeshes.Remove(key);
+                    loadedResources.Remove(key);
                     Debug.Log($"[{nameof(ResourcesLoader)}] ({nameof(FreeBitMap)}) Resource {key} unloaded!");
                 }
             }

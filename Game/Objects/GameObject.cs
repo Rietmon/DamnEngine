@@ -68,6 +68,8 @@ namespace DamnEngine
 
         protected override void OnDestroy()
         {
+            while (components.Count != 0)
+                RemoveComponent(components[0]);
             ScenesManager.UnregisterGameObject(this);
         }
     }

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using DamnEngine.Render;
 using DamnEngine.Utilities;
 using OpenTK;
+using OpenTK.Input;
+using Rietmon.Extensions;
 
 namespace DamnEngine
 {
@@ -22,16 +25,25 @@ namespace DamnEngine
             camera.SetData(0.7853982f, 800f / 600f, 0.01f, 2000);
             camera.AddComponent<GameCamera>();
 
-            var quadObject = new GameObject("Cube");
-            var meshRenderer = quadObject.AddComponent<MeshRenderer>();
-            meshRenderer.Mesh = Mesh.CreateFromFile("Man.obj").First();
-
-            var texture = Texture2D.CreateFromFile("dark.png");
             var shader = Shader.CreateFromFile("Light");
+            var texture = Texture2D.CreateFromFile("dark.png");
+            var mesh = Mesh.CreateFromFile("Man.obj").First();
             var material = new Material(shader);
             material.SetTexture(0, texture);
-
-            meshRenderer.Material = material;
+            
+            for (var x = -45; x < 46; x++)
+            {
+                for (var y = -45; y < 46; y++)
+                {
+                    var obj = new GameObject($"Obj {x} {y}");
+                    var meshRender = obj.AddComponent<MeshRenderer>();
+                    meshRender.Material = material;
+                    meshRender.Mesh = mesh;
+                    obj.Transform.Position = new Vector3(x, 0, y);
+                }
+            }
+            
+            GC.Collect();
         }
 
         public static void Update()

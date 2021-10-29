@@ -3,19 +3,17 @@ using OpenTK;
 
 namespace DamnEngine
 {
-    public class Renderer : Component
+    public class Renderer : Component, IRenderer
     {
         protected RenderTask RenderTask { get; set; }
 
-        protected void CreateRenderTask(Vector3[] vertices, Vector2[] uv, Vector3[] normals, int[] indices, Material material)
+        protected void CreateRenderTask(float[] renderTaskData, int[] indices, Material material)
         {
             if (RenderTask)
                 RenderTask.Destroy();
 
-            RenderTask = new RenderTask(vertices, uv, normals, indices, material);
-            Rendering.OnPreRendering += OnPreRendering;
-            Rendering.OnRendering += OnRendering;
-            Rendering.OnRendering += OnPostRendering;
+            RenderTask = new RenderTask(renderTaskData, indices, material);
+            Rendering.renderers.Add(this);
         }
 
         protected void DeleteRenderTask()
@@ -23,22 +21,20 @@ namespace DamnEngine
             if (!RenderTask)
                 return;
             
-            Rendering.OnPreRendering -= OnPreRendering;
-            Rendering.OnRendering -= OnRendering;
-            Rendering.OnRendering -= OnPostRendering;
+            Rendering.renderers.Remove(this);
             RenderTask.Destroy();
             RenderTask = null;
         }
 
-        protected virtual void OnPreRendering() { }
+        public virtual void OnPreRendering() { }
         
-        protected virtual void OnRendering() { }
+        public virtual void OnRendering() { }
         
-        protected virtual void OnPostRendering() { }
+        public virtual void OnPostRendering() { }
 
         protected override void OnDestroy()
         {
-            RenderTask.Destroy();
+            DeleteRenderTask();
         }
     }
 }

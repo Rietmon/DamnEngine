@@ -30,12 +30,12 @@ namespace DamnEngine
         private void CreateRenderTask()
         {
             if (Mesh && Material)
-                CreateRenderTask(Mesh.Vertices, Mesh.Uv, Mesh.Normals, Mesh.Indices, Material);
+                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material);
             else
                 DeleteRenderTask();
         }
 
-        protected override void OnRendering()
+        public override void OnRendering()
         {
             material.SetMatrix4("transform", Transform.TransformMatrix);
             material.SetMatrix4("view", Rendering.ViewMatrix);

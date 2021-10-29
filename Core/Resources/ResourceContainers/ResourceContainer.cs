@@ -4,6 +4,8 @@
     {
         public abstract object Resource { get; }
 
+        public int referencesCount;
+
         public T GetResource<T>() => (T)Resource;
     }
     
@@ -12,8 +14,6 @@
         public override object Resource => resource;
         
         private readonly T resource;
-
-        public int referencesCount;
 
         public ResourceContainer(T resource) => this.resource = resource;
 
