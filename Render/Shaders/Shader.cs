@@ -7,7 +7,7 @@ namespace DamnEngine
 {
     public sealed class Shader : DamnObject
     {
-        private readonly Dictionary<string, int> uniformLocations = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> uniformLocations = new();
 
         private readonly int shaderProgramPointer;
 
@@ -59,6 +59,12 @@ namespace DamnEngine
             GL.AttachShader(shaderProgramPointer, vertexShaderPointer);
             GL.AttachShader(shaderProgramPointer, fragmentShaderPointer);
             GL.LinkProgram(shaderProgramPointer);
+            GL.GetProgram(shaderProgramPointer, GetProgramParameterName.LinkStatus, out var code);
+            if (code != (int)All.True)
+            {
+                Debug.CrashAssert(string.IsNullOrEmpty(log), $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
+                                                             $"Can't link shaders in program {shaderProgramPointer}\nCode:{code}\nVS = {vertexShaderName}, FS = {fragmentShaderName}");
+            }
             
             GL.DetachShader(shaderProgramPointer, vertexShaderPointer);
             GL.DetachShader(shaderProgramPointer, fragmentShaderPointer);

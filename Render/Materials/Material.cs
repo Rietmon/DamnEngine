@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -52,6 +53,18 @@ namespace DamnEngine.Render
         {
             shader.Use();
             GL.Uniform3(shader.GetUniformLocation(name), value);
+        }
+
+        public void SetVector4(string name, Vector4 value)
+        {
+            shader.Use();
+            GL.Uniform4(shader.GetUniformLocation(name), value);
+        }
+
+        public void SetColor(string name, Color value)
+        {
+            shader.Use();
+            GL.Uniform4(shader.GetUniformLocation(name), value);
         }
         
         public void SetMatrix4(string name, Matrix4 value)

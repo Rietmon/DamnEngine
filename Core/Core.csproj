@@ -54,7 +54,9 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <Compile Include="Debugging\Debug.cs" />
         <Compile Include="Debugging\Statistics.cs" />
         <Compile Include="Input\Input.cs" />
+        <Compile Include="Mathematics\Bounds.cs" />
         <Compile Include="Mathematics\Mathf.cs" />
+        <Compile Include="Mathematics\Vector3Extensions.cs" />
         <Compile Include="Objects\DamnObject.cs" />
         <Compile Include="Objects\LowLevelDamnObject.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

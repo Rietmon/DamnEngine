@@ -25,21 +25,21 @@ namespace DamnEngine
             camera.SetData(0.7853982f, 800f / 600f, 0.01f, 2000);
             camera.AddComponent<GameCamera>();
 
-            var shader = Shader.CreateFromFile("Light");
+            var shader = Shader.CreateFromFile("Default");
             var texture = Texture2D.CreateFromFile("dark.png");
             var mesh = Mesh.CreateFromFile("Man.obj").First();
             var material = new Material(shader);
             material.SetTexture(0, texture);
             
-            for (var x = -100; x < 101; x++)
+            for (var x = -10; x < 11; x++)
             {
-                for (var y = -100; y < 101; y++)
+                for (var y = -10; y < 11; y++)
                 {
                     var obj = new GameObject($"Obj {x} {y}");
                     var meshRender = obj.AddComponent<MeshRenderer>();
                     meshRender.Material = material;
                     meshRender.Mesh = mesh;
-                    obj.Transform.Position = new Vector3(x, 0, y);
+                    obj.Transform.Position = new Vector3(x * 2, 0, y * 2);
                 }
             }
             

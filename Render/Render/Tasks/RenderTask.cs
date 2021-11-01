@@ -34,7 +34,7 @@ namespace DamnEngine.Render
             Statistics.TotalFacesDrawled += (uint)(indicesCount / 3);
         }
 
-        public RenderTask Copy() => new(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, material,
+        public RenderTask Copy(Material overrideMaterial = null) => new(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, overrideMaterial ?? material,
             indicesCount);
 
         protected override void OnDestroy()
@@ -47,7 +47,7 @@ namespace DamnEngine.Render
         public static RenderTask Create(float[] renderTaskData, int[] indices, Material material, uint ownerId)
         {
             if (cachedRenderTasks.TryGetValue(ownerId, out var renderTask))
-                return renderTask.Copy();
+                return renderTask.Copy(material);
             
             var vertexArrayPointer = GL.GenVertexArray();
             GL.BindVertexArray(vertexArrayPointer);
