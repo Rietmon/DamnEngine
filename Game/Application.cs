@@ -31,9 +31,9 @@ namespace DamnEngine
             var material = new Material(shader);
             material.SetTexture(0, texture);
             
-            for (var x = -45; x < 46; x++)
+            for (var x = -100; x < 101; x++)
             {
-                for (var y = -45; y < 46; y++)
+                for (var y = -100; y < 101; y++)
                 {
                     var obj = new GameObject($"Obj {x} {y}");
                     var meshRender = obj.AddComponent<MeshRenderer>();

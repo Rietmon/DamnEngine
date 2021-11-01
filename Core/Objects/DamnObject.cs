@@ -2,31 +2,17 @@
 
 namespace DamnEngine
 {
-    public abstract class DamnObject
+    public abstract class DamnObject : LowLevelDamnObject
     {
+        private static uint lastId;
+        
         public string Name { get; set; }
-
-        private bool isDestroyed;
-
-        private static bool Compare(DamnObject left, DamnObject right)
-        {
-            return left == right;
-        }
         
-        public virtual void Destroy()
-        {
-            isDestroyed = true;
-            OnDestroy();
-        }
-        
-        protected virtual void OnDestroy() { }
+        public uint Id { get; }
 
-        ~DamnObject()
+        protected DamnObject()
         {
-            if (!isDestroyed)
-                Destroy();
+            Id = lastId++;
         }
-        
-        public static implicit operator bool(DamnObject damnObject) => !Compare(damnObject, null);
     }
 }

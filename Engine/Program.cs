@@ -47,12 +47,14 @@ namespace DamnEngine
         {
             Time.DeltaTime = (float)arguments.Time;
             
-            renderWindow.Title = $"DamnEngine 1.0 | FPS: {1f / Time.DeltaTime}";
+            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled}";
             
             renderWindow.ProcessEvents();
 
             Application.Update();
             
+            Statistics.TotalFacesDrawled = 0;
+
             Rendering.RenderFrame(renderWindow);
             
             Input.Update();

@@ -1,26 +1,62 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace DamnEngine.Render
 {
-    public class RenderTask : DamnObject
+    public class RenderTask : LowLevelDamnObject
     {
+        private static readonly Dictionary<uint, RenderTask> cachedRenderTasks = new();
+
         private readonly int vertexArrayPointer;
         private readonly int vertexBufferPointer;
         private readonly int elementBufferPointer;
         private readonly Material material;
         private readonly int indicesCount;
         
-        public RenderTask(float[] renderTaskData, int[] indices, Material material)
+        private RenderTask(int vertexArrayPointer, int vertexBufferPointer, int elementBufferPointer, Material material, int indicesCount)
         {
-            vertexArrayPointer = GL.GenVertexArray();
+            this.vertexArrayPointer = vertexArrayPointer;
+            this.vertexBufferPointer = vertexBufferPointer;
+            this.elementBufferPointer = elementBufferPointer;
+            this.material = material;
+            this.indicesCount = indicesCount;
+        }
+
+        public void Draw()
+        {
             GL.BindVertexArray(vertexArrayPointer);
             
-            vertexBufferPointer = GL.GenBuffer();
+            material.Use();
+            
+            GL.DrawElements(PrimitiveType.Triangles, indicesCount, DrawElementsType.UnsignedInt, 0);
+
+            Statistics.TotalFacesDrawled += (uint)(indicesCount / 3);
+        }
+
+        public RenderTask Copy() => new(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, material,
+            indicesCount);
+
+        protected override void OnDestroy()
+        {
+            GL.DeleteBuffer(vertexBufferPointer);
+            GL.DeleteBuffer(elementBufferPointer);
+            GL.DeleteVertexArray(vertexArrayPointer);
+        }
+
+        public static RenderTask Create(float[] renderTaskData, int[] indices, Material material, uint ownerId)
+        {
+            if (cachedRenderTasks.TryGetValue(ownerId, out var renderTask))
+                return renderTask.Copy();
+            
+            var vertexArrayPointer = GL.GenVertexArray();
+            GL.BindVertexArray(vertexArrayPointer);
+            
+            var vertexBufferPointer = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferPointer);
             GL.BufferData(BufferTarget.ArrayBuffer, renderTaskData.Length * sizeof(float), renderTaskData, BufferUsageHint.StaticDraw);
 
-            elementBufferPointer = GL.GenBuffer();
+            var elementBufferPointer = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferPointer);
             GL.BufferData(BufferTarget.ElementArrayBuffer, indices.Length * sizeof(int), indices, BufferUsageHint.StaticDraw);
 
@@ -44,24 +80,11 @@ namespace DamnEngine.Render
             GL.EnableVertexAttribArray(normalLocation);
             GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 5 * sizeof(float));
 
-            this.material = material;
-            indicesCount = indices.Length;
-        }
+            renderTask = new RenderTask(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, material,
+                indices.Length);
+            cachedRenderTasks.Add(ownerId, renderTask);
 
-        public void Draw()
-        {
-            GL.BindVertexArray(vertexArrayPointer);
-            
-            material.Use();
-            
-            GL.DrawElements(PrimitiveType.Triangles, indicesCount, DrawElementsType.UnsignedInt, 0);
-        }
-
-        protected override void OnDestroy()
-        {
-            GL.DeleteBuffer(vertexBufferPointer);
-            GL.DeleteBuffer(elementBufferPointer);
-            GL.DeleteVertexArray(vertexArrayPointer);
+            return renderTask;
         }
     }
 }

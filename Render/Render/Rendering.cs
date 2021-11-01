@@ -11,7 +11,12 @@ namespace DamnEngine.Render
         public static Matrix4 ViewMatrix { get; set; }
         
         public static Matrix4 ProjectionMatrix { get; set; }
-        public static readonly List<IRenderer> renderers = new();
+
+        public static Action OnPreRendering { get; set; }
+
+        public static Action OnRendering { get; set; }
+        
+        public static Action OnPostRendering { get; set; }
 
         public static void Initialize()
         {
@@ -27,14 +32,11 @@ namespace DamnEngine.Render
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            foreach (var renderer in renderers)
-                renderer.OnPreRendering();
+            OnPreRendering?.Invoke();
             
-            foreach (var renderer in renderers)
-                renderer.OnRendering();
+            OnRendering?.Invoke();
             
-            foreach (var renderer in renderers)
-                renderer.OnPostRendering();
+            OnPostRendering?.Invoke();
             
             window.SwapBuffers();
         }

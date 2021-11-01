@@ -30,7 +30,7 @@ namespace DamnEngine
         private void CreateRenderTask()
         {
             if (Mesh && Material)
-                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material);
+                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.Id);
             else
                 DeleteRenderTask();
         }

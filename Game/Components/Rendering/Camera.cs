@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace DamnEngine
 {
-    public class Camera : Component, IRenderer
+    public class Camera : Component
     {
         public static Camera Instance { get; private set; }
 
@@ -52,8 +52,8 @@ namespace DamnEngine
         protected internal override void OnCreate()
         {
             Instance = this;
-            
-            Rendering.renderers.Add(this);
+
+            Rendering.OnPreRendering += OnPreRendering;
         }
 
         public void SetData(float fov, float aspectRatio, float near, float far)
@@ -64,8 +64,8 @@ namespace DamnEngine
             this.far = far;
             UpdateProjectionMatrix();
         }
-
-        private void OnWillRenderingFrame()
+        
+        private void OnPreRendering()
         {
             UpdateViewMatrix();
         }
@@ -76,17 +76,5 @@ namespace DamnEngine
         private void UpdateViewMatrix() => Rendering.ViewMatrix =
             Matrix4.LookAt(Transform.Position, Transform.Position + Transform.Forward, Transform.Up);
 
-        public void OnPreRendering()
-        {
-            UpdateViewMatrix();
-        }
-
-        public void OnRendering()
-        {
-        }
-
-        public void OnPostRendering()
-        {
-        }
     }
 }
