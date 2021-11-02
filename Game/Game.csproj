@@ -37,6 +37,12 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
+        <Reference Include="BepuPhysics, Version=2.3.0.0, Culture=neutral, PublicKeyToken=9345ce38ee48a1cd">
+          <HintPath>..\SDK\BepuPhysics\BepuPhysics.dll</HintPath>
+        </Reference>
+        <Reference Include="BepuUtilities, Version=2.3.0.0, Culture=neutral, PublicKeyToken=a595ef937c270ac9">
+          <HintPath>..\SDK\BepuPhysics\BepuUtilities.dll</HintPath>
+        </Reference>
         <Reference Include="OpenTK, Version=3.3.2.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
           <HintPath>..\packages\OpenTK.3.3.2\lib\net20\OpenTK.dll</HintPath>
           <Private>True</Private>
@@ -45,6 +51,7 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Drawing" />
+        <Reference Include="System.Numerics" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
@@ -56,11 +63,12 @@ ENABLE_WINDOWS_UTILITIES;</DefineConstants>
         <Compile Include="Components\Rendering\Renderers\Renderer.cs" />
         <Compile Include="Components\Transforming\Transform.cs" />
         <Compile Include="Objects\GameObject.cs" />
-        <Compile Include="Physics\Casting\Ray\Ray.cs" />
-        <Compile Include="Physics\Casting\Ray\RayCast.cs" />
         <Compile Include="Physics\Collision\BoxCollider.cs" />
+        <Compile Include="Physics\Collision\Collidables\CollidableExtensions.cs" />
         <Compile Include="Physics\Collision\Collider.cs" />
         <Compile Include="Physics\Physics.cs" />
+        <Compile Include="Physics\PhysicsNarrowPhaseCallbacks.cs" />
+        <Compile Include="Physics\PhysicsPoseIntegratorCallbacks.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Scenes\Scene.cs" />
         <Compile Include="Scenes\ScenesManager.cs" />

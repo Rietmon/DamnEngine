@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using OpenTK.Graphics.OpenGL;
+using Rietmon.Extensions;
+
 #pragma warning disable 618
 
 namespace DamnEngine
@@ -47,12 +49,12 @@ namespace DamnEngine
             
             GL.CompileShader(vertexShaderPointer);
             var log = GL.GetShaderInfoLog(vertexShaderPointer);
-            Debug.CrashAssert(string.IsNullOrEmpty(log), $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
-                                                         $"Can't compile vertex shader with code:\n{vertexShaderName}\nLog:\n{log}");
+            Debug.CrashAssert(log.IsNullOrEmpty(), $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
+                                                   $"Can't compile vertex shader with code:\n{vertexShaderName}\nLog:\n{log}");
 
             GL.CompileShader(fragmentShaderPointer);
             log = GL.GetShaderInfoLog(fragmentShaderPointer);
-            Debug.CrashAssert(string.IsNullOrEmpty(log), $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
+            Debug.CrashAssert(log.IsNullOrEmpty(), $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
                                                          $"Can't compile fragment shader with code:\n{fragmentShaderName}\nLog:\n{log}");
             
             var shaderProgramPointer = GL.CreateProgram();
@@ -60,11 +62,8 @@ namespace DamnEngine
             GL.AttachShader(shaderProgramPointer, fragmentShaderPointer);
             GL.LinkProgram(shaderProgramPointer);
             GL.GetProgram(shaderProgramPointer, GetProgramParameterName.LinkStatus, out var code);
-            if (code != (int)All.True)
-            {
-                Debug.CrashAssert(string.IsNullOrEmpty(log), $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
-                                                             $"Can't link shaders in program {shaderProgramPointer}\nCode:{code}\nVS = {vertexShaderName}, FS = {fragmentShaderName}");
-            }
+            Debug.CrashAssert(code == (int)All.True, $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
+                                                     $"Can't link shaders in program {shaderProgramPointer}\nCode:{code}\nVS = {vertexShaderName}, FS = {fragmentShaderName}");
             
             GL.DetachShader(shaderProgramPointer, vertexShaderPointer);
             GL.DetachShader(shaderProgramPointer, fragmentShaderPointer);

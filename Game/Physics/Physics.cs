@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using BepuPhysics;
+using BepuUtilities.Memory;
 
 namespace DamnEngine
 {
     public static class Physics
     {
-        internal static readonly List<Collider> colliders = new();
+        internal static Simulation Simulation { get; private set; }
 
-        public static void RegisterCollider(Collider collider)
+        private static BufferPool bufferPool;
+
+        internal static void Initialize()
         {
-            colliders.Add(collider);
+            bufferPool = new BufferPool();
+
+            Simulation = Simulation.Create(bufferPool, new PhysicsNarrowPhaseCallbacks(),
+                new PhysicsPoseIntegratorCallbacks(), new PositionFirstTimestepper());
         }
 
-        public static void UnregisterCollider(Collider collider)
+        internal static void Update(float deltaTime)
         {
-            colliders.Remove(collider);
+            Simulation.Timestep(deltaTime);
         }
     }
 }

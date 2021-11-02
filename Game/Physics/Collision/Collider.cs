@@ -1,19 +1,26 @@
-﻿using OpenTK;
+﻿using System.Collections.Generic;
+using BepuPhysics;
+using BepuPhysics.Collidables;
+using OpenTK;
 
 namespace DamnEngine
 {
     public abstract class Collider : Component
     {
-        protected internal override void OnCreate()
-        {
-            Physics.RegisterCollider(this);
-        }
+        private static readonly Dictionary<IShape, TypedIndex> registeredShapes = new();
 
-        public abstract bool IsIntersect(Vector3 position, Vector3 direction, float distance);
+        protected static Simulation Simulation => Physics.Simulation;
         
-        protected override void OnDestroy()
+        public abstract Bounds Bounds { get; }
+
+        protected TypedIndex GetShape<T>(T shape) where T : unmanaged, IShape
         {
-            Physics.UnregisterCollider(this);
+            if (registeredShapes.TryGetValue(shape, out var shapeIndex))
+                return shapeIndex;
+
+            shapeIndex = Simulation.Shapes.Add(shape);
+            registeredShapes.Add(shape, shapeIndex);
+            return shapeIndex;
         }
     }
 }

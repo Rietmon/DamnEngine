@@ -38,6 +38,8 @@ namespace DamnEngine
         
         public static float Min(params float[] values) => values.Min();
 
+        public static float Pow(float x, float y) => (float)Math.Pow(x, y);
+
         public static void Swap(ref float first, ref float second) => (first, second) = (second, first);
     }
 }

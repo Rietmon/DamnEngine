@@ -25,7 +25,7 @@ namespace DamnEngine
             camera.SetData(0.7853982f, 800f / 600f, 0.01f, 2000);
             camera.AddComponent<GameCamera>();
 
-            var shader = Shader.CreateFromFile("Default");
+            var shader = Shader.CreateFromFile("Light");
             var texture = Texture2D.CreateFromFile("dark.png");
             var mesh = Mesh.CreateFromFile("Man.obj").First();
             var material = new Material(shader);
@@ -37,13 +37,12 @@ namespace DamnEngine
                 {
                     var obj = new GameObject($"Obj {x} {y}");
                     var meshRender = obj.AddComponent<MeshRenderer>();
+                    obj.AddComponent<BoxCollider>();
                     meshRender.Material = material;
                     meshRender.Mesh = mesh;
-                    obj.Transform.Position = new Vector3(x * 2, 0, y * 2);
+                    obj.Transform.Position = new Vector3(x, 0, y);
                 }
             }
-            
-            GC.Collect();
         }
 
         public static void Update()

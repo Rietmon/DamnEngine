@@ -36,15 +36,7 @@ namespace DamnEngine
             }
             prevMousePosition = Input.MousePosition;
 
-            var ray = new Ray(Transform.Position, Transform.Forward);
-            var rayCast = new RayCast(null);
-            if (rayCast.Target)
-            {
-                var value = RandomUtilities.Range(0, 255);
-                Application.Window.Title = value.ToString();
-                rayCast.Target.GetComponent<MeshRenderer>().Material.SetColor("color", 
-                    Color.FromArgb(1, value, value, value));
-            }
+            
         }
     }
 }

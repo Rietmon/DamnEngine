@@ -1,4 +1,6 @@
-﻿using OpenTK;
+﻿using BepuPhysics;
+using BepuPhysics.Collidables;
+using OpenTK;
 
 namespace DamnEngine
 {
@@ -8,16 +10,31 @@ namespace DamnEngine
         
         public Vector3 Size { get; set; } = Vector3.One;
 
-        public Bounds Bounds => new(Center + Transform.Position, Size * Transform.Scale);
+        public override Bounds Bounds => new(Center, Size);
 
-        public override bool IsIntersect(Vector3 position, Vector3 direction, float distance)
+        private StaticHandle staticHandle;
+
+        private BodyReference bodyReference;
+
+        protected internal override void OnCreate()
         {
-            var bounds = Bounds;
-            var boundsMin = bounds.Min;
-            var boundsMax = bounds.Max;
-            var modelMatrix = Transform.TransformMatrix;
+            var box = Bounds.ToBox();
+            var boxShape = GetShape(box);
+            box.ComputeInertia(1, out var boxInertia);
+            var position = Transform.Position.ToNumericsVector3();
 
-            return false;
+            //var staticDescription = new StaticDescription(position, new CollidableDescription(boxShape, 0.1f));
+            var bodyDescription = BodyDescription.CreateDynamic(position, boxInertia,
+                new CollidableDescription(boxShape, 0.1f), new BodyActivityDescription(0.01f));
+            
+            //staticHandle = Simulation.Statics.Add(staticDescription);
+            var bodyHandle = Simulation.Bodies.Add(bodyDescription);
+            bodyReference = Simulation.Bodies.GetBodyReference(bodyHandle);
+        }
+
+        protected internal override void OnPostUpdate()
+        {
+            Transform.Position = bodyReference.Pose.Position.ToVector3();
         }
     }
 }
