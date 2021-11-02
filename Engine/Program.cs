@@ -1,7 +1,7 @@
-﻿using System;
+﻿
 using DamnEngine.Render;
-using OpenTK;
-using OpenTK.Input;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace DamnEngine
 {
@@ -20,16 +20,16 @@ namespace DamnEngine
             renderWindow.Load += OnLoad;
             renderWindow.UpdateFrame += OnUpdateFrame;
 
-            renderWindow.KeyDown += (_, arguments) => Input.OnKeyDown(arguments.Key);
-            renderWindow.KeyUp += (_, arguments) => Input.OnKeyUp(arguments.Key);
+            renderWindow.KeyDown += (arguments) => Input.OnKeyDown(arguments.Key);
+            renderWindow.KeyUp += (arguments) => Input.OnKeyUp(arguments.Key);
             
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Starting window...");
-            renderWindow.Run(60, 60);
+            renderWindow.Run();
             
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Engine started!");
         }
 
-        private static void OnLoad(object sender, EventArgs arguments)
+        private static void OnLoad()
         {
             Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing engine...");
             
@@ -37,13 +37,14 @@ namespace DamnEngine
             Rendering.Initialize();
 
             Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing application API...");
+            Input.State = renderWindow.MouseState;
             Application.Window = renderWindow;
             Application.Initialize();
             
             Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Engine has been initialized!");
         }
 
-        private static void OnUpdateFrame(object sender, FrameEventArgs arguments)
+        private static void OnUpdateFrame(FrameEventArgs arguments)
         {
             Time.DeltaTime = (float)arguments.Time;
             
@@ -58,6 +59,7 @@ namespace DamnEngine
             Rendering.RenderFrame(renderWindow);
             
             Input.Update();
+            Input.State = renderWindow.MouseState;
         }
     }
 }

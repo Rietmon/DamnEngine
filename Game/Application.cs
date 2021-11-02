@@ -5,6 +5,8 @@ using DamnEngine.Render;
 using DamnEngine.Utilities;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using Rietmon.Extensions;
 
 namespace DamnEngine
@@ -17,6 +19,8 @@ namespace DamnEngine
         public static void Initialize()
         {
             Window.VSync = VSyncMode.On;
+            
+            Physics.Initialize();
             
             ScenesManager.SetScene(new Scene("New Scene"));
 
@@ -31,13 +35,12 @@ namespace DamnEngine
             var material = new Material(shader);
             material.SetTexture(0, texture);
             
-            for (var x = -10; x < 11; x++)
+            for (var x = -25; x < 26; x++)
             {
-                for (var y = -10; y < 11; y++)
+                for (var y = -25; y < 26; y++)
                 {
                     var obj = new GameObject($"Obj {x} {y}");
                     var meshRender = obj.AddComponent<MeshRenderer>();
-                    obj.AddComponent<BoxCollider>();
                     meshRender.Material = material;
                     meshRender.Mesh = mesh;
                     obj.Transform.Position = new Vector3(x, 0, y);
@@ -52,6 +55,8 @@ namespace DamnEngine
             OnNextFrameUpdate?.Invoke();
             OnNextFrameUpdate = null;
             ScenesManager.CurrentScene.ForEachGameObjectComponent((component) => component.OnUpdate());
+            
+            Physics.Update(Time.DeltaTime);
             
             ScenesManager.CurrentScene.ForEachGameObjectComponent((component) => component.OnPostUpdate());
         }

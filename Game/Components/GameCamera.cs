@@ -2,6 +2,8 @@
 using System.Drawing;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using Rietmon.Extensions;
 
 namespace DamnEngine
@@ -12,19 +14,19 @@ namespace DamnEngine
         
         protected internal override void OnUpdate()
         {
-            if (Input.IsKeyPress(Key.W))
+            if (Input.IsKeyPress(Keys.W))
                 Transform.Position += Transform.Forward * Time.DeltaTime * 10;
-            else if (Input.IsKeyPress(Key.S))
+            else if (Input.IsKeyPress(Keys.S))
                 Transform.Position -= Transform.Forward * Time.DeltaTime * 10;
             
-            if (Input.IsKeyPress(Key.D))
+            if (Input.IsKeyPress(Keys.D))
                 Transform.Position += Transform.Right * Time.DeltaTime * 10;
-            else if (Input.IsKeyPress(Key.A))
+            else if (Input.IsKeyPress(Keys.A))
                 Transform.Position -= Transform.Right * Time.DeltaTime * 10;
             
-            if (Input.IsKeyPress(Key.E))
+            if (Input.IsKeyPress(Keys.E))
                 Transform.Position += Transform.Up * Time.DeltaTime * 10;
-            else if (Input.IsKeyPress(Key.Q))
+            else if (Input.IsKeyPress(Keys.Q))
                 Transform.Position -= Transform.Up * Time.DeltaTime * 10;
 
             if (prevMousePosition != default)

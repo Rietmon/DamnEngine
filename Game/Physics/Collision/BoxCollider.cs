@@ -1,6 +1,7 @@
 ﻿using BepuPhysics;
 using BepuPhysics.Collidables;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace DamnEngine
 {
@@ -16,7 +17,7 @@ namespace DamnEngine
 
         private BodyReference bodyReference;
 
-        protected internal override void OnCreate()
+        protected internal override void OnStart()
         {
             var box = Bounds.ToBox();
             var boxShape = GetShape(box);
