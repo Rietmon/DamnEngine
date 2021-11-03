@@ -1,6 +1,4 @@
-﻿using Rietmon.Extensions;
-
-namespace DamnEngine
+﻿namespace DamnEngine
 {
     public abstract class DamnObject : LowLevelDamnObject
     {

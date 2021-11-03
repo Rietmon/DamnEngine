@@ -1,6 +1,5 @@
 ﻿using BepuPhysics;
 using BepuPhysics.Collidables;
-using OpenTK;
 using OpenTK.Mathematics;
 
 namespace DamnEngine

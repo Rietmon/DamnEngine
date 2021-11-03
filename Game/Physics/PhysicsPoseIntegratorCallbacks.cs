@@ -1,5 +1,4 @@
 ﻿using BepuPhysics;
-using OpenTK;
 using OpenTK.Mathematics;
 
 namespace DamnEngine

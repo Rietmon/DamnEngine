@@ -1,10 +1,5 @@
-﻿using System;
-using System.Drawing;
-using OpenTK;
-using OpenTK.Input;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using Rietmon.Extensions;
 
 namespace DamnEngine
 {

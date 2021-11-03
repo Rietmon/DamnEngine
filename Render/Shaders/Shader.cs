@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using OpenTK.Graphics.OpenGL;
 using Rietmon.Extensions;
 
@@ -55,7 +54,7 @@ namespace DamnEngine
             GL.CompileShader(fragmentShaderPointer);
             log = GL.GetShaderInfoLog(fragmentShaderPointer);
             Debug.CrashAssert(log.IsNullOrEmpty(), $"[{nameof(Shader)}] ({nameof(CreateFromFiles)}) " +
-                                                         $"Can't compile fragment shader with code:\n{fragmentShaderName}\nLog:\n{log}");
+                                                   $"Can't compile fragment shader with code:\n{fragmentShaderName}\nLog:\n{log}");
             
             var shaderProgramPointer = GL.CreateProgram();
             GL.AttachShader(shaderProgramPointer, vertexShaderPointer);

@@ -1,7 +1,6 @@
-﻿
+﻿using System.ComponentModel;
 using DamnEngine.Render;
 using OpenTK.Windowing.Common;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace DamnEngine
 {
@@ -19,10 +18,11 @@ namespace DamnEngine
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Registering callbacks...");
             renderWindow.Load += OnLoad;
             renderWindow.UpdateFrame += OnUpdateFrame;
-
+            renderWindow.Closing += OnClosing;
+            
             renderWindow.KeyDown += (arguments) => Input.OnKeyDown(arguments.Key);
             renderWindow.KeyUp += (arguments) => Input.OnKeyUp(arguments.Key);
-            
+
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Starting window...");
             renderWindow.Run();
             
@@ -37,7 +37,7 @@ namespace DamnEngine
             Rendering.Initialize();
 
             Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing application API...");
-            Input.State = renderWindow.MouseState;
+            Input.MouseState = renderWindow.MouseState;
             Application.Window = renderWindow;
             Application.Initialize();
             
@@ -58,8 +58,12 @@ namespace DamnEngine
 
             Rendering.RenderFrame(renderWindow);
             
-            Input.Update();
-            Input.State = renderWindow.MouseState;
+            Input.Update(renderWindow.MouseState);
+        }
+
+        private static void OnClosing(CancelEventArgs arguments)
+        {
+            Debug.Log($"[{nameof(Program)}] ({nameof(OnClosing)}) Shutdown engine...");
         }
     }
 }

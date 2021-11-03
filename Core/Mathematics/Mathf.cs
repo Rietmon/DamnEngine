@@ -10,14 +10,12 @@ namespace DamnEngine
         public const float Rad2Deg = 57.29578f;
         
         public const float Pi = 3.14f;
-        
-        public static float Epsilon => (double)float.Epsilon == 0.0 ? 1.175494E-38f : float.Epsilon;
 
         public static float Clamp(float value, float min, float max)
         {
             if (value < min)
                 return min;
-            else if (value > max)
+            if (value > max)
                 return max;
             return value;
         }

@@ -22,6 +22,7 @@ namespace DamnEngine
         {
             var component = Activator.CreateInstance<T>();
             component.GameObject = this;
+            component.OnCreate();
 
             components.Add(component);
 

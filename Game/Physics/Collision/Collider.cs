@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BepuPhysics;
 using BepuPhysics.Collidables;
-using OpenTK;
 
 namespace DamnEngine
 {

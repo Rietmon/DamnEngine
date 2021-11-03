@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using OpenTK;
 using OpenTK.Mathematics;
 
 namespace DamnEngine.Utilities

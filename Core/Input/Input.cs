@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using OpenTK;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -7,9 +6,9 @@ namespace DamnEngine
 {
     public static class Input
     {
-        public static MouseState State { get; set; }
+        public static MouseState MouseState { get; set; }
         
-        public static Vector2 MousePosition => new(State.X, State.Y);
+        public static Vector2 MousePosition => new(MouseState.X, MouseState.Y);
 
         private static readonly List<Keys> keysDown = new();
         private static readonly List<Keys> keysPress = new();
@@ -27,7 +26,7 @@ namespace DamnEngine
             keysUp.Add(key);
         }
 
-        public static void Update()
+        public static void Update(MouseState mouseState)
         {
             foreach (var keyDown in keysDown)
                 keysPress.Add(keyDown);
@@ -35,6 +34,8 @@ namespace DamnEngine
             keysDown.Clear();
             
             keysUp.Clear();
+
+            MouseState = mouseState;
         }
 
         public static bool IsKeyDown(Keys key) => keysDown.Contains(key);

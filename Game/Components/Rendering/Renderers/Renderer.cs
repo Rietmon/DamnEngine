@@ -1,5 +1,4 @@
 ﻿using DamnEngine.Render;
-using OpenTK;
 
 namespace DamnEngine
 {

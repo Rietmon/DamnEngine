@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using DamnEngine.Render;
-using DamnEngine.Utilities;
-using OpenTK;
-using OpenTK.Input;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
-using Rietmon.Extensions;
 
 namespace DamnEngine
 {
@@ -18,6 +13,8 @@ namespace DamnEngine
 
         public static void Initialize()
         {
+            Debug.Crash("a");
+            
             Window.VSync = VSyncMode.On;
             
             Physics.Initialize();

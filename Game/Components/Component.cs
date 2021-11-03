@@ -1,5 +1,4 @@
-﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace DamnEngine
+﻿namespace DamnEngine
 {
     public abstract class Component : DamnObject
     {
@@ -9,8 +8,6 @@ namespace DamnEngine
 
         protected Component()
         {
-            OnCreate();
-
             Application.OnNextFrameUpdate += OnStart;
         }
 
@@ -28,9 +25,7 @@ namespace DamnEngine
         protected internal virtual void OnPreUpdate() { }
         protected internal virtual void OnUpdate() { }
         protected internal virtual void OnPostUpdate() { }
-        
         protected internal virtual void OnTransformChanged() { }
-        
         protected internal virtual void OnDisable() { }
 
         public override void Destroy()
