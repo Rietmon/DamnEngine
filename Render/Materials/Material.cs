@@ -16,7 +16,7 @@ namespace DamnEngine.Render
 
         private readonly Dictionary<int, Texture> textures = new();
 
-        public Material(Shader shader)
+        private Material(Shader shader)
         {
             this.shader = shader;
         }
@@ -85,6 +85,30 @@ namespace DamnEngine.Render
         protected override void OnDestroy()
         {
             shader.Destroy();
+        }
+
+        public static Material CreateFromShader(Shader shader, bool compileShader = true)
+        {
+            if (compileShader && !shader.IsCompiled)
+                shader.Compile();
+            return new Material(shader);
+        }
+
+        public static Material CreateFromShadersFiles(string shadersName, bool compileShader = true)
+        {
+            var shader = Shader.CreateFromFiles(shadersName);
+            if (compileShader)
+                shader.Compile();
+            return new Material(shader);
+        }
+
+        public static Material CreateFromShadersFiles(string vertexShaderName, string fragmentShaderName,
+            bool compileShader = true)
+        {
+            var shader = Shader.CreateFromFiles(vertexShaderName, fragmentShaderName);
+            if (compileShader)
+                shader.Compile();
+            return new Material(shader);
         }
     }
 }

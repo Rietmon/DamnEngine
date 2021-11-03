@@ -1,5 +1,7 @@
-﻿using OpenTK.Mathematics;
+﻿using System.Drawing;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using Rietmon.Extensions;
 
 namespace DamnEngine
 {
@@ -33,7 +35,12 @@ namespace DamnEngine
             }
             prevMousePosition = Input.MousePosition;
 
-            
+            if (Input.IsKeyDown(Keys.L))
+            {
+                var gameObjects = ScenesManager.CurrentScene.gameObjects;
+                var random = RandomUtilities.Range(0, gameObjects.Count);
+                gameObjects[random].GetComponent<MeshRenderer>().Material.SetColor("color", Color.Red);
+            }
         }
     }
 }

@@ -4,6 +4,8 @@ namespace DamnEngine
 {
     public static class Debug
     {
+        public static Action OnCrash { get; set; }
+        
         public static void Log(object message) => WriteMessage(message, ConsoleColor.White);
         public static void LogAssert(bool prediction, object message = null) { if (!prediction) Log($"Assert error! {message}"); }
 
@@ -28,6 +30,7 @@ namespace DamnEngine
         public static void Crash(object message)
         {
             ShowMessageBox(message, "Crash", MessageBoxIcon.Error);
+            OnCrash?.Invoke();
             Environment.Exit(1);
         }
 

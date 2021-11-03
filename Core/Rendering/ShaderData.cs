@@ -1,0 +1,21 @@
+﻿using System.Collections.Generic;
+using System.IO;
+
+namespace DamnEngine
+{
+    public class ShaderData : DamnObject
+    {
+        public string VertexShaderName { get; }
+        public string FragmentShaderName { get; }
+        public string VertexShaderCode { get; }
+        public string FragmentShaderCode { get; }
+        
+        public ShaderData(string vertexShaderName, string fragmentShaderName, string vertexShaderCode, string fragmentShaderCode)
+        {
+            VertexShaderName = vertexShaderName;
+            FragmentShaderName = fragmentShaderName;
+            VertexShaderCode = vertexShaderCode;
+            FragmentShaderCode = fragmentShaderCode;
+        }
+    }
+}

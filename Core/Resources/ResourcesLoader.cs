@@ -11,7 +11,7 @@ namespace DamnEngine
         
         public static Bitmap UseBitmap(string name)
         {
-            var bitmapKey = $"GameData/Textures/{name}";
+            var bitmapKey = $"Textures/{name}";
             if (TryGetLoadedResource<Bitmap>(bitmapKey, out var bitmap))
                 return bitmap;
 
@@ -27,7 +27,7 @@ namespace DamnEngine
 
         public static Mesh[] UseMeshes(string name)
         {
-            var meshKey = $"GameData/Meshes/{name}";
+            var meshKey = $"Meshes/{name}";
             if (TryGetLoadedResource<Mesh[]>(meshKey, out var mesh))
                 return mesh;
             
@@ -49,9 +49,26 @@ namespace DamnEngine
 
         public static void FreeMesh(string name) => FreeLoadedResource($"GameData/Meshes/{name}");
 
-        public static string GetVertexShaderCode(string name) => File.ReadAllText($"GameData/Shaders/{name}.vert");
+        public static ShaderData UseShaderData(string vertexShaderName, string fragmentShaderName)
+        {
+            var shaderDataKey = $"Shaders/{vertexShaderName}_{fragmentShaderName}";
+            if (TryGetLoadedResource<ShaderData>(shaderDataKey, out var shaderData))
+                return shaderData;
+            
+            var vertexShaderPath = $"GameData/Shaders/{vertexShaderName}.vert";
+            var fragmentShaderPath = $"GameData/Shaders/{vertexShaderName}.frag";
+            
+            var vertexShaderCode = File.ReadAllText(vertexShaderPath);
+            var fragmentShaderCode = File.ReadAllText(fragmentShaderPath);
 
-        public static string GetFragmentShaderCode(string name) => File.ReadAllText($"GameData/Shaders/{name}.frag");
+            shaderData = new ShaderData(vertexShaderName, fragmentShaderName, vertexShaderCode, fragmentShaderCode);
+            
+            RegisterLoadedResource(shaderDataKey, shaderData);
+
+            return shaderData;
+        }
+
+        public static void FreeShaderData(string vertexShaderName, string fragmentShaderName) => FreeLoadedResource($"Shaders/{vertexShaderName}_{fragmentShaderName}");
 
         private static bool TryGetLoadedResource<T>(string name, out T result)
         {

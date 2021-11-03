@@ -11,6 +11,7 @@ namespace DamnEngine
         private static void Main()
         {
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Starting engine...");
+            Debug.OnCrash += () => OnClosing(null);
             
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Creating window...");
             renderWindow = new RenderWindow("DamnEngine 1.0", 800, 600);

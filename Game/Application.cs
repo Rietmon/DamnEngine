@@ -13,8 +13,6 @@ namespace DamnEngine
 
         public static void Initialize()
         {
-            Debug.Crash("a");
-            
             Window.VSync = VSyncMode.On;
             
             Physics.Initialize();
@@ -26,18 +24,17 @@ namespace DamnEngine
             camera.SetData(0.7853982f, 800f / 600f, 0.01f, 2000);
             camera.AddComponent<GameCamera>();
 
-            var shader = Shader.CreateFromFile("Light");
             var texture = Texture2D.CreateFromFile("dark.png");
             var mesh = Mesh.CreateFromFile("Man.obj").First();
-            var material = new Material(shader);
-            material.SetTexture(0, texture);
             
-            for (var x = -25; x < 26; x++)
+            for (var x = -5; x < 6; x++)
             {
-                for (var y = -25; y < 26; y++)
+                for (var y = -5; y < 6; y++)
                 {
                     var obj = new GameObject($"Obj {x} {y}");
                     var meshRender = obj.AddComponent<MeshRenderer>();
+                    var material = Material.CreateFromShadersFiles("Light");
+                    material.SetTexture(0, texture);
                     meshRender.Material = material;
                     meshRender.Mesh = mesh;
                     obj.Transform.Position = new Vector3(x, 0, y);
