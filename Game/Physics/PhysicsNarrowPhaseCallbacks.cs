@@ -7,12 +7,12 @@ namespace DamnEngine
 {
     public struct PhysicsNarrowPhaseCallbacks : INarrowPhaseCallbacks
     {
-        public SpringSettings ContactSpringiness;
+        private SpringSettings contactSpringiness;
 
         public void Initialize(Simulation simulation)
         {
-            if (ContactSpringiness.AngularFrequency == 0 && ContactSpringiness.TwiceDampingRatio == 0)
-                ContactSpringiness = new SpringSettings(30, 0);
+            if (contactSpringiness.AngularFrequency == 0 && contactSpringiness.TwiceDampingRatio == 0)
+                contactSpringiness = new SpringSettings(30, 0);
         }
 
         public bool AllowContactGeneration(int workerIndex, CollidableReference a, CollidableReference b) =>
@@ -25,7 +25,7 @@ namespace DamnEngine
             {
                 FrictionCoefficient = 1f,
                 MaximumRecoveryVelocity = 2f,
-                SpringSettings = ContactSpringiness
+                SpringSettings = contactSpringiness
             };
             return true;
         }

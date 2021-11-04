@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Forms;
 using DamnEngine.Render;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -14,7 +15,8 @@ namespace DamnEngine
         public static void Initialize()
         {
             Window.VSync = VSyncMode.On;
-            Window.CursorGrabbed = true;
+            Input.GrabMouse = true;
+            Cursor.Hide();
             
             Physics.Initialize();
             

@@ -51,7 +51,9 @@ namespace DamnEngine
             
             Time.DeltaTime = (float)arguments.Time;
             
-            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled} | Statics: {Physics.Simulation.Statics.Count} | Bodies: {Physics.Simulation.Bodies.ActiveSet.Count}";
+            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled} " +
+                                 $"| Statics: {Physics.Simulation.Statics.Count} | Bodies: {Physics.Simulation.Bodies.ActiveSet.Count} " +
+                                 $"| MouseDeltaPosition: {Input.MouseDeltaPosition}";
             
             renderWindow.ProcessEvents();
 
@@ -61,7 +63,7 @@ namespace DamnEngine
 
             Rendering.RenderFrame(renderWindow);
             
-            Input.Update(renderWindow.MouseState);
+            Input.Update(renderWindow);
         }
 
         private static void OnClosing(CancelEventArgs arguments)

@@ -1,19 +1,34 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using Cursor = System.Windows.Forms.Cursor;
 
 namespace DamnEngine
 {
     public static class Input
     {
-        public static MouseState MouseState { get; set; }
+        public static bool GrabMouse { get; set; }
         
-        public static Vector2 MousePosition => MouseState.Position;
-        public static Vector2 MouseDelta => MouseState.PreviousPosition;
+        public static MouseState MouseState { get; set; }
+
+        public static Vector2 MousePosition
+        {
+            get => mousePosition;
+            set
+            {
+                var mousePoint = new Point((int)value.X, (int)value.Y);
+                Cursor.Position = mousePoint;
+            }
+        }
+        public static Vector2 MousePreviousPosition { get; private set; }
+        public static Vector2 MouseDeltaPosition { get; private set; }
 
         private static readonly List<Keys> keysDown = new();
         private static readonly List<Keys> keysPress = new();
         private static readonly List<Keys> keysUp = new();
+
+        private static Vector2 mousePosition;
         
         public static void OnKeyDown(Keys key)
         {
@@ -27,7 +42,7 @@ namespace DamnEngine
             keysUp.Add(key);
         }
 
-        public static void Update(MouseState mouseState)
+        public static void Update(RenderWindow renderWindow)
         {
             foreach (var keyDown in keysDown)
                 keysPress.Add(keyDown);
@@ -36,7 +51,17 @@ namespace DamnEngine
             
             keysUp.Clear();
 
-            MouseState = mouseState;
+            MouseState = renderWindow.MouseState;
+
+            var mousePoint = Cursor.Position;
+            MousePreviousPosition = mousePosition;
+            mousePosition = new Vector2(mousePoint.X, mousePoint.Y);
+            if (GrabMouse)
+            {
+                var windowCenter = renderWindow.Bounds.Center;
+                MouseDeltaPosition = (Cursor.Position.X, Cursor.Position.Y) - windowCenter;
+                Cursor.Position = new Point((int)windowCenter.X, (int)windowCenter.Y);
+            }
         }
 
         public static bool IsKeyDown(Keys key) => keysDown.Contains(key);

@@ -28,7 +28,7 @@ namespace DamnEngine
 
             if (prevMousePosition != default)
             {
-                var mousePosition = Input.MouseDelta;
+                var mousePosition = Input.MouseDeltaPosition;
                 var targetRotation = new Vector3(-mousePosition.Y, -mousePosition.X, 0) / 10 + Transform.Rotation;
                 targetRotation.X = Mathf.Clamp(targetRotation.X, -90, 90);
                 Transform.Rotation = targetRotation;

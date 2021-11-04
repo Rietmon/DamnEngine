@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace DamnEngine
 {
@@ -46,7 +47,7 @@ namespace DamnEngine
 
         private static void ShowMessageBox(object message, object title, MessageBoxIcon icon)
         {
-            DamnEngine.MessageBox.Show(message.ToString(), title.ToString(), MessageBoxButtons.OK, icon);
+            System.Windows.Forms.MessageBox.Show(message.ToString(), title.ToString(), MessageBoxButtons.OK, icon);
         }
     }
 }
