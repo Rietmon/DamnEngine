@@ -2,9 +2,31 @@
 {
     public abstract class Component : DamnObject
     {
+        public bool IsObjectActive
+        {
+            get => GameObject.IsObjectActive;
+            set => GameObject.IsObjectActive = value;
+        }
+        
+        public bool IsComponentEnabled
+        {
+            get => isComponentEnabled;
+            set
+            {
+                if (isComponentEnabled == value)
+                    return;
+                isComponentEnabled = value;
+                if (isComponentEnabled)
+                    OnEnable();
+                else
+                    OnDisable();
+            }
+        }
         public GameObject GameObject { get; internal set; }
 
         public Transform Transform => GameObject.Transform;
+
+        private bool isComponentEnabled;
 
         protected Component()
         {
@@ -14,6 +36,10 @@
         public T AddComponent<T>() where T : Component => GameObject.AddComponent<T>();
         
         public T GetComponent<T>() => GameObject.GetComponent<T>();
+        
+        public T[] GetComponents<T>() => GameObject.GetComponents<T>();
+
+        public bool TryGetComponent<T>(out T component) => GameObject.TryGetComponent(out component);
         
         public void RemoveComponent<T>() => GameObject.RemoveComponent<T>();
         

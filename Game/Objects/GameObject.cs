@@ -5,9 +5,26 @@ namespace DamnEngine
 {
     public class GameObject : DamnObject
     {
+        public bool IsObjectActive
+        {
+            get => isObjectActive;
+            set
+            {
+                if (isObjectActive == value)
+                    return;
+                
+                isObjectActive = value;
+                if (isObjectActive)
+                    ForEachComponent((component) => component.OnEnable());
+                else
+                    ForEachComponent((component) => component.OnDisable());
+            }
+        }
         public Transform Transform { get; }
         
         private readonly List<Component> components = new();
+
+        private bool isObjectActive;
 
         public GameObject(string name = "GameObject")
         {
@@ -40,6 +57,24 @@ namespace DamnEngine
             return default;
         }
 
+        public T[] GetComponents<T>()
+        {
+            var result = new List<T>();
+            foreach (var component in components)
+            {
+                if (component is T castedComponent)
+                    result.Add(castedComponent);
+            }
+
+            return result.ToArray();
+        }
+        
+        public bool TryGetComponent<T>(out T component)
+        {
+            component = GetComponent<T>();
+            return component != null;
+        }
+        
         public void RemoveComponent<T>() => RemoveComponent((Component)(object)GetComponent<T>());
 
         public void RemoveComponent<T>(T component) where T : Component

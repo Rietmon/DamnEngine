@@ -6,55 +6,87 @@ namespace DamnEngine
 {
     public class BoxCollider : Collider
     {
+        public bool IsStaticShapeCreated { get; private set; }
         public Vector3 Center { get; set; } = Vector3.Zero;
         
         public Vector3 Size { get; set; } = Vector3.One;
+        
+        public bool IsStatic { get; internal set; }
 
         public override Bounds Bounds => new(Center, Size * Transform.Scale);
 
-        private StaticHandle staticHandle;
-
-        private BodyReference bodyReference;
-
-        public void Dynamic()
+        public override IConvexShape Shape
         {
-            var box = Bounds.ToBox();
-            var boxShape = GetShape(new Box(1,2,1));
-            box.ComputeInertia(1, out var boxInertia);
-            var position = Transform.Position.ToNumericsVector3();
-
-            var bodyDescription = BodyDescription.CreateDynamic(position, boxInertia,
-                new CollidableDescription(boxShape, 0.1f), new BodyActivityDescription(0.01f));
-            bodyDescription.Velocity = new BodyVelocity(new System.Numerics.Vector3(), new System.Numerics.Vector3());
-            
-            var bodyHandle = Simulation.Bodies.Add(bodyDescription);
-            bodyReference = Simulation.Bodies.GetBodyReference(bodyHandle);
+            get
+            {
+                var (x, y, z) = Transform.Scale.FromToBepuVector3() * Size.FromToBepuVector3();
+                var box = new Box(x, y, z);
+                return box;
+            }
         }
 
-        public void Static()
+        public override TypedIndex ShapeIndex
         {
-            var box = Bounds.ToBox();
-            var boxShape = GetShape(new Box(10, 10, 0));
-            var position = Transform.Position.FromToBepuVector3().ToNumericsVector3();
+            get
+            {
+                var boxShape = GetShape((Box)Shape);
+                return boxShape;
+            }
+        }
 
-            var staticDescription = new StaticDescription(new System.Numerics.Vector3(0,0,-10), new CollidableDescription(boxShape, 0.1f));
+        public override Vector3 ShapePosition => Transform.Position + Center;
+
+        protected internal override void OnCreate()
+        {
+            CreateStaticShape();
+        }
+
+        protected internal override void OnEnable()
+        {
+            CreateStaticShape();
+        }
+
+        internal override void CreateStaticShape()
+        {
+            if (IsStatic || IsStaticShapeCreated)
+                return;
             
+            IsStatic = true;
+
+            var boxShape = ShapeIndex;
+            var bepuPosition = ShapePosition.FromToBepuVector3().ToNumericsVector3();
+
+            var collidableDescription = new CollidableDescription(boxShape, 0.1f);
+
+            var staticDescription = new StaticDescription(bepuPosition, collidableDescription);
+
             staticHandle = Simulation.Statics.Add(staticDescription);
+            IsStaticShapeCreated = true;
         }
 
-        protected internal override void OnPostUpdate()
+        internal override void RemoveStaticShape()
         {
-            if (bodyReference.Exists)
+            if (!IsStatic)
+                return;
+            
+            IsStatic = false;
+            
+            if (IsStaticShapeCreated)
             {
-                var a = bodyReference.Pose.Position.ToVector3().FromToBepuVector3();
-                Transform.Position = a;
+                Simulation.Statics.Remove(staticHandle);
+                staticHandle = default;
+                IsStaticShapeCreated = false;
             }
+        }
 
-            if (Simulation.Statics.GetStaticReference(staticHandle).Exists)
-            {
-                var b = Simulation.Statics.GetStaticReference(staticHandle);
-                Debug.Log(b.Pose.Position.ToVector3().FromToBepuVector3());
-            }
+        protected internal override void OnDisable()
+        {
+            RemoveStaticShape();
+        }
+
+        protected override void OnDestroy()
+        {
+            RemoveStaticShape();
         }
     }
 }

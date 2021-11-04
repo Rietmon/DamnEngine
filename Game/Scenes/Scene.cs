@@ -16,6 +16,8 @@ namespace DamnEngine
 
         public GameObject FindGameObject(Predicate<GameObject> condition) => gameObjects.Find(condition);
 
+        public GameObject FindGameObjectByName(string name) => FindGameObject((gameObject) => gameObject.Name == name);
+
         public void ForEachGameObject(Action<GameObject> gameObjectAction)
         {
             foreach (var gameObject in gameObjects)

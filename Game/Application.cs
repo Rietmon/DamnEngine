@@ -28,13 +28,14 @@ namespace DamnEngine
             camera.AddComponent<GameCamera>();
 
             var texture = Texture2D.CreateFromFile("dark.png");
-            var mesh = Mesh.CreateFromFile("Man.obj").First();
+            var mesh = Mesh.CreateFromFile("Cube.obj").First();
             
             var obj = new GameObject($"Man");
             var meshRender = obj.AddComponent<MeshRenderer>();
             var material = Material.CreateFromShadersFiles("Light");
+            obj.Transform.Position = new Vector3(0, 100, 0);
             var collider = obj.AddComponent<BoxCollider>();
-            collider.Dynamic();
+            obj.AddComponent<RigidBody>();
             material.SetTexture(0, texture);
             meshRender.Material = material;
             meshRender.Mesh = mesh;
@@ -43,12 +44,11 @@ namespace DamnEngine
             var obj1 = new GameObject("Plane");
             var mr = obj1.AddComponent<MeshRenderer>();
             var material1 = Material.CreateFromShadersFiles("Light");
-            collider = obj1.AddComponent<BoxCollider>();
-            collider.Static();
+            obj1.Transform.Position = new Vector3(0, -5, 0);
+            obj1.AddComponent<BoxCollider>();
             material1.SetTexture(0, texture);
             mr.Material = material1;
             mr.Mesh = planeMesh;
-            obj1.Transform.Position = new Vector3(0, -10, 0);
             obj1.Transform.Scale = Vector3.One;
         }
 
