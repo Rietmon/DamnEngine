@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using DamnEngine.Render;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace DamnEngine
 {
@@ -26,8 +27,6 @@ namespace DamnEngine
 
             Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Starting window...");
             renderWindow.Run();
-            
-            Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Engine started!");
         }
 
         private static void OnLoad()
@@ -47,9 +46,12 @@ namespace DamnEngine
 
         private static void OnUpdateFrame(FrameEventArgs arguments)
         {
+            if (Input.IsKeyPress(Keys.Escape))
+                renderWindow.Close();
+            
             Time.DeltaTime = (float)arguments.Time;
             
-            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled}";
+            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled} | Statics: {Physics.Simulation.Statics.Count} | Bodies: {Physics.Simulation.Bodies.ActiveSet.Count}";
             
             renderWindow.ProcessEvents();
 

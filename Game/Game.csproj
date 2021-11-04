@@ -20,16 +20,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Core\Core.csproj" />
+      <ProjectReference Include="..\Physics\BepuPhysics\BepuPhysics.csproj" />
+      <ProjectReference Include="..\Physics\BepuUtilities\BepuUtilities.csproj" />
       <ProjectReference Include="..\Render\Render.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="BepuPhysics, Version=2.3.0.0, Culture=neutral, PublicKeyToken=9345ce38ee48a1cd">
-        <HintPath>..\SDK\BepuPhysics\BepuPhysics.dll</HintPath>
-      </Reference>
-      <Reference Include="BepuUtilities, Version=2.3.0.0, Culture=neutral, PublicKeyToken=a595ef937c270ac9">
-        <HintPath>..\SDK\BepuPhysics\BepuUtilities.dll</HintPath>
-      </Reference>
     </ItemGroup>
 
 </Project>

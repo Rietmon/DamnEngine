@@ -1,11 +1,12 @@
 ﻿using BepuPhysics;
 using BepuUtilities.Memory;
+using OpenTK.Mathematics;
 
 namespace DamnEngine
 {
     public static class Physics
     {
-        internal static Simulation Simulation { get; private set; }
+        public static Simulation Simulation { get; private set; }
 
         private static BufferPool bufferPool;
 
@@ -21,5 +22,7 @@ namespace DamnEngine
         {
             Simulation.Timestep(deltaTime);
         }
+
+        internal static Vector3 FromToBepuVector3(this Vector3 vector) => new(vector.X, vector.Z, vector.Y);
     }
 }

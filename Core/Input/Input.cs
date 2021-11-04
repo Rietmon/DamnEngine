@@ -8,7 +8,8 @@ namespace DamnEngine
     {
         public static MouseState MouseState { get; set; }
         
-        public static Vector2 MousePosition => new(MouseState.X, MouseState.Y);
+        public static Vector2 MousePosition => MouseState.Position;
+        public static Vector2 MouseDelta => MouseState.PreviousPosition;
 
         private static readonly List<Keys> keysDown = new();
         private static readonly List<Keys> keysPress = new();

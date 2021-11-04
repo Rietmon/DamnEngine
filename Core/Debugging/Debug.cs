@@ -7,21 +7,21 @@ namespace DamnEngine
         public static Action OnCrash { get; set; }
         
         public static void Log(object message) => WriteMessage(message, ConsoleColor.White);
-        public static void LogAssert(bool prediction, object message = null) { if (!prediction) Log($"Assert error! {message}"); }
+        public static void LogAssert(bool prediction, object message = null) { if (!prediction) Log($"Assert! {message}"); }
 
         public static void LogWarning(object message) => WriteMessage(message, ConsoleColor.Yellow);
-        public static void LogWarningAssert(bool prediction, object message = null) { if (!prediction) LogWarning($"Assert error! {message}"); }
+        public static void LogWarningAssert(bool prediction, object message = null) { if (!prediction) LogWarning($"Assert warning! {message}"); }
 
         public static void LogError(object message) => WriteMessage(message, ConsoleColor.Red);
         public static void LogErrorAssert(bool prediction, object message = null) { if (!prediction) LogError($"Assert error! {message}"); }
 
          public static void MessageBox(object message) => 
              ShowMessageBox(message, "Message", MessageBoxIcon.Information);
-        public static void AssertMessageBox(bool prediction, object message) { if (!prediction) MessageBox($"Assert error! {message}"); }
+        public static void AssertMessageBox(bool prediction, object message) { if (!prediction) MessageBox($"Assert! {message}"); }
 
          public static void MessageBoxWarning(object message) =>
              ShowMessageBox(message, "Warning", MessageBoxIcon.Warning);
-        public static void AssertMessageBoxWarning(bool prediction, object message) { if (!prediction) MessageBoxWarning($"Assert error! {message}"); }
+        public static void AssertMessageBoxWarning(bool prediction, object message) { if (!prediction) MessageBoxWarning($"Assert warning! {message}"); }
 
          public static void MessageBoxError(object message) =>
              ShowMessageBox(message, "Error", MessageBoxIcon.Error);

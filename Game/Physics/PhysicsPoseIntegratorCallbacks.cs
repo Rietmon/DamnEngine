@@ -16,8 +16,11 @@ namespace DamnEngine
         private Vector3 gravityDelta;
         private float linearDampingDelta;
         private float angularDampingDelta;
-        
-        public void Initialize(Simulation simulation) { }
+
+        public void Initialize(Simulation simulation)
+        {
+            Gravity = new Vector3(0, 0, -10);
+        }
 
         public void PrepareForIntegration(float deltaTime)
         {

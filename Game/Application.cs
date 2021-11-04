@@ -14,6 +14,7 @@ namespace DamnEngine
         public static void Initialize()
         {
             Window.VSync = VSyncMode.On;
+            Window.CursorGrabbed = true;
             
             Physics.Initialize();
             
@@ -27,19 +28,26 @@ namespace DamnEngine
             var texture = Texture2D.CreateFromFile("dark.png");
             var mesh = Mesh.CreateFromFile("Man.obj").First();
             
-            for (var x = -5; x < 6; x++)
-            {
-                for (var y = -5; y < 6; y++)
-                {
-                    var obj = new GameObject($"Obj {x} {y}");
-                    var meshRender = obj.AddComponent<MeshRenderer>();
-                    var material = Material.CreateFromShadersFiles("Light");
-                    material.SetTexture(0, texture);
-                    meshRender.Material = material;
-                    meshRender.Mesh = mesh;
-                    obj.Transform.Position = new Vector3(x, 0, y);
-                }
-            }
+            var obj = new GameObject($"Man");
+            var meshRender = obj.AddComponent<MeshRenderer>();
+            var material = Material.CreateFromShadersFiles("Light");
+            var collider = obj.AddComponent<BoxCollider>();
+            collider.Dynamic();
+            material.SetTexture(0, texture);
+            meshRender.Material = material;
+            meshRender.Mesh = mesh;
+
+            var planeMesh = Mesh.CreateFromFile("Cube.obj").First();
+            var obj1 = new GameObject("Plane");
+            var mr = obj1.AddComponent<MeshRenderer>();
+            var material1 = Material.CreateFromShadersFiles("Light");
+            collider = obj1.AddComponent<BoxCollider>();
+            collider.Static();
+            material1.SetTexture(0, texture);
+            mr.Material = material1;
+            mr.Mesh = planeMesh;
+            obj1.Transform.Position = new Vector3(0, -10, 0);
+            obj1.Transform.Scale = Vector3.One;
         }
 
         public static void Update()

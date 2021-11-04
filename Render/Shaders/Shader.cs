@@ -15,7 +15,7 @@ namespace DamnEngine
 
         private int shaderProgramPointer = -1;
 
-        public Shader(ShaderData shaderData)
+        private Shader(ShaderData shaderData)
         {
             this.shaderData = shaderData;
         }
@@ -60,11 +60,11 @@ namespace DamnEngine
             }
         }
 
-        internal void Use() => GL.UseProgram(shaderProgramPointer);
+        public void Use() => GL.UseProgram(shaderProgramPointer);
 
-        internal int GetAttributeLocation(string attributeName) => GL.GetAttribLocation(shaderProgramPointer, attributeName);
+        public int GetAttributeLocation(string attributeName) => GL.GetAttribLocation(shaderProgramPointer, attributeName);
 
-        internal int GetUniformLocation(string uniformLocation) => uniformLocations[uniformLocation];
+        public int GetUniformLocation(string uniformLocation) => uniformLocations[uniformLocation];
 
         protected override void OnDestroy()
         {
