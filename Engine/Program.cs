@@ -33,6 +33,9 @@ namespace DamnEngine
         {
             Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing engine...");
             
+            Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing input...");
+            Input.Initialize(renderWindow);
+            
             Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing render...");
             Rendering.Initialize();
 

@@ -8,7 +8,12 @@ namespace DamnEngine
     public class GameCamera : Component
     {
         private Vector2 prevMousePosition;
-        
+
+        protected internal override void OnCreate()
+        {
+            Transform.Position = new Vector3(0, 0, -10);
+        }
+
         protected internal override void OnUpdate()
         {
             if (Input.IsKeyPress(Keys.W))
@@ -26,21 +31,9 @@ namespace DamnEngine
             else if (Input.IsKeyPress(Keys.Q))
                 Transform.Position -= Transform.Up * Time.DeltaTime * 10;
 
-            if (prevMousePosition != default)
-            {
-                var mousePosition = Input.MouseDeltaPosition;
-                var targetRotation = new Vector3(-mousePosition.Y, -mousePosition.X, 0) / 10 + Transform.Rotation;
-                targetRotation.X = Mathf.Clamp(targetRotation.X, -90, 90);
-                Transform.Rotation = targetRotation;
-            }
-            prevMousePosition = Input.MousePosition;
-
-            if (Input.IsKeyDown(Keys.L))
-            {
-                var gameObjects = ScenesManager.CurrentScene.gameObjects;
-                var random = RandomUtilities.Range(0, gameObjects.Count);
-                gameObjects[random].GetComponent<MeshRenderer>().Material.SetColor("color", Color.Red);
-            }
+            var targetRotation = new Vector3(-Input.MouseDeltaPosition.Y, -Input.MouseDeltaPosition.X, 0) / 10 + Transform.Rotation;
+            targetRotation.X = Mathf.Clamp(targetRotation.X, -90, 90);
+            Transform.Rotation = targetRotation;
         }
     }
 }

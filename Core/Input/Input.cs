@@ -29,6 +29,11 @@ namespace DamnEngine
         private static readonly List<Keys> keysUp = new();
 
         private static Vector2 mousePosition;
+
+        public static void Initialize(RenderWindow renderWindow)
+        {
+            Cursor.Position = new Point((int)renderWindow.Bounds.Center.X, (int)renderWindow.Bounds.Center.Y);
+        }
         
         public static void OnKeyDown(Keys key)
         {
@@ -59,7 +64,7 @@ namespace DamnEngine
             if (GrabMouse)
             {
                 var windowCenter = renderWindow.Bounds.Center;
-                MouseDeltaPosition = (Cursor.Position.X, Cursor.Position.Y) - windowCenter;
+                MouseDeltaPosition = MousePosition - windowCenter;
                 Cursor.Position = new Point((int)windowCenter.X, (int)windowCenter.Y);
             }
         }
