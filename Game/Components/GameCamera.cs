@@ -37,7 +37,7 @@ namespace DamnEngine
 
             if (Input.IsKeyDown(Keys.B))
             {
-                var obj = ScenesManager.CurrentScene.FindGameObjectByName("Man");
+                var obj = ScenesManager.CurrentScene.FindGameObjectByName("PhysicsCube1");
                 var rigidBody = obj.GetComponent<RigidBody>();
                 rigidBody.ApplyImpulse(new Vector3(0.5f,10,0));
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using DamnEngine.Render;
@@ -30,25 +31,34 @@ namespace DamnEngine
             var texture = Texture2D.CreateFromFile("dark.png");
             var mesh = Mesh.CreateFromFile("Cube.obj").First();
             
-            var obj = new GameObject($"Man");
+            var obj = new GameObject($"PhysicsCube1");
             var meshRender = obj.AddComponent<MeshRenderer>();
             var material = Material.CreateFromShadersFiles("Light");
-            obj.Transform.Position = new Vector3(0, 100, 0);
-            var collider = obj.AddComponent<BoxCollider>();
-            obj.AddComponent<RigidBody>();
             material.SetTexture(0, texture);
+            obj.Transform.Position = new Vector3(0, 100, 0);
+            obj.AddComponent<BoxCollider>();
+            obj.AddComponent<RigidBody>();
             meshRender.Material = material;
             meshRender.Mesh = mesh;
+            
+            var obj2 = new GameObject($"PhysicsCube2");
+            var material2 = Material.CreateFromShadersFiles("Light");
+            material2.SetTexture(0, texture);
+            material2.SetColor("color", Color.Red);
+            meshRender = obj2.AddComponent<MeshRenderer>();
+            meshRender.Material = material;
+            meshRender.Mesh = mesh;
+            obj2.Transform.Position = new Vector3(0, 102, 0);
+            obj2.Transform.Parent = obj.Transform;
 
-            var planeMesh = Mesh.CreateFromFile("Cube.obj").First();
-            var obj1 = new GameObject("Plane");
+            var obj1 = new GameObject("ColliderCube1");
             var mr = obj1.AddComponent<MeshRenderer>();
             var material1 = Material.CreateFromShadersFiles("Light");
             obj1.Transform.Position = new Vector3(0, -5, 0);
             obj1.AddComponent<BoxCollider>();
             material1.SetTexture(0, texture);
             mr.Material = material1;
-            mr.Mesh = planeMesh;
+            mr.Mesh = mesh;
             obj1.Transform.Scale = Vector3.One;
         }
 
