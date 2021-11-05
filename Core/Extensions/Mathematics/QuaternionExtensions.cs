@@ -12,7 +12,7 @@ namespace DamnEngine
             new(quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
 
         // Copied from https://stackoverflow.com/questions/11492299/quaternion-to-euler-angles-algorithm-how-to-convert-to-y-up-and-between-ha/11505219
-        public static Vector3 Euler(this Quaternion quaternion)
+        public static Vector3 ToEuler(this Quaternion quaternion)
         {
             var pitchYawRoll = new Vector3();
 
@@ -48,6 +48,15 @@ namespace DamnEngine
             pitchYawRoll.Z = (float)Math.Atan2(2f * quaternion.X * quaternion.W - 2f * quaternion.Y * quaternion.Z, -sqx + sqy - sqz + sqw);      // Roll
 
             return pitchYawRoll;
+        }
+
+        public static Quaternion FromEuler(this Quaternion quaternion, Vector3 euler)
+        {
+            quaternion = Quaternion.Identity;
+            quaternion *= Quaternion.FromAxisAngle(Vector3.UnitX, euler.X);
+            quaternion *= Quaternion.FromAxisAngle(Vector3.UnitY, euler.Y);
+            quaternion *= Quaternion.FromAxisAngle(Vector3.UnitZ, euler.Z);
+            return quaternion;
         }
     }
 }

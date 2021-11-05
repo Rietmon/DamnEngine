@@ -40,20 +40,19 @@ namespace DamnEngine
         public void ApplyImpulse(Vector3 force)
         {
             AwakeBody();
-            BodyReference.ApplyImpulse(force.FromToBepuVector3().ToNumericsVector3(), new System.Numerics.Vector3());
+            BodyReference.ApplyImpulse(force.FromToBepuPosition().ToNumericsVector3(), new System.Numerics.Vector3());
         }
 
         public void ApplyImpulse(Vector3 force, Vector3 offset)
         {
             AwakeBody();
-            BodyReference.ApplyImpulse(force.FromToBepuVector3().ToNumericsVector3(), offset.FromToBepuVector3().ToNumericsVector3());
+            BodyReference.ApplyImpulse(force.FromToBepuPosition().ToNumericsVector3(), offset.FromToBepuPosition().ToNumericsVector3());
         }
 
         protected internal override void OnPostUpdate()
         {
-            Transform.Position = BodyReference.Pose.Position.ToVector3().FromToBepuVector3();
-            var rotation = BodyReference.Pose.Orientation.ToQuaternion().Euler().FromToBepuRotation();
-            Transform.Rotation = rotation;
+            Transform.Position = BodyReference.Pose.Position.ToVector3().FromToBepuPosition();
+            Transform.Rotation = BodyReference.Pose.Orientation.ToQuaternion().FromToBepuQuaternion();
         }
 
         private void CreateDynamicBody()
@@ -63,7 +62,7 @@ namespace DamnEngine
             
             collider.Shape.ComputeInertia(Mass, out var bodyInertia);
             var shape = collider.ShapeIndex;
-            var bepuPosition = collider.ShapePosition.FromToBepuVector3().ToNumericsVector3();
+            var bepuPosition = collider.ShapePosition.FromToBepuPosition().ToNumericsVector3();
 
             var collidableDescription = new CollidableDescription(shape, 0.1f);
             var bodyActivityDescription = new BodyActivityDescription(0.01f);

@@ -19,7 +19,7 @@ namespace DamnEngine
         {
             get
             {
-                var (x, y, z) = Transform.Scale.FromToBepuVector3() * Size.FromToBepuVector3();
+                var (x, y, z) = Transform.Scale.FromToBepuPosition() * Size.FromToBepuPosition();
                 var box = new Box(x, y, z);
                 return box;
             }
@@ -54,7 +54,7 @@ namespace DamnEngine
             IsStatic = true;
 
             var boxShape = ShapeIndex;
-            var bepuPosition = ShapePosition.FromToBepuVector3().ToNumericsVector3();
+            var bepuPosition = ShapePosition.FromToBepuPosition().ToNumericsVector3();
 
             var collidableDescription = new CollidableDescription(boxShape, 0.1f);
 

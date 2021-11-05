@@ -23,7 +23,7 @@ namespace DamnEngine
             Simulation.Timestep(deltaTime);
         }
 
-        internal static Vector3 FromToBepuVector3(this Vector3 vector) => new(vector.X, vector.Z, vector.Y);
-        internal static Vector3 FromToBepuRotation(this Vector3 vector) => new(-vector.X, -vector.Z, -vector.Y);
+        internal static Vector3 FromToBepuPosition(this Vector3 vector) => new(vector.X, vector.Z, vector.Y);
+        internal static Quaternion FromToBepuQuaternion(this Quaternion quaternion) => new(-quaternion.X, -quaternion.Z, -quaternion.Y, quaternion.W);
     }
 }

@@ -6,7 +6,7 @@ namespace DamnEngine
     {
         public static Box ToBox(this Bounds bounds)
         {
-            var bepuVector = bounds.Size.FromToBepuVector3();
+            var bepuVector = bounds.Size.FromToBepuPosition();
             return new Box(bepuVector.X, bepuVector.Y, bepuVector.Z);
         }
     }

@@ -4,11 +4,11 @@ namespace DamnEngine
 {
     public partial class Transform : Component
     {
-        public Vector3 Forward => TransformForward(Rotation);
+        public Vector3 Forward => TransformForward(EulerRotation);
         public Vector3 Backward => -Forward;
-        public Vector3 Right => TransformRight(Rotation);
+        public Vector3 Right => TransformRight(EulerRotation);
         public Vector3 Left => -Right;
-        public Vector3 Up => TransformUp(Rotation);
+        public Vector3 Up => TransformUp(EulerRotation);
         public Vector3 Down => -Up;
 
         public Matrix4 TransformMatrix
@@ -19,18 +19,14 @@ namespace DamnEngine
             
                 if (!Parent)
                 {
-                    transform *= Matrix4.CreateRotationX(Rotation.X);
-                    transform *= Matrix4.CreateRotationY(Rotation.Y);
-                    transform *= Matrix4.CreateRotationZ(Rotation.Z);
+                    transform *= Matrix4.CreateFromQuaternion(Rotation);
                     transform *= Matrix4.CreateTranslation(Position);
                     transform *= Matrix4.CreateScale(Scale);
                 }
                 else
                 {
                     transform *= Matrix4.CreateTranslation(Position);
-                    transform *= Matrix4.CreateRotationX(Rotation.X);
-                    transform *= Matrix4.CreateRotationY(Rotation.Y);
-                    transform *= Matrix4.CreateRotationZ(Rotation.Z);
+                    transform *= Matrix4.CreateFromQuaternion(Rotation);
                     transform *= Matrix4.CreateScale(Scale);
                 }
 

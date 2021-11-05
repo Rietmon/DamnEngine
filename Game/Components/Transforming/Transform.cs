@@ -30,9 +30,14 @@ namespace DamnEngine
                 Position = Parent.LocalPosition + value;
             }
         }
-        public Vector3 Rotation
+        public Quaternion Rotation
         {
-            get => localRotation;
+            get
+            {
+                if (!Parent)
+                    return localRotation;
+                return Parent.Rotation + localRotation;
+            }
             set
             {
                 localRotation = value;
@@ -49,8 +54,18 @@ namespace DamnEngine
             }
         }
         
+        public Vector3 EulerRotation
+        {
+            get => localRotation.ToEuler();
+            set
+            {
+                Rotation = new Quaternion().FromEuler(value);
+                GameObject.ForEachComponent((component) => component.OnTransformChanged());
+            }
+        }
+        
         private Vector3 localPosition = Vector3.Zero;
-        private Vector3 localRotation = Vector3.Zero;
+        private Quaternion localRotation = Quaternion.Identity;
         private Vector3 localScale = Vector3.One;
     }
 }
