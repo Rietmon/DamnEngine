@@ -17,11 +17,22 @@ namespace DamnEngine
             {
                 var transform = Matrix4.Identity;
             
-                transform *= Matrix4.CreateTranslation(Position);
-                transform *= Matrix4.CreateRotationX(Rotation.X);
-                transform *= Matrix4.CreateRotationY(Rotation.Y);
-                transform *= Matrix4.CreateRotationZ(Rotation.Z);
-                transform *= Matrix4.CreateScale(Scale);
+                if (!Parent)
+                {
+                    transform *= Matrix4.CreateRotationX(Rotation.X);
+                    transform *= Matrix4.CreateRotationY(Rotation.Y);
+                    transform *= Matrix4.CreateRotationZ(Rotation.Z);
+                    transform *= Matrix4.CreateTranslation(Position);
+                    transform *= Matrix4.CreateScale(Scale);
+                }
+                else
+                {
+                    transform *= Matrix4.CreateTranslation(Position);
+                    transform *= Matrix4.CreateRotationX(Rotation.X);
+                    transform *= Matrix4.CreateRotationY(Rotation.Y);
+                    transform *= Matrix4.CreateRotationZ(Rotation.Z);
+                    transform *= Matrix4.CreateScale(Scale);
+                }
 
                 return transform;
             }

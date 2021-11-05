@@ -1,7 +1,7 @@
-﻿using BepuPhysics;
+﻿using System;
+using BepuPhysics;
 using BepuPhysics.Collidables;
 using OpenTK.Mathematics;
-using Quaternion = System.Numerics.Quaternion;
 
 namespace DamnEngine
 {
@@ -52,7 +52,8 @@ namespace DamnEngine
         protected internal override void OnPostUpdate()
         {
             Transform.Position = BodyReference.Pose.Position.ToVector3().FromToBepuVector3();
-            BodyReference.Pose.Orientation = Quaternion.Identity;
+            var rotation = BodyReference.Pose.Orientation.ToQuaternion().Euler().FromToBepuRotation();
+            Transform.Rotation = rotation;
         }
 
         private void CreateDynamicBody()

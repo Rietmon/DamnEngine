@@ -24,5 +24,6 @@ namespace DamnEngine
         }
 
         internal static Vector3 FromToBepuVector3(this Vector3 vector) => new(vector.X, vector.Z, vector.Y);
+        internal static Vector3 FromToBepuRotation(this Vector3 vector) => new(-vector.X, -vector.Z, -vector.Y);
     }
 }

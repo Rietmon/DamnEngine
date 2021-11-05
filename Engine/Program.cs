@@ -54,8 +54,7 @@ namespace DamnEngine
             
             Time.DeltaTime = (float)arguments.Time;
             
-            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled} " +
-                                 $"| PhysicsCube: {ScenesManager.CurrentScene.FindGameObjectByName("PhysicsCube2").Transform.Position}";
+            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled}";
             
             renderWindow.ProcessEvents();
 

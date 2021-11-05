@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Rietmon.Extensions;
@@ -39,7 +40,14 @@ namespace DamnEngine
             {
                 var obj = ScenesManager.CurrentScene.FindGameObjectByName("PhysicsCube1");
                 var rigidBody = obj.GetComponent<RigidBody>();
-                rigidBody.ApplyImpulse(new Vector3(0.5f,10,0));
+                var x = RandomUtilities.Range(-3, 3);
+                var y = RandomUtilities.Range(1, 10);
+                var z = RandomUtilities.Range(-3, 3);
+                var x2 = RandomUtilities.Range(-1, 1);
+                var y2 = RandomUtilities.Range(-1, 1);
+                var z2 = RandomUtilities.Range(-1, 1);
+                Debug.Log(x + " " + y + " " + z);
+                rigidBody.ApplyImpulse(new Vector3(x,y,z), new Vector3(x2, y2, z2));
             }
         }
     }
