@@ -24,7 +24,7 @@ namespace DamnEngine
         
         private readonly List<Component> components = new();
 
-        private bool isObjectActive;
+        private bool isObjectActive = true;
 
         public GameObject(string name = "GameObject")
         {
@@ -35,10 +35,12 @@ namespace DamnEngine
             ScenesManager.RegisterGameObject(this);
         }
 
-        public T AddComponent<T>() where T : Component
+        public T AddComponent<T>() where T : Component, new()
         {
-            var component = Activator.CreateInstance<T>();
-            component.GameObject = this;
+            var component = new T
+            {
+                GameObject = this
+            };
             component.OnCreate();
 
             components.Add(component);

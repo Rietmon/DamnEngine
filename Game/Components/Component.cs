@@ -26,14 +26,14 @@
 
         public Transform Transform => GameObject.Transform;
 
-        private bool isComponentEnabled;
+        private bool isComponentEnabled = true;
 
         protected Component()
         {
             Application.OnNextFrameUpdate += OnStart;
         }
 
-        public T AddComponent<T>() where T : Component => GameObject.AddComponent<T>();
+        public T AddComponent<T>() where T : Component, new() => GameObject.AddComponent<T>();
         
         public T GetComponent<T>() => GameObject.GetComponent<T>();
         
