@@ -56,10 +56,10 @@ namespace DamnEngine
         
         public Vector3 EulerRotation
         {
-            get => localRotation.ToEuler();
+            get => localRotation.ToEuler() * Mathf.Rad2Deg;
             set
             {
-                Rotation = new Quaternion().FromEuler(value);
+                Rotation = QuaternionExtensions.FromEuler(value * Mathf.Deg2Rad);
                 GameObject.ForEachComponent((component) => component.OnTransformChanged());
             }
         }

@@ -52,17 +52,16 @@ namespace DamnEngine
         protected internal override void OnCreate()
         {
             Instance = this;
+            
+            fov = 0.7853982f;
+            var windowSize = Application.Window.Bounds.Max;
+            aspectRatio = (float)windowSize.X / (float)windowSize.Y;
+            near = 0.01f;
+            far = 2000f;
+            
+            UpdateProjectionMatrix();
 
             Rendering.OnPreRendering += OnPreRendering;
-        }
-
-        public void SetData(float fov, float aspectRatio, float near, float far)
-        {
-            this.fov = fov;
-            this.aspectRatio = aspectRatio;
-            this.near = near;
-            this.far = far;
-            UpdateProjectionMatrix();
         }
         
         private void OnPreRendering()

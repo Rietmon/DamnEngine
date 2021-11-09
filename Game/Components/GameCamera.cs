@@ -8,8 +8,6 @@ namespace DamnEngine
 {
     public class GameCamera : Component
     {
-        private Vector2 prevMousePosition;
-
         protected internal override void OnCreate()
         {
             Transform.Position = new Vector3(0, 0, -10);
@@ -23,31 +21,37 @@ namespace DamnEngine
                 Transform.Position -= Transform.Forward * Time.DeltaTime * 10;
             
             if (Input.IsKeyPress(Keys.D))
-                Transform.Position += Transform.Right * Time.DeltaTime * 10;
-            else if (Input.IsKeyPress(Keys.A))
                 Transform.Position -= Transform.Right * Time.DeltaTime * 10;
+            else if (Input.IsKeyPress(Keys.A))
+                Transform.Position += Transform.Right * Time.DeltaTime * 10;
             
             if (Input.IsKeyPress(Keys.E))
                 Transform.Position += Transform.Up * Time.DeltaTime * 10;
             else if (Input.IsKeyPress(Keys.Q))
                 Transform.Position -= Transform.Up * Time.DeltaTime * 10;
 
-            //var targetRotation = new Vector3(-Input.MouseDeltaPosition.Y, -Input.MouseDeltaPosition.X, 0) / 10 + Transform.EulerRotation;
-            //targetRotation.X = Mathf.Clamp(targetRotation.X, -90, 90);
-            //Transform.EulerRotation = targetRotation;
+            var targetRotationX = new Vector3(0, -Input.MouseDeltaPosition.X, 0) / 10 / Mathf.Rad2Deg;
+            var targetQuaternionRotation = QuaternionExtensions.FromEuler(targetRotationX);
+            Application.Window.Title = targetQuaternionRotation.ToString();
+            Transform.Rotation *= targetQuaternionRotation;
 
             if (Input.IsKeyDown(Keys.B))
             {
-                var obj = ScenesManager.CurrentScene.FindGameObjectByName("PhysicsCube1");
-                var rigidBody = obj.GetComponent<RigidBody>();
-                var x = RandomUtilities.Range(-0.5f, 0.5f);
-                var y = RandomUtilities.Range(1, 10);
-                var z = RandomUtilities.Range(-0.5f, 0.5f);
-                var x2 = RandomUtilities.Range(-1, 1);
-                var y2 = RandomUtilities.Range(-1, 1);
-                var z2 = RandomUtilities.Range(-1, 1);
-                Debug.Log(x + " " + y + " " + z);
-                rigidBody.ApplyImpulse(new Vector3(x,y,z), new Vector3(x2, y2, z2));
+                ScenesManager.CurrentScene.ForEachGameObject((obj) =>
+                {
+                    if (!obj.Name.Contains("PhysicsCube"))
+                        return;
+                    
+                    var rigidBody = obj.GetComponent<RigidBody>();
+                    var x = RandomUtilities.Range(-0.5f, 0.5f);
+                    var y = RandomUtilities.Range(1, 10);
+                    var z = RandomUtilities.Range(-0.5f, 0.5f);
+                    var x2 = RandomUtilities.Range(-0.5f, 0.5f);
+                    var y2 = RandomUtilities.Range(-1, 1);
+                    var z2 = RandomUtilities.Range(-0.5f, 0.5f);
+                    Debug.Log(x + " " + y + " " + z);
+                    rigidBody.ApplyImpulse(new Vector3(x,y,z), new Vector3(x2, y2, z2));
+                });
             }
         }
     }

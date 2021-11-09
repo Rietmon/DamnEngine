@@ -50,12 +50,12 @@ namespace DamnEngine
             return pitchYawRoll;
         }
 
-        public static Quaternion FromEuler(this Quaternion quaternion, Vector3 euler)
+        public static Quaternion FromEuler(Vector3 euler)
         {
-            quaternion = Quaternion.Identity;
-            quaternion *= Quaternion.FromAxisAngle(Vector3.UnitX, euler.X);
+            var quaternion = Quaternion.Identity;
+            quaternion *= Quaternion.FromAxisAngle(Vector3.UnitZ, euler.X);
             quaternion *= Quaternion.FromAxisAngle(Vector3.UnitY, euler.Y);
-            quaternion *= Quaternion.FromAxisAngle(Vector3.UnitZ, euler.Z);
+            quaternion *= Quaternion.FromAxisAngle(Vector3.UnitX, euler.Z);
             return quaternion;
         }
     }
