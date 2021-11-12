@@ -16,8 +16,8 @@ namespace DamnEngine
         public static void Initialize()
         {
             Window.VSync = VSyncMode.On;
-            Input.GrabMouse = true;
-            Cursor.Hide();
+            //Input.GrabMouse = true;
+            //Cursor.Hide();
             
             Physics.Initialize();
             
@@ -26,6 +26,7 @@ namespace DamnEngine
             var cameraObject = new GameObject("Camera");
             var camera = cameraObject.AddComponent<Camera>();
             camera.AddComponent<GameCamera>();
+            //camera.AddComponent<TestRotation>();
 
             var texture = Texture2D.CreateFromFile("dark.png");
             var mesh = Mesh.CreateFromFile("Cube.obj").First();
@@ -48,7 +49,7 @@ namespace DamnEngine
             material1.SetTexture(0, texture);
             mr.Material = material1;
             mr.Mesh = mesh;
-            obj1.AddComponent<TestRotation>();
+            //obj1.AddComponent<TestRotation>();
         }
 
         private static void CreateDynamicCube(Vector3 pos, int num, Mesh mesh, Texture tex)
@@ -58,10 +59,21 @@ namespace DamnEngine
             var material = Material.CreateFromShadersFiles("Light");
             material.SetTexture(0, tex);
             obj.Transform.Position = pos;
-            obj.AddComponent<BoxCollider>();
-            obj.AddComponent<RigidBody>();
+            //obj.AddComponent<BoxCollider>();
+            //obj.AddComponent<RigidBody>();
+            obj.AddComponent<TestRotation>();
             meshRender.Material = material;
             meshRender.Mesh = mesh;
+            
+            var obj1 = new GameObject("t");
+            meshRender = obj1.AddComponent<MeshRenderer>();
+            material = Material.CreateFromShadersFiles("Light");
+            material.SetTexture(0, tex);
+            obj1.Transform.Position = pos + new Vector3(0,1,-0.525f);
+            obj1.Transform.Scale = new Vector3(0.1f, 0.1f, 1);
+            meshRender.Material = material;
+            meshRender.Mesh = mesh;
+            obj1.Transform.Parent = obj;
         }
 
         public static void Update()

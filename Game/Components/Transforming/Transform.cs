@@ -36,7 +36,7 @@ namespace DamnEngine
             {
                 if (!Parent)
                     return localRotation;
-                return Parent.Rotation + localRotation;
+                return localRotation * Parent.Rotation;
             }
             set
             {
@@ -54,12 +54,37 @@ namespace DamnEngine
             }
         }
         
-        public Vector3 EulerRotation
+        public Vector3 EulerAngles
         {
-            get => localRotation.ToEuler() * Mathf.Rad2Deg;
+            get
+            {
+                var eulerAngles = localRotation.ToEulerAngles() * Mathf.Rad2Deg;
+                for (var i = 0; i < 3; i++)
+                {
+                    var angle = eulerAngles[i];
+                    if (angle < 0)
+                    {
+                        angle = 180 + (180 - Mathf.Abs(angle));
+                        eulerAngles[i] = angle;
+                    }
+                }
+
+                return eulerAngles;
+            }
             set
             {
-                Rotation = QuaternionExtensions.FromEuler(value * Mathf.Deg2Rad);
+                for (var i = 0; i < 3; i++)
+                {
+                    var angle = value[i];
+                    if (angle > 180)
+                    {
+                        angle = -180 + (angle - 180);
+                        value[i] = angle;
+                    }
+                }
+                Rotation = Quaternion.FromEulerAngles(value * Mathf.Deg2Rad);
+                var euler = Rotation.ToEulerAngles() * Mathf.Rad2Deg;
+                Application.Window.Title = $"X: {euler.X:##.000} Y: {euler.Y:##.000} Z: {euler.Z:##.000}";
                 GameObject.ForEachComponent((component) => component.OnTransformChanged());
             }
         }

@@ -29,30 +29,19 @@ namespace DamnEngine
                 Transform.Position += Transform.Up * Time.DeltaTime * 10;
             else if (Input.IsKeyPress(Keys.Q))
                 Transform.Position -= Transform.Up * Time.DeltaTime * 10;
+            
+            // var rotationX = Quaternion.FromAxisAngle(Vector3.UnitX, Input.MouseDeltaPosition.Y / 10 * Time.DeltaTime);
+            // var rotationY = Quaternion.FromAxisAngle(Vector3.UnitY, -Input.MouseDeltaPosition.X / 10 * Time.DeltaTime);
+            // var rotation = rotationX * rotationY;
+            // Transform.Rotation *= rotation;
 
-            var targetRotationX = new Vector3(0, -Input.MouseDeltaPosition.X, 0) / 10 / Mathf.Rad2Deg;
-            var targetQuaternionRotation = QuaternionExtensions.FromEuler(targetRotationX);
-            Application.Window.Title = targetQuaternionRotation.ToString();
-            Transform.Rotation *= targetQuaternionRotation;
+            // var rotation = new Vector3(Input.MouseDeltaPosition.Y / 10, -Input.MouseDeltaPosition.X / 10, 0);
+            // Transform.EulerAngles += rotation;
+            
+            var euler = Transform.Rotation;
+            Application.Window.Title = $"X: {euler.X:##.000} Y: {euler.Y:##.000} Z: {euler.Z:##.000} W: {euler.W:##.000}";
 
-            if (Input.IsKeyDown(Keys.B))
-            {
-                ScenesManager.CurrentScene.ForEachGameObject((obj) =>
-                {
-                    if (!obj.Name.Contains("PhysicsCube"))
-                        return;
-                    
-                    var rigidBody = obj.GetComponent<RigidBody>();
-                    var x = RandomUtilities.Range(-0.5f, 0.5f);
-                    var y = RandomUtilities.Range(1, 10);
-                    var z = RandomUtilities.Range(-0.5f, 0.5f);
-                    var x2 = RandomUtilities.Range(-0.5f, 0.5f);
-                    var y2 = RandomUtilities.Range(-1, 1);
-                    var z2 = RandomUtilities.Range(-0.5f, 0.5f);
-                    Debug.Log(x + " " + y + " " + z);
-                    rigidBody.ApplyImpulse(new Vector3(x,y,z), new Vector3(x2, y2, z2));
-                });
-            }
+            //Application.Window.Title = Transform.EulerAngles.ToString();
         }
     }
 }

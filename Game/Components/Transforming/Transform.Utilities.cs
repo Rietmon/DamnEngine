@@ -26,8 +26,8 @@ namespace DamnEngine
                 else
                 {
                     transform *= Matrix4.CreateTranslation(Position);
-                    transform *= Matrix4.CreateFromQuaternion(Rotation);
                     transform *= Matrix4.CreateScale(Scale);
+                    transform *= Matrix4.CreateFromQuaternion(Rotation);
                 }
 
                 return transform;
