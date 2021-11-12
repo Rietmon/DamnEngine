@@ -16,8 +16,8 @@ namespace DamnEngine
         public static void Initialize()
         {
             Window.VSync = VSyncMode.On;
-            //Input.GrabMouse = true;
-            //Cursor.Hide();
+            Input.GrabMouse = true;
+            Cursor.Hide();
             
             Physics.Initialize();
             
@@ -59,9 +59,9 @@ namespace DamnEngine
             var material = Material.CreateFromShadersFiles("Light");
             material.SetTexture(0, tex);
             obj.Transform.Position = pos;
-            //obj.AddComponent<BoxCollider>();
-            //obj.AddComponent<RigidBody>();
-            obj.AddComponent<TestRotation>();
+            obj.AddComponent<BoxCollider>();
+            obj.AddComponent<RigidBody>();
+            obj.AddComponent<TestPhysics>();
             meshRender.Material = material;
             meshRender.Mesh = mesh;
             

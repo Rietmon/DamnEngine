@@ -52,7 +52,7 @@ namespace DamnEngine
         protected internal override void OnPostUpdate()
         {
             Transform.Position = BodyReference.Pose.Position.ToVector3().FromToBepuPosition();
-            Transform.Rotation = BodyReference.Pose.Orientation.ToQuaternion().FromToBepuQuaternion();
+            Transform.Rotation = BodyReference.Pose.Orientation.ToQuaternion().FromToBepuQuaternion().QuaternionToEulerAngles();
         }
 
         private void CreateDynamicBody()

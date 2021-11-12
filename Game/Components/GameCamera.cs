@@ -21,9 +21,9 @@ namespace DamnEngine
                 Transform.Position -= Transform.Forward * Time.DeltaTime * 10;
             
             if (Input.IsKeyPress(Keys.D))
-                Transform.Position -= Transform.Right * Time.DeltaTime * 10;
-            else if (Input.IsKeyPress(Keys.A))
                 Transform.Position += Transform.Right * Time.DeltaTime * 10;
+            else if (Input.IsKeyPress(Keys.A))
+                Transform.Position -= Transform.Right * Time.DeltaTime * 10;
             
             if (Input.IsKeyPress(Keys.E))
                 Transform.Position += Transform.Up * Time.DeltaTime * 10;
@@ -35,11 +35,10 @@ namespace DamnEngine
             // var rotation = rotationX * rotationY;
             // Transform.Rotation *= rotation;
 
-            // var rotation = new Vector3(Input.MouseDeltaPosition.Y / 10, -Input.MouseDeltaPosition.X / 10, 0);
-            // Transform.EulerAngles += rotation;
+            var rotation = new Vector3(-Input.MouseDeltaPosition.Y / 10, -Input.MouseDeltaPosition.X / 10, 0);
+            Transform.Rotation += rotation;
             
-            var euler = Transform.Rotation;
-            Application.Window.Title = $"X: {euler.X:##.000} Y: {euler.Y:##.000} Z: {euler.Z:##.000} W: {euler.W:##.000}";
+            
 
             //Application.Window.Title = Transform.EulerAngles.ToString();
         }

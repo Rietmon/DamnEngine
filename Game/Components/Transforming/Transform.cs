@@ -30,7 +30,7 @@ namespace DamnEngine
                 Position = Parent.LocalPosition + value;
             }
         }
-        public Quaternion Rotation
+        public Vector3 Rotation
         {
             get
             {
@@ -53,44 +53,9 @@ namespace DamnEngine
                 GameObject.ForEachComponent((component) => component.OnTransformChanged());
             }
         }
-        
-        public Vector3 EulerAngles
-        {
-            get
-            {
-                var eulerAngles = localRotation.ToEulerAngles() * Mathf.Rad2Deg;
-                for (var i = 0; i < 3; i++)
-                {
-                    var angle = eulerAngles[i];
-                    if (angle < 0)
-                    {
-                        angle = 180 + (180 - Mathf.Abs(angle));
-                        eulerAngles[i] = angle;
-                    }
-                }
 
-                return eulerAngles;
-            }
-            set
-            {
-                for (var i = 0; i < 3; i++)
-                {
-                    var angle = value[i];
-                    if (angle > 180)
-                    {
-                        angle = -180 + (angle - 180);
-                        value[i] = angle;
-                    }
-                }
-                Rotation = Quaternion.FromEulerAngles(value * Mathf.Deg2Rad);
-                var euler = Rotation.ToEulerAngles() * Mathf.Rad2Deg;
-                Application.Window.Title = $"X: {euler.X:##.000} Y: {euler.Y:##.000} Z: {euler.Z:##.000}";
-                GameObject.ForEachComponent((component) => component.OnTransformChanged());
-            }
-        }
-        
         private Vector3 localPosition = Vector3.Zero;
-        private Quaternion localRotation = Quaternion.Identity;
+        private Vector3 localRotation = Vector3.Zero;
         private Vector3 localScale = Vector3.One;
     }
 }
