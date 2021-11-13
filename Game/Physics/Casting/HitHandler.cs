@@ -30,7 +30,6 @@ namespace DamnEngine
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void OnRayHit(in RayData ray, ref float maxDistance, float distance, in Vector3 normal, CollidableReference collidable, int childIndex)
         {
-            Application.Window.Title = collidable.ToString();
             maxDistance = distance;
             if (distance < castHit.Distance)
             {

@@ -27,11 +27,6 @@ namespace DamnEngine
             Simulation.Timestep(deltaTime);
         }
 
-        public static void RegisterCollider(CollidableReference reference, Collider collider) => collidersHandles.Add(reference, collider);
-        public static Collider FindCollider(CollidableReference reference) => collidersHandles[reference];
-        public static Collider TryFindCollider(CollidableReference reference) => collidersHandles.TryGetValue(reference, out var collider) ? collider : null;
-        public static void UnregisterCollider(CollidableReference reference) => collidersHandles.Remove(reference);
-
         public static RayCastHit RayCast(Vector3 position, Vector3 direction, float maxDistance = float.MaxValue)
         {
             position = position.FromToBepuPosition();
@@ -42,6 +37,11 @@ namespace DamnEngine
 
             return hitHandler.CastHit;
         }
+
+        public static void RegisterCollider(CollidableReference reference, Collider collider) => collidersHandles.Add(reference, collider);
+        public static Collider FindCollider(CollidableReference reference) => collidersHandles[reference];
+        public static Collider TryFindCollider(CollidableReference reference) => collidersHandles.TryGetValue(reference, out var collider) ? collider : null;
+        public static void UnregisterCollider(CollidableReference reference) => collidersHandles.Remove(reference);
 
         #region Mathematics Extensions
 

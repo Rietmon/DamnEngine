@@ -36,6 +36,16 @@ namespace DamnEngine
                 child.localPosition = child.Position - Position;
             }
         }
+
+        public void RecalculateChildesRotation()
+        {
+            // TODO: MAKE IT
+        }
+
+        public void RecalculateChildesScale()
+        {
+            // TODO: MAKE IT
+        }
         
         private void OnChangeParent(Transform oldParent, Transform newParent)
         {

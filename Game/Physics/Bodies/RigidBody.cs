@@ -18,6 +18,8 @@ namespace DamnEngine
         private Collider collider;
 
         private BodyHandle bodyHandle;
+
+        private bool isPhysicsUpdate;
         
         protected internal override void OnStart()
         {
@@ -47,12 +49,6 @@ namespace DamnEngine
         {
             AwakeBody();
             BodyReference.ApplyImpulse(force.FromToBepuPosition().ToNumericsVector3(), offset.FromToBepuPosition().ToNumericsVector3());
-        }
-
-        protected internal override void OnPostUpdate()
-        {
-            Transform.Position = BodyReference.Pose.Position.ToVector3().FromToBepuPosition();
-            Transform.Rotation = BodyReference.Pose.Orientation.ToQuaternion().FromToBepuQuaternion().QuaternionToEulerAngles();
         }
 
         private void CreateDynamicBody()
@@ -86,6 +82,30 @@ namespace DamnEngine
                 bodyHandle = default;
                 IsBodyCreated = false;
             }
+        }
+
+        protected internal override void OnPostUpdate()
+        {
+            if (!IsBodyCreated)
+                return;
+
+            isPhysicsUpdate = true;
+            
+            var position = BodyReference.Pose.Position.ToVector3().FromToBepuPosition();
+            var rotation = BodyReference.Pose.Orientation.ToQuaternion().FromToBepuQuaternion().QuaternionToEulerAngles();
+            
+            Transform.SetTransform(position, rotation, Transform.Scale);
+            
+            isPhysicsUpdate = false;
+        }
+
+        protected internal override void OnTransformChanged()
+        {
+            if (!IsBodyCreated || isPhysicsUpdate)
+                return;
+            
+            BodyReference.Pose.Position = Transform.Position.FromToBepuPosition().ToNumericsVector3();
+            BodyReference.Pose.Orientation = Quaternion.FromEulerAngles(Transform.Rotation / Mathf.Rad2Deg).FromToBepuQuaternion().ToNumericsQuaternion();
         }
 
         protected internal override void OnDisable()

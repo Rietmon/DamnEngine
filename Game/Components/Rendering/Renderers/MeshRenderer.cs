@@ -37,7 +37,9 @@ namespace DamnEngine
 
         public override void OnRendering()
         {
-            material.SetMatrix4("transform", Transform.TransformMatrix);
+            if (!new BoxBounding(Transform.Position, 1).IsOnFrustum(Camera.Main.Frustum, Transform))
+                return;
+            material.SetMatrix4("transform", Transform.ModelMatrix);
             material.SetMatrix4("view", Rendering.ViewMatrix);
             material.SetMatrix4("projection", Rendering.ProjectionMatrix);
             RenderTask.Draw();

@@ -1,11 +1,12 @@
-﻿using DamnEngine.Render;
+﻿using System;
+using DamnEngine.Render;
 using OpenTK.Mathematics;
 
 namespace DamnEngine
 {
     public class Camera : Component
     {
-        public static Camera Instance { get; private set; }
+        public static Camera Main { get; private set; }
 
         public float Fov
         {
@@ -44,6 +45,34 @@ namespace DamnEngine
             }
         }
 
+        public Frustum Frustum
+        {
+            get
+            {
+                var halfVerticalSide = Far * Mathf.Tan(Fov / 2);
+                var halfHorizontalSide = halfVerticalSide * AspectRatio;
+                var forwardMultiplyFar = Transform.Forward * Far;
+
+                return new Frustum
+                {
+                    NearFace = new Plane(Transform.Position + Transform.Forward * Near,
+                        Transform.Forward),
+                    FarFace = new Plane(Transform.Position + forwardMultiplyFar,
+                        Transform.Backward),
+
+                    RightFace = new Plane(Transform.Position,
+                        Vector3.Cross(Transform.Up, forwardMultiplyFar + Transform.Right * halfHorizontalSide)),
+                    LeftFace = new Plane(Transform.Position,
+                        Vector3.Cross(forwardMultiplyFar - Transform.Right * halfHorizontalSide, Transform.Up)),
+
+                    TopFace = new Plane(Transform.Position,
+                        Vector3.Cross(Transform.Right, forwardMultiplyFar - Transform.Up * halfVerticalSide)),
+                    BottomFace = new Plane(Transform.Position,
+                        Vector3.Cross(forwardMultiplyFar + Transform.Up * halfVerticalSide, Transform.Right))
+                };
+            }
+        }
+
         private float fov;
         private float aspectRatio;
         private float near;
@@ -51,7 +80,7 @@ namespace DamnEngine
 
         protected internal override void OnCreate()
         {
-            Instance = this;
+            Main = this;
             
             fov = 0.7853982f;
             var windowSize = Application.Window.Bounds.Max;
@@ -60,11 +89,9 @@ namespace DamnEngine
             far = 2000f;
             
             UpdateProjectionMatrix();
-
-            Rendering.OnPreRendering += OnPreRendering;
         }
-        
-        private void OnPreRendering()
+
+        protected internal override void OnTransformChanged()
         {
             UpdateViewMatrix();
         }
@@ -74,6 +101,5 @@ namespace DamnEngine
 
         private void UpdateViewMatrix() => Rendering.ViewMatrix =
             Matrix4.LookAt(Transform.Position, Transform.Position + Transform.Forward, Transform.Up);
-
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DamnEngine
 {
-    public partial class Transform : Component
+    public partial class Transform
     {
         public Vector3 Forward => TransformForward(Rotation);
         public Vector3 Backward => -Forward;
@@ -11,7 +11,7 @@ namespace DamnEngine
         public Vector3 Up => TransformUp(Rotation);
         public Vector3 Down => -Up;
 
-        public Matrix4 TransformMatrix
+        public Matrix4 ModelMatrix
         {
             get
             {
