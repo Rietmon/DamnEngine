@@ -30,17 +30,11 @@ namespace DamnEngine
             else if (Input.IsKeyPress(Keys.Q))
                 Transform.Position -= Transform.Up * Time.DeltaTime * 10;
             
-            // var rotationX = Quaternion.FromAxisAngle(Vector3.UnitX, Input.MouseDeltaPosition.Y / 10 * Time.DeltaTime);
-            // var rotationY = Quaternion.FromAxisAngle(Vector3.UnitY, -Input.MouseDeltaPosition.X / 10 * Time.DeltaTime);
-            // var rotation = rotationX * rotationY;
-            // Transform.Rotation *= rotation;
-
-            var rotation = new Vector3(-Input.MouseDeltaPosition.Y / 10, -Input.MouseDeltaPosition.X / 10, 0);
-            Transform.Rotation += rotation;
+            var targetRotation = new Vector3(-Input.MouseDeltaPosition.Y, -Input.MouseDeltaPosition.X, 0) / 10 + Transform.Rotation;
+            targetRotation.X = Mathf.Clamp(targetRotation.X, -90, 90);
+            Transform.Rotation = targetRotation;
             
-            
-
-            //Application.Window.Title = Transform.EulerAngles.ToString();
+            Physics.RayCast(Transform.Position, Transform.Forward, 10);
         }
     }
 }

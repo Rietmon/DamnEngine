@@ -61,7 +61,7 @@ namespace DamnEngine
             obj.Transform.Position = pos;
             obj.AddComponent<BoxCollider>();
             obj.AddComponent<RigidBody>();
-            obj.AddComponent<TestPhysics>();
+            //obj.AddComponent<TestRotation>();
             meshRender.Material = material;
             meshRender.Mesh = mesh;
             

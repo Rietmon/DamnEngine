@@ -114,6 +114,9 @@ namespace BepuPhysics.Collidables
             var handle = (Mobility == CollidableMobility.Static) ? StaticHandle.Value : BodyHandle.Value;
             return $"{Mobility}[{handle}]";
         }
+
+        public static implicit operator CollidableReference(StaticHandle staticHandle) => new(staticHandle);
+        public static implicit operator CollidableReference(BodyHandle bodyHandle) => new(CollidableMobility.Dynamic, bodyHandle);
     }
 
     public struct CollidableReferenceComparer : IEqualityComparerRef<CollidableReference>

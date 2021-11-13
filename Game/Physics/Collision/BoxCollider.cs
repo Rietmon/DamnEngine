@@ -61,6 +61,9 @@ namespace DamnEngine
             var staticDescription = new StaticDescription(bepuPosition, collidableDescription);
 
             staticHandle = Simulation.Statics.Add(staticDescription);
+
+            Physics.RegisterCollider(staticHandle, this);
+            
             IsStaticShapeCreated = true;
         }
 
@@ -74,6 +77,8 @@ namespace DamnEngine
             if (IsStaticShapeCreated)
             {
                 Simulation.Statics.Remove(staticHandle);
+                Physics.UnregisterCollider(staticHandle);
+                
                 staticHandle = default;
                 IsStaticShapeCreated = false;
             }

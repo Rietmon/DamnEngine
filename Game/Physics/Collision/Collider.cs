@@ -38,5 +38,10 @@ namespace DamnEngine
             registeredShapes.Add(shape, shapeIndex);
             return shapeIndex;
         }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
     }
 }

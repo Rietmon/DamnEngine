@@ -72,6 +72,8 @@ namespace DamnEngine
 
             bodyHandle = Simulation.Bodies.Add(bodyDescription);
             IsBodyCreated = true;
+
+            Physics.RegisterCollider(bodyHandle, collider);
         }
 
         private void RemoveDynamicBody()
@@ -79,6 +81,8 @@ namespace DamnEngine
             if (IsBodyCreated)
             {
                 Simulation.Bodies.Remove(bodyHandle);
+                Physics.UnregisterCollider(bodyHandle);
+                
                 bodyHandle = default;
                 IsBodyCreated = false;
             }

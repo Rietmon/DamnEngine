@@ -16,7 +16,7 @@ namespace DamnEngine
             set
             {
                 localPosition = value;
-                GameObject.ForEachComponent((component) => component.OnTransformChanged());
+                CallOnTransformChanged();
                 RecalculateChildesPosition();
             }
         }
@@ -36,12 +36,12 @@ namespace DamnEngine
             {
                 if (!Parent)
                     return localRotation;
-                return localRotation * Parent.Rotation;
+                return localRotation + Parent.Rotation;
             }
             set
             {
                 localRotation = value;
-                GameObject.ForEachComponent((component) => component.OnTransformChanged());
+                CallOnTransformChanged();
             }
         }
         public Vector3 Scale
@@ -50,7 +50,7 @@ namespace DamnEngine
             set
             {
                 localScale = value;
-                GameObject.ForEachComponent((component) => component.OnTransformChanged());
+                CallOnTransformChanged();
             }
         }
 

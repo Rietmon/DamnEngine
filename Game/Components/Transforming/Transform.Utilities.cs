@@ -16,23 +16,12 @@ namespace DamnEngine
             get
             {
                 var transform = Matrix4.Identity;
-            
-                if (!Parent)
-                {
-                    transform *= Matrix4.CreateRotationX(Rotation.X);
-                    transform *= Matrix4.CreateRotationY(Rotation.Y);
-                    transform *= Matrix4.CreateRotationZ(Rotation.Z);
-                    transform *= Matrix4.CreateTranslation(Position);
-                    transform *= Matrix4.CreateScale(Scale);
-                }
-                else
-                {
-                    transform *= Matrix4.CreateTranslation(Position);
-                    transform *= Matrix4.CreateScale(Scale);
-                    transform *= Matrix4.CreateRotationX(Rotation.X);
-                    transform *= Matrix4.CreateRotationY(Rotation.Y);
-                    transform *= Matrix4.CreateRotationZ(Rotation.Z);
-                }
+
+                transform *= Matrix4.CreateScale(Scale);
+                transform *= Matrix4.CreateRotationX(Rotation.X);
+                transform *= Matrix4.CreateRotationY(Rotation.Y);
+                transform *= Matrix4.CreateRotationZ(Rotation.Z);
+                transform *= Matrix4.CreateTranslation(Position);
 
                 return transform;
             }
@@ -48,7 +37,7 @@ namespace DamnEngine
         public static Vector3 TransformBackward(Vector3 rotation) => -TransformForward(rotation);
         public static Vector3 TransformRight(Vector3 rotation) => Vector3.Cross(TransformForward(rotation), Vector3.UnitY).Normalized();
         public static Vector3 TransformLeft(Vector3 rotation) => -TransformRight(rotation);
-        public static Vector3 TransformUp(Vector3 rotation) => Vector3.Cross(TransformRight(rotation), TransformForward(rotation)).Normalized();
+        public static Vector3 TransformUp(Vector3 rotation) => Vector3.Cross(TransformRight(rotation), TransformForward(rotation)).Normalized(); // TODO: Calculate here Z rotation!!!
         public static Vector3 TransformDown(Vector3 rotation) => -TransformUp(rotation);
 
         private void CallOnTransformChanged() =>
