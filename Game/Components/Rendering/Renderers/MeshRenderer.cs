@@ -1,4 +1,5 @@
 ﻿using DamnEngine.Render;
+using OpenTK.Mathematics;
 
 namespace DamnEngine
 {
@@ -37,8 +38,9 @@ namespace DamnEngine
 
         public override void OnRendering()
         {
-            if (!new BoxBounding(Transform.Position, 1).IsOnFrustum(Camera.Main.Frustum, Transform))
+            if (!Camera.Main.CubeInFrustum(Transform.Position, Transform.Scale))
                 return;
+            
             material.SetMatrix4("transform", Transform.ModelMatrix);
             material.SetMatrix4("view", Rendering.ViewMatrix);
             material.SetMatrix4("projection", Rendering.ProjectionMatrix);

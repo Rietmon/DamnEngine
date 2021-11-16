@@ -8,8 +8,6 @@ namespace DamnEngine
         public RenderWindow(string windowName, int width, int height)
             : base(new GameWindowSettings { UpdateFrequency = 60, RenderFrequency = 60, IsMultiThreaded = false},
                 new NativeWindowSettings { Size = new Vector2i(width, height), Title = windowName })
-        {
-            
-        }
+        { }
     }
 }

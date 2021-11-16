@@ -26,15 +26,25 @@ namespace DamnEngine
             var cameraObject = new GameObject("Camera");
             var camera = cameraObject.AddComponent<Camera>();
             camera.AddComponent<GameCamera>();
-
             var texture = Texture2D.CreateFromFile("dark.png");
-            var mesh = Mesh.CreateFromFile("Cube.obj").First();
+            var mesh = Mesh.CreateFromFile("Man.obj").First();
 
+
+            for (var x = 0; x < 10; x++)
+            {
+                for (var y = 0; y < 10; y++)
+                {
+                    Create(new Vector3(x * 2, 0, y * 2), texture, mesh);
+                }
+            }
+        }
+
+        public static void Create(Vector3 pos, Texture texture, Mesh mesh)
+        {
             var obj1 = new GameObject("Plane");
             var mr = obj1.AddComponent<MeshRenderer>();
             var material1 = Material.CreateFromShadersFiles("Light");
-            obj1.Transform.Position = new Vector3(0, -5, 0);
-            obj1.Transform.Scale = new Vector3(1, 1, 1);
+            obj1.Transform.Position = pos;
             obj1.AddComponent<BoxCollider>();
             material1.SetTexture(0, texture);
             mr.Material = material1;
