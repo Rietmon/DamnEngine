@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace DamnEngine
+﻿namespace DamnEngine
 {
     public class ShaderData : DamnObject
     {

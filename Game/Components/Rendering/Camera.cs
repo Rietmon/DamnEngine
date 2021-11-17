@@ -1,5 +1,4 @@
-﻿using System;
-using DamnEngine.Render;
+﻿using DamnEngine.Render;
 using OpenTK.Mathematics;
 
 namespace DamnEngine

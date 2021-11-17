@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using BepuPhysics.Constraints;
 using BepuPhysics.Collidables;
 using BepuUtilities.Collections;
 using BepuPhysics.CollisionDetection;

@@ -2,11 +2,7 @@
 using System;
 using System.Diagnostics;
 using BepuUtilities.Memory;
-using BepuUtilities.Collections;
-using System.Runtime.InteropServices;
-using System.Threading;
 using BepuUtilities;
-using BepuPhysics.Collidables;
 using BepuPhysics.CollisionDetection;
 
 namespace BepuPhysics

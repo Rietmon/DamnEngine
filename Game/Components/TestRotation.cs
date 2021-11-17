@@ -1,6 +1,4 @@
-﻿using DamnEngine.Render;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Rietmon.Extensions;
 

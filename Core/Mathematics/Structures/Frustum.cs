@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DamnEngine
+﻿namespace DamnEngine
 {
     public struct Frustum
     {

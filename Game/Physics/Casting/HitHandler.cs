@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using BepuPhysics;
 using BepuPhysics.Collidables;
 using BepuPhysics.Trees;
-using BepuUtilities.Memory;
 
 namespace DamnEngine
 {

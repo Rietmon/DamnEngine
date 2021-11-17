@@ -1,5 +1,4 @@
-﻿using System;
-using BepuPhysics;
+﻿using BepuPhysics;
 using BepuPhysics.Collidables;
 using OpenTK.Mathematics;
 
