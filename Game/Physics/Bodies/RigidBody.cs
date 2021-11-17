@@ -56,6 +56,9 @@ namespace DamnEngine
             if (IsBodyCreated)
                 return;
             
+            if (collider.IsStaticCreated)
+                collider.RemoveStaticShape();
+            
             collider.Shape.ComputeInertia(Mass, out var bodyInertia);
             var shape = collider.ShapeIndex;
             var bepuPosition = collider.ShapePosition.FromToBepuPosition().ToNumericsVector3();
@@ -82,6 +85,8 @@ namespace DamnEngine
                 bodyHandle = default;
                 IsBodyCreated = false;
             }
+            
+            collider.CreateStaticShape();
         }
 
         protected internal override void OnPostUpdate()

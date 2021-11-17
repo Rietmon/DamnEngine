@@ -11,7 +11,7 @@ namespace DamnEngine
         
         public Vector3 Size { get; set; } = Vector3.One;
         
-        public override bool IsStatic { get; protected set; }
+        public override bool IsStaticCreated { get; protected set; }
 
         public override Bounds Bounds => new(Center, Size * Transform.Scale);
 
@@ -48,10 +48,10 @@ namespace DamnEngine
 
         internal override void CreateStaticShape()
         {
-            if (IsStatic || IsStaticShapeCreated)
+            if (IsStaticCreated || IsStaticShapeCreated)
                 return;
             
-            IsStatic = true;
+            IsStaticCreated = true;
 
             var boxShape = ShapeIndex;
             var bepuPosition = ShapePosition.FromToBepuPosition().ToNumericsVector3();
@@ -69,10 +69,10 @@ namespace DamnEngine
 
         internal override void RemoveStaticShape()
         {
-            if (!IsStatic)
+            if (!IsStaticCreated)
                 return;
             
-            IsStatic = false;
+            IsStaticCreated = false;
             
             if (IsStaticShapeCreated)
             {

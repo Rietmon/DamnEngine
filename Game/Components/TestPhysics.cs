@@ -37,6 +37,12 @@ namespace DamnEngine
                 var rigidBody = GetComponent<RigidBody>();
                 rigidBody.ApplyImpulse(new Vector3(2, 5, 2), new Vector3(0, 0.5f, 0));
             }
+
+            if (Input.IsKeyDown(Keys.U))
+            {
+                var rigidBody = GetComponent<RigidBody>();
+                rigidBody.ApplyImpulse(new Vector3(0, 5, 0));
+            }
         }
     }
 }
