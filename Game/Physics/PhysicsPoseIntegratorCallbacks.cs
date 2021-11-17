@@ -5,11 +5,11 @@ namespace DamnEngine
 {
     public struct PhysicsPoseIntegratorCallbacks : IPoseIntegratorCallbacks
     {
-        public Vector3 Gravity { get; set; }
+        public static Vector3 Gravity { get; set; }
         
-        public float LinearDamping { get; set; }
+        public static float LinearDamping { get; set; }
         
-        public float AngularDamping { get; set; }
+        public static float AngularDamping { get; set; }
         
         public AngularIntegrationMode AngularIntegrationMode => AngularIntegrationMode.Nonconserving;
 
@@ -19,7 +19,7 @@ namespace DamnEngine
 
         public void Initialize(Simulation simulation)
         {
-            Gravity = new Vector3(0, 0, -10);
+            Gravity = new Vector3(0, 0, -18);
         }
 
         public void PrepareForIntegration(float deltaTime)

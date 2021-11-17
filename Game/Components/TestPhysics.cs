@@ -43,6 +43,13 @@ namespace DamnEngine
                 var rigidBody = GetComponent<RigidBody>();
                 rigidBody.ApplyImpulse(new Vector3(0, 5, 0));
             }
+            
+            if (Input.IsKeyDown(Keys.D1))
+                Physics.Gravity += Vector3.UnitY.FromToBepuPosition();
+            if (Input.IsKeyDown(Keys.D2))
+                Physics.Gravity -= Vector3.UnitY.FromToBepuPosition();
+
+            Application.Window.Title = Physics.Gravity.ToString();
         }
     }
 }

@@ -8,6 +8,24 @@ namespace DamnEngine
 {
     public static class Physics
     {
+        public static Vector3 Gravity
+        {
+            get => PhysicsPoseIntegratorCallbacks.Gravity;
+            set => PhysicsPoseIntegratorCallbacks.Gravity = value;
+        }
+
+        public static float AngularDamping
+        {
+            get => PhysicsPoseIntegratorCallbacks.AngularDamping;
+            set => PhysicsPoseIntegratorCallbacks.AngularDamping = value;
+        }
+
+        public static float LinearDamping
+        {
+            get => PhysicsPoseIntegratorCallbacks.LinearDamping;
+            set => PhysicsPoseIntegratorCallbacks.LinearDamping = value;
+        }
+        
         public static Simulation Simulation { get; private set; }
         
         private static readonly Dictionary<CollidableReference, Collider> collidersHandles = new();
@@ -18,8 +36,9 @@ namespace DamnEngine
         {
             bufferPool = new BufferPool();
 
-            Simulation = Simulation.Create(bufferPool, new PhysicsNarrowPhaseCallbacks(),
-                new PhysicsPoseIntegratorCallbacks(), new PositionFirstTimestepper());
+            var narrowPhase = new PhysicsNarrowPhaseCallbacks();
+            var poseIntegrator = new PhysicsPoseIntegratorCallbacks();
+            Simulation = Simulation.Create(bufferPool, narrowPhase, poseIntegrator, new PositionFirstTimestepper());
         }
 
         internal static void Update(float deltaTime)
