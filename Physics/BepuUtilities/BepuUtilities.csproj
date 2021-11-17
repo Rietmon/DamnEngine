@@ -28,7 +28,7 @@
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <Optimize>false</Optimize>
     <DefineConstants>TRACE;DEBUG;CHECKMATH;NETSTANDARD2_0</DefineConstants>
-    <OutputPath>../_Binaries/Debug/</OutputPath>
+    <OutputPath>../../_Binaries/Debug/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -36,7 +36,7 @@
     <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>embedded</DebugType>
-    <OutputPath>../_Binaries/Release/</OutputPath>
+    <OutputPath>../../_Binaries/Release/</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='ReleaseStrip'">
