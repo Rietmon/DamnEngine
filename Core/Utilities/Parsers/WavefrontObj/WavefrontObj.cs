@@ -50,13 +50,15 @@ namespace DamnEngine.Utilities
                 }
             }
 
-            return new Mesh(name)
+            var mesh = new Mesh(name)
             {
                 Vertices = meshVertices,
                 Uv = meshUv, 
                 Normals = meshNormals,
                 Indices = meshIndices
             };
+            mesh.UpdateBounds();
+            return mesh;
         }
 
         private void GetGreaterArray(out int greaterCount, out int greaterArrayIndex)

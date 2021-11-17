@@ -25,12 +25,28 @@ namespace DamnEngine
                 gameObjectAction.Invoke(gameObject);
             }
         }
+        public void ForEachActiveGameObject(Action<GameObject> gameObjectAction)
+        {
+            foreach (var gameObject in gameObjects)
+            {
+                if (gameObject.IsObjectActive)
+                    gameObjectAction.Invoke(gameObject);
+            }
+        }
 
         public void ForEachGameObjectComponent(Action<Component> componentAction)
         {
             ForEachGameObject((gameObject) =>
             {
                 gameObject.ForEachComponent(componentAction);
+            });
+        }
+
+        public void ForEachActiveGameObjectEnabledComponent(Action<Component> componentAction)
+        {
+            ForEachGameObject((gameObject) =>
+            {
+                gameObject.ForEachEnabledComponent(componentAction);
             });
         }
     }

@@ -24,8 +24,8 @@ namespace DamnEngine
             RenderTask = null;
             Rendering.OnRendering -= OnRendering;
         }
-        
-        public virtual void OnRendering() { }
+
+        protected virtual void OnRendering() { }
 
         protected override void OnDestroy()
         {

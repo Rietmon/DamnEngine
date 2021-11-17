@@ -27,7 +27,7 @@ namespace DamnEngine
             var camera = cameraObject.AddComponent<Camera>();
             camera.AddComponent<GameCamera>();
             var texture = Texture2D.CreateFromFile("dark.png");
-            var mesh = Mesh.CreateFromFile("Man.obj").First();
+            var mesh = Mesh.CreateFromFile("Cube.obj").First();
 
 
             for (var x = 0; x < 10; x++)
@@ -53,15 +53,15 @@ namespace DamnEngine
 
         public static void Update()
         {
-            ScenesManager.CurrentScene.ForEachGameObjectComponent((component) => component.OnPreUpdate());
+            ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnPreUpdate());
             
             OnNextFrameUpdate?.Invoke();
             OnNextFrameUpdate = null;
-            ScenesManager.CurrentScene.ForEachGameObjectComponent((component) => component.OnUpdate());
+            ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnUpdate());
             
             Physics.Update(Time.DeltaTime);
             
-            ScenesManager.CurrentScene.ForEachGameObjectComponent((component) => component.OnPostUpdate());
+            ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnPostUpdate());
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DamnEngine
         
         public Vector3 Size { get; set; } = Vector3.One;
         
-        public bool IsStatic { get; internal set; }
+        public override bool IsStatic { get; protected set; }
 
         public override Bounds Bounds => new(Center, Size * Transform.Scale);
 

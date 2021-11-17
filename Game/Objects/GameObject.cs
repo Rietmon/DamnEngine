@@ -20,7 +20,7 @@ namespace DamnEngine
                     ForEachComponent((component) => component.OnDisable());
             }
         }
-        public Transform Transform { get; }
+        public Transform Transform { get; set; }
         
         private readonly List<Component> components = new();
 
@@ -81,13 +81,16 @@ namespace DamnEngine
 
         public void RemoveComponent<T>(T component) where T : Component
         {
+            if (component == Transform)
+                Transform = null;
+            
             component.GameObject = null;
             component.Destroy();
 
             components.Remove(component);
         }
 
-        internal void ForEachComponent(Action<Component> componentAction)
+        public void ForEachComponent(Action<Component> componentAction)
         {
             foreach (var component in components)
             {
@@ -95,11 +98,29 @@ namespace DamnEngine
             }
         }
 
-        internal void ForEachComponent<T>(Action<T> componentAction)
+        public void ForEachEnabledComponent(Action<Component> componentAction)
+        {
+            foreach (var component in components)
+            {
+                if (component.IsComponentEnabled)
+                    componentAction.Invoke(component);
+            }
+        }
+
+        public void ForEachComponent<T>(Action<T> componentAction)
         {
             foreach (var component in components)
             {
                 if (component is T result)
+                    componentAction.Invoke(result);
+            }
+        }
+
+        public void ForEachEnabledComponent<T>(Action<T> componentAction)
+        {
+            foreach (var component in components)
+            {
+                if (component.IsComponentEnabled && component is T result)
                     componentAction.Invoke(result);
             }
         }

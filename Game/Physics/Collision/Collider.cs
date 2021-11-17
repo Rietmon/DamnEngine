@@ -11,7 +11,7 @@ namespace DamnEngine
 
         protected static Simulation Simulation => Physics.Simulation;
         
-        public bool IsStatic { get; protected set; }
+        public abstract bool IsStatic { get; protected set; }
         
         public abstract Bounds Bounds { get; }
         

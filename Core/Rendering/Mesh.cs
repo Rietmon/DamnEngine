@@ -10,6 +10,8 @@ namespace DamnEngine
         public Vector3[] Normals { get; set; }
         public int[] Indices { get; set; }
 
+        public Bounds CenteredBounds { get; private set; }
+
         public float[] RenderTaskData
         {
             get
@@ -44,6 +46,24 @@ namespace DamnEngine
         {
             OriginalMeshName = name;
             Name = name;
+        }
+
+        public void UpdateBounds()
+        {
+            var max = new Vector3();
+
+            for (var i = 0; i < Vertices.Length; i++)
+            {
+                var vertex = Vertices[i].Abs();
+                if (max.X < vertex.X)
+                    max.X = vertex.X;
+                if (max.Y < vertex.Y)
+                    max.Y = vertex.Y;
+                if (max.Z < vertex.Z)
+                    max.Z = vertex.Z;
+            }
+
+            CenteredBounds = new Bounds(Vector3.Zero, max);
         }
 
         protected override void OnDestroy()

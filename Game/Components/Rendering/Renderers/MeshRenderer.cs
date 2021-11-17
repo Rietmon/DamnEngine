@@ -25,6 +25,9 @@ namespace DamnEngine
             }
         }
 
+        public bool IsInFrustum => Camera.Main.CubeInFrustum(Transform.Position + mesh.CenteredBounds.Center,
+            mesh.CenteredBounds.Size * Transform.Scale);
+
         private Mesh mesh;
         private Material material;
 
@@ -36,9 +39,9 @@ namespace DamnEngine
                 DeleteRenderTask();
         }
 
-        public override void OnRendering()
+        protected override void OnRendering()
         {
-            if (!Camera.Main.CubeInFrustum(Transform.Position, Transform.Scale))
+            if (!IsInFrustum)
                 return;
             
             material.SetMatrix4("transform", Transform.ModelMatrix);
