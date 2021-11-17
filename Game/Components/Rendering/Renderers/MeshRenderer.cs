@@ -47,6 +47,11 @@ namespace DamnEngine
             material.SetMatrix4("transform", Transform.ModelMatrix);
             material.SetMatrix4("view", Rendering.ViewMatrix);
             material.SetMatrix4("projection", Rendering.ProjectionMatrix);
+            
+            material.SetVector3("objectColor", Vector3.One);
+            material.SetVector3("lightColor", Vector3.One);
+            material.SetVector3("lightPos", new Vector3(0, 3, 0));
+            material.SetVector3("viewPos", Camera.Main.Transform.Position);
             RenderTask.Draw();
         }
     }
