@@ -10,9 +10,10 @@ namespace DamnEngine
         {
             if (RenderTask)
                 RenderTask.Destroy();
+            else
+                Rendering.OnRendering += OnRendering;
 
             RenderTask = RenderTask.Create(renderTaskData, indices, material, ownerId);
-            Rendering.OnRendering += OnRendering;
         }
 
         protected void DeleteRenderTask()

@@ -1,5 +1,6 @@
 ﻿using DamnEngine.Render;
 using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace DamnEngine
 {
@@ -10,7 +11,11 @@ namespace DamnEngine
             get => mesh;
             set
             {
+                if (mesh)
+                    mesh.OnMeshChanged -= OnMeshChanged;
+                
                 mesh = value;
+                mesh.OnMeshChanged += OnMeshChanged;
                 CreateRenderTask();
             }
         }
@@ -50,9 +55,25 @@ namespace DamnEngine
             
             material.SetVector3("objectColor", Vector3.One);
             material.SetVector3("lightColor", Vector3.One);
-            material.SetVector3("lightPos", new Vector3(0, 3, 0));
+            material.SetVector3("lightPos", new Vector3(0, 1, 0));
             material.SetVector3("viewPos", Camera.Main.Transform.Position);
             RenderTask.Draw();
+        }
+
+        private void OnMeshChanged()
+        {
+            if (Mesh.IsValid)
+                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.Id);
+        }
+
+        protected internal override void OnUpdate()
+        {
+            if (Input.IsKeyPress(Keys.D3))
+            {
+                var vertices = Mesh.Vertices;
+                vertices[0] += new Vector3(0, 0.01f, 0);
+                Mesh.Vertices = vertices;
+            }
         }
     }
 }

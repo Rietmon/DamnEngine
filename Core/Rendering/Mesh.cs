@@ -1,14 +1,67 @@
-﻿using OpenTK.Mathematics;
+﻿using System;
+using OpenTK.Mathematics;
 
 namespace DamnEngine
 {
     public class Mesh : DamnObject
     {
+        public Action OnMeshChanged { get; set; }
         public string OriginalMeshName { get; }
-        public Vector3[] Vertices { get; set; }
-        public Vector2[] Uv { get; set; }
-        public Vector3[] Normals { get; set; }
-        public int[] Indices { get; set; }
+
+        public bool IsValid => Vertices != null && Uv != null && Normals != null && Indices != null;
+
+        public Vector3[] Vertices
+        {
+            get => vertices;
+            set
+            {
+                if (!VerifyMeshChanges(value, Uv, Normals, Indices, IsValid))
+                    return;
+                
+                vertices = value;
+                renderTaskDataIsDirty = true;
+                OnMeshChanged?.Invoke();
+            }
+        }
+        public Vector2[] Uv
+        {
+            get => uv;
+            set
+            {
+                if (!VerifyMeshChanges(Vertices, value, Normals, Indices, IsValid))
+                    return;
+                
+                uv = value;
+                renderTaskDataIsDirty = true;
+                OnMeshChanged?.Invoke();
+            }
+        }
+        public Vector3[] Normals
+        {
+            get => normals;
+            set
+            {
+                if (!VerifyMeshChanges(Vertices, Uv, value, Indices, IsValid))
+                    return;
+                
+                normals = value;
+                renderTaskDataIsDirty = true;
+                OnMeshChanged?.Invoke();
+            }
+        }
+        public int[] Indices
+        {
+            get => indices;
+            set
+            {
+                if (!VerifyMeshChanges(Vertices, Uv, Normals, value, IsValid))
+                    return;
+                
+                indices = value;
+                renderTaskDataIsDirty = true;
+                OnMeshChanged?.Invoke();
+            }
+        }
 
         public Bounds CenteredBounds { get; private set; }
 
@@ -16,7 +69,7 @@ namespace DamnEngine
         {
             get
             {
-                if (renderTaskData != null)
+                if (renderTaskData != null && !renderTaskDataIsDirty)
                     return renderTaskData;
                 
                 renderTaskData = new float[Vertices.Length * 8];
@@ -36,11 +89,19 @@ namespace DamnEngine
                     renderTaskData[i + 7] = normal.Z;
                 }
 
+                renderTaskDataIsDirty = false;
                 return renderTaskData;
             }
         }
+
+        private Vector3[] vertices;
+        private Vector2[] uv;
+        private Vector3[] normals;
+        private int[] indices;
         
         private float[] renderTaskData;
+
+        private bool renderTaskDataIsDirty;
 
         public Mesh(string name)
         {
@@ -66,6 +127,33 @@ namespace DamnEngine
             CenteredBounds = new Bounds(Vector3.Zero, max);
         }
 
+        public void UpdateNormals()
+        {
+            static Vector3 GetFaceNormal(Vector3 p1, Vector3 p2, Vector3 p3) 
+            {
+                var a = p3 - p2;
+                var b = p1 - p2;
+                return Vector3.Normalize(Vector3.Cross(a, b));
+            }
+
+            var normals = new Vector3[Vertices.Length];
+            for (var i = 0; i < Indices.Length; i += 3)
+            {
+                var p1 = Vertices[Indices[i + 0]];
+                var p2 = Vertices[Indices[i + 1]];
+                var p3 = Vertices[Indices[i + 2]];
+                var normal = GetFaceNormal(p1, p2, p3);
+                normals[Indices[i + 0]] += normal;
+                normals[Indices[i + 1]] += normal;
+                normals[Indices[i + 2]] += normal;
+            }
+
+            for (var i = 0; i < normals.Length; i++)
+                normals[i] = normals[i].Normalized();
+
+            Normals = normals;
+        }
+        
         protected override void OnDestroy()
         {
             ResourcesLoader.FreeMesh(OriginalMeshName);
@@ -74,6 +162,26 @@ namespace DamnEngine
         public static Mesh[] CreateFromFile(string meshName)
         {
             return ResourcesLoader.UseMeshes(meshName);
+        }
+
+        private static bool VerifyMeshChanges(Vector3[] vertices, Vector2[] uv, Vector3[] normals, int[] indices, bool isValid)
+        {
+            if (!isValid)
+                return true;
+            
+            if (vertices.Length != uv.Length || uv.Length != normals.Length)
+            {
+                Debug.LogError($"[{nameof(Mesh)}] ({nameof(VerifyMeshChanges)}) Vertices, Uv and Normals need to have same array lengths!");
+                return false;
+            }
+
+            if (indices.Length % 3 != 0)
+            {
+                Debug.LogError($"[{nameof(Mesh)}] ({nameof(VerifyMeshChanges)}) Mesh must to be triangulated!");
+                return false;
+            }
+
+            return true;
         }
     }
 }

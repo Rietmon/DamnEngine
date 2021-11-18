@@ -12,14 +12,16 @@ namespace DamnEngine.Render
         private readonly int elementBufferPointer;
         private readonly Material material;
         private readonly int indicesCount;
+        private readonly uint ownerId;
         
-        private RenderTask(int vertexArrayPointer, int vertexBufferPointer, int elementBufferPointer, Material material, int indicesCount)
+        private RenderTask(int vertexArrayPointer, int vertexBufferPointer, int elementBufferPointer, Material material, int indicesCount, uint ownerId)
         {
             this.vertexArrayPointer = vertexArrayPointer;
             this.vertexBufferPointer = vertexBufferPointer;
             this.elementBufferPointer = elementBufferPointer;
             this.material = material;
             this.indicesCount = indicesCount;
+            this.ownerId = ownerId;
         }
 
         public void Draw()
@@ -34,13 +36,14 @@ namespace DamnEngine.Render
         }
 
         public RenderTask Copy(Material overrideMaterial = null) => new(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, overrideMaterial ?? material,
-            indicesCount);
+            indicesCount, ownerId);
 
         protected override void OnDestroy()
         {
             GL.DeleteBuffer(vertexBufferPointer);
             GL.DeleteBuffer(elementBufferPointer);
             GL.DeleteVertexArray(vertexArrayPointer);
+            cachedRenderTasks.Remove(ownerId);
         }
 
         public static RenderTask Create(float[] renderTaskData, int[] indices, Material material, uint ownerId)
@@ -80,7 +83,7 @@ namespace DamnEngine.Render
             GL.VertexAttribPointer(normalLocation, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 5 * sizeof(float));
 
             renderTask = new RenderTask(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, material,
-                indices.Length);
+                indices.Length, ownerId);
             cachedRenderTasks.Add(ownerId, renderTask);
 
             return renderTask;

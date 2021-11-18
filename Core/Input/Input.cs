@@ -61,11 +61,15 @@ namespace DamnEngine
             var mousePoint = Cursor.Position;
             MousePreviousPosition = mousePosition;
             mousePosition = new Vector2(mousePoint.X, mousePoint.Y);
-            if (GrabMouse)
+            if (GrabMouse && renderWindow.IsFocused)
             {
                 var windowCenter = renderWindow.Bounds.Center;
                 MouseDeltaPosition = MousePosition - windowCenter;
                 Cursor.Position = new Point((int)windowCenter.X, (int)windowCenter.Y);
+            }
+            else
+            {
+                MouseDeltaPosition = mousePosition - MousePreviousPosition;
             }
         }
 
