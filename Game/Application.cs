@@ -51,9 +51,8 @@ namespace DamnEngine
             material1.SetTexture(0, texture);
             mr.Material = material1;
             mr.Mesh = mesh;
-
-            var scene = new SerializationDamnObject(obj1);
-            File.WriteAllText(Paths.AppDataPath, scene.Serialize());
+            
+            File.WriteAllText(Paths.AppDataPath + "test.dat", obj1.SerializationObject.Serialize());
         }
 
         public static void Update()

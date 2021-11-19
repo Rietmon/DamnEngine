@@ -8,18 +8,20 @@ namespace DamnEngine.Serialization
     {
         public string Type { get; set; }
         
-        public string Value { get; set; }
+        public object Value { get; set; }
 
         public SerializableValue(object value)
         {
             Type = value.GetType().FullName;
-            Value = value.Encode();
+            Value = value;
         }
 
-        public object GetValue()
+        public SerializableValue(string type, string value)
         {
-            var type = System.Type.GetType(Type);
-            return Value.Decode(type);
+            Type = type;
+            var systemType = System.Type.GetType(type);
+            if (systemType != null)
+                Value = value.Decode(systemType);
         }
     }
 }

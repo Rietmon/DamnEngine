@@ -1,7 +1,11 @@
-﻿namespace DamnEngine
+﻿using DamnEngine.Serialization;
+
+namespace DamnEngine
 {
-    public abstract class Component : DamnObject
+    public abstract class Component : DamnObject, ISerializable
     {
+        public ISerializationObject SerializationObject => new SerializationComponent(this);
+        
         public bool IsObjectActive
         {
             get => GameObject.IsObjectActive;

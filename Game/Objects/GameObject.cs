@@ -7,6 +7,8 @@ namespace DamnEngine
     [Serializable]
     public class GameObject : DamnObject, ISerializable
     {
+        public ISerializationObject SerializationObject => new SerializationGameObject(this);
+        
         public bool IsObjectActive
         {
             get => isObjectActive;
@@ -24,7 +26,7 @@ namespace DamnEngine
         }
         public Transform Transform { get; set; }
         
-        [SerializeField] private List<Component> components = new();
+        internal readonly List<Component> components = new();
 
         private bool isObjectActive = true;
 

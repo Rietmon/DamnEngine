@@ -1,4 +1,5 @@
-﻿using OpenTK.Mathematics;
+﻿using DamnEngine.Serialization;
+using OpenTK.Mathematics;
 
 namespace DamnEngine
 {
@@ -74,9 +75,9 @@ namespace DamnEngine
             }
         }
 
-        private Vector3 localPosition = Vector3.Zero;
-        private Vector3 localRotation = Vector3.Zero;
-        private Vector3 localScale = Vector3.One;
+        [SerializeField] private Vector3 localPosition = Vector3.Zero;
+        [SerializeField] private Vector3 localRotation = Vector3.Zero;
+        [SerializeField] private Vector3 localScale = Vector3.One;
 
         internal void SetPositionWithoutNotify(Vector3 position)
         {
