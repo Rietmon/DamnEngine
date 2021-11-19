@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using DamnEngine.Serialization;
 
 namespace DamnEngine
 {
-    public class Scene
+    [Serializable]
+    public class Scene : DamnObject
     {
-        public string Name { get; }
-        
-        internal readonly List<GameObject> gameObjects = new();
+        [SerializeField] internal List<GameObject> gameObjects = new();
 
         public Scene(string name)
         {

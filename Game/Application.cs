@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using DamnEngine.Render;
+using DamnEngine.Serialization;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 
@@ -49,6 +51,9 @@ namespace DamnEngine
             material1.SetTexture(0, texture);
             mr.Material = material1;
             mr.Mesh = mesh;
+
+            var scene = new SerializationDamnObject(obj1);
+            File.WriteAllText(Paths.AppDataPath, scene.Serialize());
         }
 
         public static void Update()

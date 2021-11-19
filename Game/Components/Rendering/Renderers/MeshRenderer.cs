@@ -39,7 +39,7 @@ namespace DamnEngine
         private void CreateRenderTask()
         {
             if (Mesh && Material)
-                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.Id);
+                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.RuntimeId);
             else
                 DeleteRenderTask();
         }
@@ -62,7 +62,7 @@ namespace DamnEngine
         private void OnMeshChanged()
         {
             if (Mesh.IsValid)
-                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.Id);
+                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.RuntimeId);
         }
 
         protected internal override void OnUpdate()

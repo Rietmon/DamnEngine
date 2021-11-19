@@ -1,16 +1,20 @@
-﻿namespace DamnEngine
+﻿using DamnEngine.Serialization;
+
+namespace DamnEngine
 {
-    public abstract class DamnObject : LowLevelDamnObject
+    public abstract class DamnObject : LowLevelDamnObject, ISerializable
     {
-        private static uint lastId;
+        private static uint lastRuntimeId;
+
+        ISerializationObject ISerializable.SerializationObject => new SerializationDamnObject(this);
         
         public string Name { get; set; }
         
-        public uint Id { get; }
+        public uint RuntimeId { get; }
 
         protected DamnObject()
         {
-            Id = lastId++;
+            RuntimeId = lastRuntimeId++;
         }
     }
 }

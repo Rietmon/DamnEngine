@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using DamnEngine.Serialization;
 
 namespace DamnEngine
 {
-    public class GameObject : DamnObject
+    [Serializable]
+    public class GameObject : DamnObject, ISerializable
     {
         public bool IsObjectActive
         {
@@ -22,7 +24,7 @@ namespace DamnEngine
         }
         public Transform Transform { get; set; }
         
-        private readonly List<Component> components = new();
+        [SerializeField] private List<Component> components = new();
 
         private bool isObjectActive = true;
 
