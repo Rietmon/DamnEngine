@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenTK.Mathematics;
+using Rietmon.Extensions;
 
 namespace DamnEngine.Utilities
 {
@@ -21,73 +23,29 @@ namespace DamnEngine.Utilities
     {
         public string materialName;
         public string name;
-        public List<Vector3> vertices = new();
-        public List<Vector2> uv = new();
-        public List<Vector3> normals = new();
-        public List<WavefrontObjFace> faces = new();
+        public readonly List<Vector3> vertices = new();
+        public readonly List<Vector2> uv = new();
+        public readonly List<Vector3> normals = new();
+        public readonly List<WavefrontObjFace> faces = new();
 
         public Mesh ToMesh()
         {
             var newVertices = new List<Vector3>(vertices);
             var originalVertices = new List<int>();
-            
             var newUv = new List<Vector2>(uv);
             var originalUv = new List<int>();
-            
             var newNormals = new List<Vector3>(normals);
             var originalNormals = new List<int>();
             for (var i = 0; i < faces.Count; i++)
             {
                 var faceVertices = faces[i].faceVertices;
-                for (var j = 0; j < faceVertices.Length; j++)
-                {
-                    var vertexIndex = faceVertices[j].vertexIndex;
-                    if (originalVertices.Contains(vertexIndex))
-                    {
-                        newVertices.Add(vertices[vertexIndex]);
-                        faceVertices[j].vertexIndex = newVertices.Count - 1;
-                    }
-                    else
-                    {
-                        originalVertices.Add(vertexIndex);
-                    }
-                    
-                    var uvIndex = faceVertices[j].uvIndex;
-                    if (originalUv.Contains(uvIndex))
-                    {
-                        newUv.Add(uv[uvIndex]);
-                        faceVertices[j].uvIndex = newUv.Count - 1;
-                    }
-                    else
-                    {
-                        originalUv.Add(uvIndex);
-                    }
-                    
-                    var normalIndex = faceVertices[j].normalIndex;
-                    if (originalNormals.Contains(normalIndex))
-                    {
-                        newNormals.Add(normals[normalIndex]);
-                        faceVertices[j].normalIndex = newNormals.Count - 1;
-                    }
-                    else
-                    {
-                        originalNormals.Add(normalIndex);
-                    }
-                }
+                FixFaceData(0, faceVertices, newVertices, originalVertices);
+                FixFaceData(1, faceVertices, newUv, originalUv);
+                FixFaceData(2, faceVertices, newNormals, originalNormals);
             }
 
-            var subWavefrontObj = new WavefrontObjMesh()
-            {
-                name = name,
-                materialName = materialName,
-                vertices = newVertices,
-                uv = newUv,
-                normals = newNormals,
-                faces = faces
-            };
-            
-            subWavefrontObj.GetGreaterArray(out var greaterCount, out var greaterArrayIndex);
-            
+            ListExtensions.GetGreaterList(out var greaterCount, out var greaterArrayIndex, newVertices, newUv, newNormals);
+
             var meshVertices = new Vector3[greaterCount];
             var meshUv = new Vector2[greaterCount];
             var meshNormals = new Vector3[greaterCount];
@@ -99,7 +57,7 @@ namespace DamnEngine.Utilities
                 for (var j = 0; j < 3; j++)
                 {
                     var faceVertex = face.faceVertices[j];
-                    var index = faceVertex.GetIndexByArray(greaterArrayIndex);
+                    var index = faceVertex[greaterArrayIndex];
                     meshVertices[index] = newVertices[faceVertex.vertexIndex];
                     meshUv[index] = newUv[faceVertex.uvIndex];
                     meshNormals[index] = newNormals[faceVertex.normalIndex];
@@ -119,20 +77,20 @@ namespace DamnEngine.Utilities
             return mesh;
         }
 
-        private void GetGreaterArray(out int greaterCount, out int greaterArrayIndex)
+        private static void FixFaceData<T>(int type, WavefrontObjFaceVertex[] faceVertices, List<T> newList, List<int> originalList)
         {
-            greaterCount = vertices.Count;
-            greaterArrayIndex = 0;
-            if (greaterCount < uv.Count)
+            for (var j = 0; j < faceVertices.Length; j++)
             {
-                greaterCount = uv.Count;
-                greaterArrayIndex = 1;
-            }
-
-            if (greaterCount < normals.Count)
-            {
-                greaterCount = normals.Count;
-                greaterArrayIndex = 2;
+                var index = faceVertices[j][type];
+                if (originalList.Contains(index))
+                {
+                    newList.Add(newList[index]);
+                    faceVertices[j][type] = newList.Count - 1;
+                }
+                else
+                {
+                    originalList.Add(index);
+                }
             }
         }
     }
@@ -160,15 +118,30 @@ namespace DamnEngine.Utilities
             this.normalIndex = normalIndex - 1;
         }
 
-        public int GetIndexByArray(int arrayIndex)
+        public int this[int index]
         {
-            return arrayIndex switch
+            get
             {
-                0 => vertexIndex,
-                1 => uvIndex,
-                2 => normalIndex,
-                _ => -1
-            };
+                return index switch
+                {
+                    0 => vertexIndex,
+                    1 => uvIndex,
+                    2 => normalIndex,
+                    _ => -1
+                };
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0: vertexIndex = value;
+                        return;
+                    case 1: uvIndex = value;
+                        return;
+                    case 2: normalIndex = value;
+                        return;
+                }
+            }
         }
     }
 }

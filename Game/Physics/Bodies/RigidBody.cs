@@ -108,6 +108,7 @@ namespace DamnEngine
             if (!IsBodyCreated || isPhysicsUpdate)
                 return;
             
+            AwakeBody();
             BodyReference.Pose.Position = Transform.Position.FromToBepuPosition().ToNumericsVector3();
             BodyReference.Pose.Orientation = Quaternion.FromEulerAngles(Transform.Rotation / Mathf.Rad2Deg).FromToBepuQuaternion().ToNumericsQuaternion();
         }

@@ -55,8 +55,7 @@ namespace DamnEngine
             
             material.SetVector3("objectColor", Vector3.One);
             material.SetVector3("lightColor", Vector3.One);
-            material.SetVector3("lightPos", new Vector3(0, 1, 0));
-            material.SetVector3("viewPos", Camera.Main.Transform.Position);
+            material.SetVector3("lightPos", new Vector3(0, 2, 0));
             RenderTask.Draw();
         }
 
