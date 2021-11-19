@@ -21,14 +21,72 @@ namespace DamnEngine.Utilities
     {
         public string materialName;
         public string name;
-        public readonly List<Vector3> vertices = new();
-        public readonly List<Vector2> uv = new();
-        public readonly List<Vector3> normals = new();
-        public readonly List<WavefrontObjFace> faces = new();
+        public List<Vector3> vertices = new();
+        public List<Vector2> uv = new();
+        public List<Vector3> normals = new();
+        public List<WavefrontObjFace> faces = new();
 
         public Mesh ToMesh()
         {
-            GetGreaterArray(out var greaterCount, out var greaterArrayIndex);
+            var newVertices = new List<Vector3>(vertices);
+            var originalVertices = new List<int>();
+            
+            var newUv = new List<Vector2>(uv);
+            var originalUv = new List<int>();
+            
+            var newNormals = new List<Vector3>(normals);
+            var originalNormals = new List<int>();
+            for (var i = 0; i < faces.Count; i++)
+            {
+                var faceVertices = faces[i].faceVertices;
+                for (var j = 0; j < faceVertices.Length; j++)
+                {
+                    var vertexIndex = faceVertices[j].vertexIndex;
+                    if (originalVertices.Contains(vertexIndex))
+                    {
+                        newVertices.Add(vertices[vertexIndex]);
+                        faceVertices[j].vertexIndex = newVertices.Count - 1;
+                    }
+                    else
+                    {
+                        originalVertices.Add(vertexIndex);
+                    }
+                    
+                    var uvIndex = faceVertices[j].uvIndex;
+                    if (originalUv.Contains(uvIndex))
+                    {
+                        newUv.Add(uv[uvIndex]);
+                        faceVertices[j].uvIndex = newUv.Count - 1;
+                    }
+                    else
+                    {
+                        originalUv.Add(uvIndex);
+                    }
+                    
+                    var normalIndex = faceVertices[j].normalIndex;
+                    if (originalNormals.Contains(normalIndex))
+                    {
+                        newNormals.Add(normals[normalIndex]);
+                        faceVertices[j].normalIndex = newNormals.Count - 1;
+                    }
+                    else
+                    {
+                        originalNormals.Add(normalIndex);
+                    }
+                }
+            }
+
+            var subWavefrontObj = new WavefrontObjMesh()
+            {
+                name = name,
+                materialName = materialName,
+                vertices = newVertices,
+                uv = newUv,
+                normals = newNormals,
+                faces = faces
+            };
+            
+            subWavefrontObj.GetGreaterArray(out var greaterCount, out var greaterArrayIndex);
             
             var meshVertices = new Vector3[greaterCount];
             var meshUv = new Vector2[greaterCount];
@@ -42,14 +100,13 @@ namespace DamnEngine.Utilities
                 {
                     var faceVertex = face.faceVertices[j];
                     var index = faceVertex.GetIndexByArray(greaterArrayIndex);
-
-                    meshVertices[index] = vertices[faceVertex.vertexIndex];
-                    meshUv[index] = uv[faceVertex.uvIndex];
-                    meshNormals[index] = normals[faceVertex.normalIndex];
+                    meshVertices[index] = newVertices[faceVertex.vertexIndex];
+                    meshUv[index] = newUv[faceVertex.uvIndex];
+                    meshNormals[index] = newNormals[faceVertex.normalIndex];
                     meshIndices[i * 3 + j] = index;
                 }
             }
-
+            
             var mesh = new Mesh(name)
             {
                 Vertices = meshVertices,
@@ -58,6 +115,7 @@ namespace DamnEngine.Utilities
                 Indices = meshIndices
             };
             mesh.UpdateBounds();
+            mesh.UpdateNormals();
             return mesh;
         }
 
@@ -91,9 +149,9 @@ namespace DamnEngine.Utilities
 
     public class WavefrontObjFaceVertex
     {
-        public readonly int vertexIndex;
-        public readonly int uvIndex;
-        public readonly int normalIndex;
+        public int vertexIndex;
+        public int uvIndex;
+        public int normalIndex;
 
         public WavefrontObjFaceVertex(int vertexIndex, int uvIndex, int normalIndex)
         {
