@@ -52,10 +52,6 @@ namespace DamnEngine
             material.SetMatrix4("transform", Transform.ModelMatrix);
             material.SetMatrix4("view", Rendering.ViewMatrix);
             material.SetMatrix4("projection", Rendering.ProjectionMatrix);
-            
-            material.SetVector3("objectColor", Vector3.One);
-            material.SetVector3("lightColor", Vector3.One);
-            material.SetVector3("lightPos", new Vector3(0, 2, 0));
             RenderTask.Draw();
         }
 
@@ -67,7 +63,7 @@ namespace DamnEngine
 
         protected internal override void OnUpdate()
         {
-            if (Input.IsKeyPress(Keys.D3))
+            if (Input.IsKeyPress(KeyCode.D3))
             {
                 var vertices = Mesh.Vertices;
                 vertices[0] += new Vector3(0, 0.01f, 0);

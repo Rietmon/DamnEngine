@@ -8,7 +8,7 @@ namespace DamnEngine
     {
         protected internal override void OnUpdate()
         {
-            if (Input.IsKeyDown(Keys.B))
+            if (Input.IsKeyDown(KeyCode.B))
             {
                 var rigidBody = GetComponent<RigidBody>();
                 var x = RandomUtilities.Range(-0.5f, 0.5f);
@@ -20,33 +20,33 @@ namespace DamnEngine
                 rigidBody.ApplyImpulse(new Vector3(x,y,z), new Vector3(x2, y2, z2));
             }
 
-            if (Input.IsKeyDown(Keys.N))
+            if (Input.IsKeyDown(KeyCode.N))
             {
                 var rigidBody = GetComponent<RigidBody>();
                 rigidBody.ApplyImpulse(new Vector3(-2, 5, 0), new Vector3(0.5f, 0.5f, 0));
             }
 
-            if (Input.IsKeyDown(Keys.M))
+            if (Input.IsKeyDown(KeyCode.M))
             {
                 var rigidBody = GetComponent<RigidBody>();
                 rigidBody.ApplyImpulse(new Vector3(0, 5, 2), new Vector3(0, 0.5f, 0.5f));
             }
 
-            if (Input.IsKeyDown(Keys.L))
+            if (Input.IsKeyDown(KeyCode.L))
             {
                 var rigidBody = GetComponent<RigidBody>();
                 rigidBody.ApplyImpulse(new Vector3(2, 5, 2), new Vector3(0, 0.5f, 0));
             }
 
-            if (Input.IsKeyDown(Keys.U))
+            if (Input.IsKeyDown(KeyCode.U))
             {
                 var rigidBody = GetComponent<RigidBody>();
                 rigidBody.ApplyImpulse(new Vector3(0, 5, 0));
             }
             
-            if (Input.IsKeyDown(Keys.D1))
+            if (Input.IsKeyDown(KeyCode.D1))
                 Physics.Gravity += Vector3.UnitY.FromToBepuPosition();
-            if (Input.IsKeyDown(Keys.D2))
+            if (Input.IsKeyDown(KeyCode.D2))
                 Physics.Gravity -= Vector3.UnitY.FromToBepuPosition();
         }
     }

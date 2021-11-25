@@ -8,20 +8,20 @@ namespace DamnEngine
     {
         protected internal override void OnUpdate()
         {
-            if (Input.IsKeyPress(Keys.X))
+            if (Input.IsKeyPress(KeyCode.X))
             {
                 Transform.Rotation += new Vector3(5, 0, 0) * Time.DeltaTime;
             }
-            if (Input.IsKeyPress(Keys.Y))
+            if (Input.IsKeyPress(KeyCode.Y))
             {
                 Transform.Rotation += new Vector3(0, 5, 0) * Time.DeltaTime;
             }
-            if (Input.IsKeyPress(Keys.Z))
+            if (Input.IsKeyPress(KeyCode.Z))
             {
                 Transform.Rotation += new Vector3(0, 0, 5) * Time.DeltaTime;
             }
 
-            if (Input.IsKeyDown(Keys.G))
+            if (Input.IsKeyDown(KeyCode.G))
             {
                 var x = RandomUtilities.Range(0, 360);
                 var y = RandomUtilities.Range(0, 360);

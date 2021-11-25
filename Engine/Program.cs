@@ -49,7 +49,7 @@ namespace DamnEngine
 
         private static void OnUpdateFrame(FrameEventArgs arguments)
         {
-            if (Input.IsKeyPress(Keys.Escape))
+            if (Input.IsKeyPress(KeyCode.Escape))
                 renderWindow.Close();
             
             Time.DeltaTime = (float)arguments.Time;

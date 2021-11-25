@@ -24,9 +24,9 @@ namespace DamnEngine
         public static Vector2 MousePreviousPosition { get; private set; }
         public static Vector2 MouseDeltaPosition { get; private set; }
 
-        private static readonly List<Keys> keysDown = new();
-        private static readonly List<Keys> keysPress = new();
-        private static readonly List<Keys> keysUp = new();
+        private static readonly List<KeyCode> keysDown = new();
+        private static readonly List<KeyCode> keysPress = new();
+        private static readonly List<KeyCode> keysUp = new();
 
         private static Vector2 mousePosition;
 
@@ -37,14 +37,16 @@ namespace DamnEngine
         
         public static void OnKeyDown(Keys key)
         {
-            if (!keysPress.Contains(key))
-                keysDown.Add(key);
+            var keyCode = (KeyCode)key;
+            if (!keysPress.Contains(keyCode))
+                keysDown.Add(keyCode);
         }
 
         public static void OnKeyUp(Keys key)
         {
-            keysPress.Remove(key);
-            keysUp.Add(key);
+            var keyCode = (KeyCode)key;
+            keysPress.Remove(keyCode);
+            keysUp.Add(keyCode);
         }
 
         public static void Update(RenderWindow renderWindow)
@@ -73,10 +75,10 @@ namespace DamnEngine
             }
         }
 
-        public static bool IsKeyDown(Keys key) => keysDown.Contains(key);
+        public static bool IsKeyDown(KeyCode key) => keysDown.Contains(key);
 
-        public static bool IsKeyPress(Keys key) => keysDown.Contains(key) || keysPress.Contains(key);
+        public static bool IsKeyPress(KeyCode key) => keysDown.Contains(key) || keysPress.Contains(key);
 
-        public static bool IsKeyUp(Keys key) => keysUp.Contains(key);
+        public static bool IsKeyUp(KeyCode key) => keysUp.Contains(key);
     }
 }

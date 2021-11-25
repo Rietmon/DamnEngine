@@ -13,24 +13,24 @@ namespace DamnEngine
         protected internal override void OnUpdate()
         {
             var speed = 10;
-            if (Input.IsKeyPress(Keys.LeftControl))
+            if (Input.IsKeyPress(KeyCode.LeftControl))
                 speed = 5;
-            else if (Input.IsKeyPress(Keys.LeftShift))
+            else if (Input.IsKeyPress(KeyCode.LeftShift))
                 speed = 20;
 
-            if (Input.IsKeyPress(Keys.W))
+            if (Input.IsKeyPress(KeyCode.W))
                 Transform.Position += Transform.Forward * Time.DeltaTime * speed;
-            else if (Input.IsKeyPress(Keys.S))
+            else if (Input.IsKeyPress(KeyCode.S))
                 Transform.Position -= Transform.Forward * Time.DeltaTime * speed;
             
-            if (Input.IsKeyPress(Keys.D))
+            if (Input.IsKeyPress(KeyCode.D))
                 Transform.Position += Transform.Right * Time.DeltaTime * speed;
-            else if (Input.IsKeyPress(Keys.A))
+            else if (Input.IsKeyPress(KeyCode.A))
                 Transform.Position -= Transform.Right * Time.DeltaTime * speed;
             
-            if (Input.IsKeyPress(Keys.E))
+            if (Input.IsKeyPress(KeyCode.E))
                 Transform.Position += Transform.Up * Time.DeltaTime * speed;
-            else if (Input.IsKeyPress(Keys.Q))
+            else if (Input.IsKeyPress(KeyCode.Q))
                 Transform.Position -= Transform.Up * Time.DeltaTime * speed;
             
             var targetRotation = new Vector3(-Input.MouseDeltaPosition.Y, -Input.MouseDeltaPosition.X, 0) / 10 + Transform.Rotation;
