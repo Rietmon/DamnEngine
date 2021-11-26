@@ -12,34 +12,50 @@ namespace DamnEngine
         public Vector3 Down => -Up;
 
         public Vector3 RotationInRadians => Rotation * Mathf.Deg2Rad;
+        public Vector3 LocalRotationInRadians => Rotation * Mathf.Deg2Rad;
 
-        public Matrix4 ModelMatrix
+        public Matrix4 WorldMatrix
         {
             get
             {
-                var model = Matrix4.Identity;
-
-                if (!Parent)
-                {
-                    model *= Matrix4Extensions.CreateRotation(RotationInRadians);
-                    model *= Matrix4.CreateTranslation(Position);
-                    model *= Matrix4.CreateScale(Scale);
-                }
-                else
-                {
-                    model *= Matrix4Extensions.CreateRotation(RotationInRadians);
-                    
-                    model *= Matrix4.CreateTranslation(LocalPosition);
-                    model *= Matrix4Extensions.CreateRotation(Parent.RotationInRadians);
-                    model *= Matrix4.CreateTranslation(-LocalPosition);
-                    
-                    model *= Matrix4.CreateTranslation(Position);
-                    model *= Matrix4.CreateScale(Scale);
-                }
-
-                return model;
+                var matrix = Matrix4.Identity;
+                matrix *= Matrix4Extensions.CreateRotation(LocalRotationInRadians);
+                matrix *= Matrix4.CreateTranslation(Position);
+                matrix *= Matrix4.CreateScale(Scale);
+                return matrix;
             }
         }
+
+        public Matrix4 LocalMatrix
+        {
+            get
+            {
+                var matrix = Matrix4.Identity;
+                matrix *= Matrix4Extensions.CreateRotation(LocalRotationInRadians);
+                matrix *= Matrix4.CreateTranslation(LocalPosition);
+                matrix *= Matrix4Extensions.CreateRotation(Parent.LocalRotationInRadians);
+                matrix *= Matrix4.CreateTranslation(-LocalPosition);
+                matrix *= Matrix4.CreateScale(Scale);
+                return matrix;
+            }
+        }
+
+        public Matrix4 LocalToWorldMatrix
+        {
+            get
+            {
+                var matrix = Matrix4.Identity;
+                matrix *= Matrix4Extensions.CreateRotation(LocalRotationInRadians);
+                matrix *= Matrix4.CreateTranslation(LocalPosition);
+                matrix *= Matrix4Extensions.CreateRotation(Parent.LocalRotationInRadians);
+                matrix *= Matrix4.CreateTranslation(-LocalPosition);
+                matrix *= Matrix4.CreateTranslation(Position);
+                matrix *= Matrix4.CreateScale(Scale);
+                return matrix;
+            }
+        }
+
+        public Matrix4 ModelMatrix => Parent ? LocalToWorldMatrix : WorldMatrix;
         
         public static Vector3 TransformForward(Vector3 rotation)
         {

@@ -15,7 +15,7 @@ namespace DamnEngine
             }
         }
         public Vector3 LocalPosition => Parent ? position - Parent.Position : position;
-        
+
         public Vector3 Rotation
         {
             get => rotation;
@@ -25,8 +25,6 @@ namespace DamnEngine
                 CallOnTransformChanged();
             }
         }
-
-        public Vector3 LocalRotation => rotation;
         
         public Vector3 Scale
         {

@@ -33,14 +33,12 @@ namespace DamnEngine
         {
             if (oldParent)
             {
-                position += oldParent.Position;
                 oldParent.childes.Remove(this);
                 oldParent.CallOnTransformChanged();
             }
 
             if (newParent)
             {
-                position -= newParent.Position;
                 newParent.childes.Add(this);
                 newParent.CallOnTransformChanged();
             }
