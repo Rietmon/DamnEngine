@@ -20,6 +20,19 @@ namespace DamnEngine
             {
                 Transform.Rotation += new Vector3(0, 0, 500) * Time.DeltaTime;
             }
+            
+            if (Input.IsKeyPress(KeyCode.D4))
+            {
+                Transform.Scale += new Vector3(1, 0, 0) * Time.DeltaTime;
+            }
+            if (Input.IsKeyPress(KeyCode.D5))
+            {
+                Transform.Scale += new Vector3(0, 1, 0) * Time.DeltaTime;
+            }
+            if (Input.IsKeyPress(KeyCode.D6))
+            {
+                Transform.Scale += new Vector3(0, 0, 1) * Time.DeltaTime;
+            }
 
             if (Input.IsKeyDown(KeyCode.G))
             {
@@ -51,6 +64,19 @@ namespace DamnEngine
             if (Input.IsKeyPress(KeyCode.D3))
             {
                 Transform.Rotation += new Vector3(0, 0, 500) * Time.DeltaTime;
+            }
+            
+            if (Input.IsKeyPress(KeyCode.D7))
+            {
+                Transform.Scale += new Vector3(1, 0, 0) * Time.DeltaTime;
+            }
+            if (Input.IsKeyPress(KeyCode.D8))
+            {
+                Transform.Scale += new Vector3(0, 1, 0) * Time.DeltaTime;
+            }
+            if (Input.IsKeyPress(KeyCode.D9))
+            {
+                Transform.Scale += new Vector3(0, 0, 1) * Time.DeltaTime;
             }
         }
     }

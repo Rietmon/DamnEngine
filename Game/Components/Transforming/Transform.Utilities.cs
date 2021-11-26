@@ -35,7 +35,7 @@ namespace DamnEngine
                 matrix *= Matrix4.CreateTranslation(LocalPosition);
                 matrix *= Matrix4Extensions.CreateRotation(Parent.LocalRotationInRadians);
                 matrix *= Matrix4.CreateTranslation(-LocalPosition);
-                matrix *= Matrix4.CreateScale(Scale);
+                matrix *= Matrix4.CreateScale(LocalScale);
                 return matrix;
             }
         }
@@ -50,7 +50,7 @@ namespace DamnEngine
                 matrix *= Matrix4Extensions.CreateRotation(Parent.LocalRotationInRadians);
                 matrix *= Matrix4.CreateTranslation(-LocalPosition);
                 matrix *= Matrix4.CreateTranslation(Position);
-                matrix *= Matrix4.CreateScale(Scale);
+                matrix *= Matrix4.CreateScale(LocalScale);
                 return matrix;
             }
         }
