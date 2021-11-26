@@ -35,4 +35,23 @@ namespace DamnEngine
             }
         }
     }
+    
+    public class TestRotation2 : Component
+    {
+        protected internal override void OnUpdate()
+        {
+            if (Input.IsKeyPress(KeyCode.D1))
+            {
+                Transform.Rotation += new Vector3(500, 0, 0) * Time.DeltaTime;
+            }
+            if (Input.IsKeyPress(KeyCode.D2))
+            {
+                Transform.Rotation += new Vector3(0, 500, 0) * Time.DeltaTime;
+            }
+            if (Input.IsKeyPress(KeyCode.D3))
+            {
+                Transform.Rotation += new Vector3(0, 0, 500) * Time.DeltaTime;
+            }
+        }
+    }
 }

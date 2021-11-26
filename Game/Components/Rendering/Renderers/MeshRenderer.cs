@@ -60,15 +60,5 @@ namespace DamnEngine
             if (Mesh.IsValid)
                 CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.RuntimeId);
         }
-
-        protected internal override void OnUpdate()
-        {
-            if (Input.IsKeyPress(KeyCode.D3))
-            {
-                var vertices = Mesh.Vertices;
-                vertices[0] += new Vector3(0, 0.01f, 0);
-                Mesh.Vertices = vertices;
-            }
-        }
     }
 }

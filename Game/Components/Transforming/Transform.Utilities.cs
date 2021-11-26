@@ -21,18 +21,19 @@ namespace DamnEngine
 
                 if (!Parent)
                 {
-                    model *= Matrix4.CreateTranslation(Position);
                     model *= Matrix4Extensions.CreateRotation(RotationInRadians);
+                    model *= Matrix4.CreateTranslation(Position);
                     model *= Matrix4.CreateScale(Scale);
                 }
                 else
                 {
+                    model *= Matrix4Extensions.CreateRotation(RotationInRadians);
+                    
                     model *= Matrix4.CreateTranslation(LocalPosition);
                     model *= Matrix4Extensions.CreateRotation(Parent.RotationInRadians);
                     model *= Matrix4.CreateTranslation(-LocalPosition);
                     
                     model *= Matrix4.CreateTranslation(Position);
-                    model *= Matrix4Extensions.CreateRotation(RotationInRadians);
                     model *= Matrix4.CreateScale(Scale);
                 }
 

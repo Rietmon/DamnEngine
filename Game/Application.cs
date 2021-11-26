@@ -55,6 +55,7 @@ namespace DamnEngine
             material1 = Material.CreateFromShadersFiles("Default");
             obj1.Transform.Position = new Vector3(0,2,0);
             obj1.Transform.Parent = obj2;
+            obj1.AddComponent<TestRotation2>();
             material1.SetTexture(0, texture);
             mr.Material = material1;
             mr.Mesh = mesh;
