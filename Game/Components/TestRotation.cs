@@ -10,15 +10,15 @@ namespace DamnEngine
         {
             if (Input.IsKeyPress(KeyCode.X))
             {
-                Transform.Rotation += new Vector3(5, 0, 0) * Time.DeltaTime;
+                Transform.Rotation += new Vector3(500, 0, 0) * Time.DeltaTime;
             }
             if (Input.IsKeyPress(KeyCode.Y))
             {
-                Transform.Rotation += new Vector3(0, 5, 0) * Time.DeltaTime;
+                Transform.Rotation += new Vector3(0, 500, 0) * Time.DeltaTime;
             }
             if (Input.IsKeyPress(KeyCode.Z))
             {
-                Transform.Rotation += new Vector3(0, 0, 5) * Time.DeltaTime;
+                Transform.Rotation += new Vector3(0, 0, 500) * Time.DeltaTime;
             }
 
             if (Input.IsKeyDown(KeyCode.G))

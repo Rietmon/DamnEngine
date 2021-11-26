@@ -38,6 +38,8 @@ namespace DamnEngine
 
         public static float Pow(float x, float y) => (float)Math.Pow(x, y);
 
+        public static float Sqrt(float x) => (float)Math.Sqrt(x);
+
         public static void Swap(ref float first, ref float second) => (first, second) = (second, first);
     }
 }

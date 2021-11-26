@@ -11,19 +11,32 @@ namespace DamnEngine
         public Vector3 Up => TransformUp(Rotation);
         public Vector3 Down => -Up;
 
+        public Vector3 RotationInRadians => Rotation * Mathf.Deg2Rad;
+
         public Matrix4 ModelMatrix
         {
             get
             {
-                var transform = Matrix4.Identity;
+                var model = Matrix4.Identity;
 
-                transform *= Matrix4.CreateScale(Scale);
-                transform *= Matrix4.CreateRotationX(Rotation.X);
-                transform *= Matrix4.CreateRotationY(Rotation.Y);
-                transform *= Matrix4.CreateRotationZ(Rotation.Z);
-                transform *= Matrix4.CreateTranslation(Position);
+                if (!Parent)
+                {
+                    model *= Matrix4.CreateTranslation(Position);
+                    model *= Matrix4Extensions.CreateRotation(RotationInRadians);
+                    model *= Matrix4.CreateScale(Scale);
+                }
+                else
+                {
+                    model *= Matrix4.CreateTranslation(LocalPosition);
+                    model *= Matrix4Extensions.CreateRotation(Parent.RotationInRadians);
+                    model *= Matrix4.CreateTranslation(-LocalPosition);
+                    
+                    model *= Matrix4.CreateTranslation(Position);
+                    model *= Matrix4Extensions.CreateRotation(RotationInRadians);
+                    model *= Matrix4.CreateScale(Scale);
+                }
 
-                return transform;
+                return model;
             }
         }
         
