@@ -26,10 +26,4 @@
       <ProjectReference Include="..\Render\Render.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="Tiny-JSON, Version=1.1.2.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\Core\RietmonLibrary\3RD\TinyJson\Tiny-JSON.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
 </Project>
