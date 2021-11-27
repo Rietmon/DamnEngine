@@ -35,7 +35,7 @@ namespace DamnEngine
             
             var targetRotation = new Vector3(-Input.MouseDeltaPosition.Y, -Input.MouseDeltaPosition.X, 0) / 10 + Transform.Rotation;
             targetRotation.X = Mathf.Clamp(targetRotation.X, -90, 90);
-            Transform.Rotation = targetRotation;
+            Transform.LocalRotation = targetRotation;
         }
     }
 }

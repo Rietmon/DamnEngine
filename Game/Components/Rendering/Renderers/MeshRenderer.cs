@@ -30,8 +30,15 @@ namespace DamnEngine
             }
         }
 
-        public bool IsInFrustum => Camera.Main.CubeInFrustum(Transform.Position + mesh.CenteredBounds.Center,
-            mesh.CenteredBounds.Size * Transform.Scale);
+        public bool IsInFrustum
+        {
+            get
+            {
+                var modelMatrix = Transform.ModelMatrix;
+                return Camera.Main.CubeInFrustum(modelMatrix.GetTRSPosition() + mesh.CenteredBounds.Center,
+                    mesh.CenteredBounds.Diagonal * Transform.Scale);
+            }
+        }
 
         private Mesh mesh;
         private Material material;

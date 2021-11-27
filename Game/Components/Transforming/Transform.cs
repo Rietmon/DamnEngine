@@ -7,46 +7,52 @@ namespace DamnEngine
     {
         public Vector3 Position
         {
-            get => position;
+            get => worldPosition;
             set
             {
-                position = value;
+                worldPosition = value;
                 CallOnTransformChanged();
             }
         }
-        public Vector3 LocalPosition => Parent ? position - Parent.Position : position;
-
-        public Vector3 Rotation
+        public Vector3 LocalPosition
         {
-            get => rotation;
+            get => Parent ? worldPosition - Parent.Position : worldPosition;
             set
             {
-                rotation = value;
+                if (Parent)
+                    worldPosition = value + Parent.Position;
+                else
+                    worldPosition = value;
+                CallOnTransformChanged();
+            }
+        }
+
+        public Vector3 Rotation => Parent ? ModelMatrix.GetTRSRotation() : localRotation;
+        public Vector3 LocalRotation
+        {
+            get => localRotation;
+            set
+            {
+                localRotation = value;
                 CallOnTransformChanged();
             }
         }
         
-        public Vector3 Scale
+        public Vector3 Scale => Parent ? localScale * Parent.Scale : localScale;
+        public Vector3 LocalScale
         {
-            get => scale;
+            get => localScale;
             set
             {
-                scale = value;
+                localScale = value;
                 CallOnTransformChanged();
             }
         }
-        public Vector3 LocalScale => Parent ? scale * Parent.Scale : scale;
 
-        [SerializeField] private Vector3 position = Vector3.Zero;
-        [SerializeField] private Vector3 rotation = Vector3.Zero;
-        [SerializeField] private Vector3 scale = Vector3.One;
+        [SerializeField] private Vector3 worldPosition = Vector3.Zero;
+        [SerializeField] private Vector3 localRotation = Vector3.Zero;
+        [SerializeField] private Vector3 localScale = Vector3.One;
 
-        public void SetTransform(Vector3 position, Vector3 rotation, Vector3 scale)
-        {
-            this.position = position;
-            this.rotation = rotation;
-            this.scale = scale;
-            CallOnTransformChanged();
-        }
+        public override void Destroy() { }
     }
 }

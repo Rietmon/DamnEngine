@@ -24,11 +24,12 @@ namespace DamnEngine
                     ForEachComponent((component) => component.OnDisable());
             }
         }
-        public Transform Transform { get; set; }
+        public Transform Transform { get; }
         
         internal readonly List<Component> components = new();
 
         private bool isObjectActive = true;
+        private bool destroyingObject;
 
         public GameObject(string name = "GameObject")
         {
@@ -81,17 +82,19 @@ namespace DamnEngine
             return component != null;
         }
         
-        public void RemoveComponent<T>() => RemoveComponent((Component)(object)GetComponent<T>());
+        public bool RemoveComponent<T>() => RemoveComponent((Component)(object)GetComponent<T>());
 
-        public void RemoveComponent<T>(T component) where T : Component
+        public bool RemoveComponent<T>(T component) where T : Component
         {
-            if (component == Transform)
-                Transform = null;
+            if (component is Transform && !destroyingObject)
+                return false;
             
             component.GameObject = null;
             component.Destroy();
 
             components.Remove(component);
+
+            return true;
         }
 
         public void ForEachComponent(Action<Component> componentAction)
@@ -131,8 +134,11 @@ namespace DamnEngine
 
         protected override void OnDestroy()
         {
+            destroyingObject = true;
+            
             while (components.Count != 0)
                 RemoveComponent(components[0]);
+            
             ScenesManager.UnregisterGameObject(this);
         }
     }

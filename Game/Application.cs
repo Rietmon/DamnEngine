@@ -34,7 +34,7 @@ namespace DamnEngine
             var mr = obj1.AddComponent<MeshRenderer>();
             var material1 = Material.CreateFromShadersFiles("Default");
             obj1.Transform.Position = new Vector3(0,-4,0);
-            obj1.Transform.Scale = new Vector3(100, 1, 100);
+            obj1.Transform.LocalScale = new Vector3(100, 1, 100);
             obj1.AddComponent<BoxCollider>();
             material1.SetTexture(0, texture);
             mr.Material = material1;
