@@ -31,18 +31,23 @@ namespace DamnEngine
             var gridTexture = Texture2D.CreateFromFile("dark.png");
             var cubeMesh = Mesh.CreateFromFile("Cube.obj").First();
             var sphereMesh = Mesh.CreateFromFile("Sphere.obj").First();
+            var springboardMesh = Mesh.CreateFromFile("Springboard.obj").First();
 
-            var plane = CreateObject("Plane", cubeMesh, gridTexture);
-            plane.Transform.Position = new Vector3(0,-4,0);
-            plane.Transform.LocalScale = new Vector3(100, 1, 100);
-            plane.AddComponent<BoxCollider>();
+            // var plane = CreateObject("Plane", cubeMesh, gridTexture);
+            // plane.Transform.Position = new Vector3(0,-4,0);
+            // plane.Transform.LocalScale = new Vector3(100, 1, 100);
+            // plane.AddComponent<BoxCollider>();
 
-            var cube = CreateObject("Cube", cubeMesh, gridTexture);
-            cube.AddComponent<BoxCollider>();
-            cube.AddComponent<RigidBody>();
+            var springboard = CreateObject("Springboard", springboardMesh, gridTexture);
+            springboard.Transform.Position = new Vector3(0,-30,-10);
+            springboard.AddComponent<MeshCollider>().Mesh = springboardMesh;
+
+            // var cube = CreateObject("Cube", cubeMesh, gridTexture);
+            // cube.AddComponent<BoxCollider>();
+            // cube.AddComponent<RigidBody>();
 
             var sphere = CreateObject("Sphere", sphereMesh, gridTexture);
-            sphere.Transform.Position = new Vector3(0, 2, 0);
+            sphere.Transform.Position = new Vector3(0, 0, 0);
             sphere.AddComponent<SphereCollider>();
             sphere.AddComponent<RigidBody>();
             sphere.AddComponent<TestPhysics>();

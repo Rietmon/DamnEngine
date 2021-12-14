@@ -10,16 +10,18 @@ namespace DamnEngine
         private static readonly Dictionary<IShape, TypedIndex> registeredShapes = new();
 
         protected static Simulation Simulation => Physics.Simulation;
-        
-        public abstract bool IsStaticShapeCreated { get; protected set; }
-        
+
+        public virtual bool CanCreateShape => true;
+
         public abstract Bounds Bounds { get; }
         
-        public abstract IConvexShape Shape { get; }
+        public abstract IShape Shape { get; }
         
         public abstract TypedIndex ShapeIndex { get; }
         
         public abstract Vector3 ShapePosition { get; }
+        
+        public bool IsStaticShapeCreated { get; protected set; }
 
         public StaticReference StaticReference => Simulation.Statics.GetStaticReference(staticHandle);
 
@@ -37,13 +39,13 @@ namespace DamnEngine
 
         internal virtual void TryCreateStaticShape()
         {
-            if (IsStaticShapeCreated)
+            if (IsStaticShapeCreated || !CanCreateShape)
                 return;
 
-            var boxShape = ShapeIndex;
+            var shape = ShapeIndex;
             var bepuPosition = ShapePosition.FromToBepuPosition().ToNumericsVector3();
 
-            var collidableDescription = new CollidableDescription(boxShape, 0.1f);
+            var collidableDescription = new CollidableDescription(shape, 0.1f);
 
             var staticDescription = new StaticDescription(bepuPosition, collidableDescription);
 
@@ -76,6 +78,8 @@ namespace DamnEngine
             registeredShapes.Add(shape, shapeIndex);
             return shapeIndex;
         }
+
+        internal abstract void ComputeInertia(float mass, out BodyInertia inertia);
 
         protected internal override void OnDisable()
         {

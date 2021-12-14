@@ -10,22 +10,25 @@ namespace DamnEngine
         
         public Vector3 Size { get; set; } = Vector3.One;
         
-        public override bool IsStaticShapeCreated { get; protected set; }
+        public IConvexShape ConvexShape { get; private set; }
 
         public override Bounds Bounds => new(Center, Size * Transform.Scale);
 
-        public override IConvexShape Shape
+        public override IShape Shape
         {
             get
             {
                 var (x, y, z) = Transform.Scale.FromToBepuPosition() * Size.FromToBepuPosition();
-                var box = new Box(x, y, z);
-                return box;
+                ConvexShape = new Box(x, y, z);
+                return ConvexShape;
             }
         }
 
         public override TypedIndex ShapeIndex => GetShape((Box)Shape);
 
         public override Vector3 ShapePosition => Transform.Position + Center;
+
+        internal override void ComputeInertia(float mass, out BodyInertia inertia) =>
+            ConvexShape.ComputeInertia(mass, out inertia);
     }
 }

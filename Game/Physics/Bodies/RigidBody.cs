@@ -58,7 +58,7 @@ namespace DamnEngine
             if (collider.IsStaticShapeCreated)
                 collider.TryRemoveStaticShape();
             
-            collider.Shape.ComputeInertia(Mass, out var bodyInertia);
+            collider.ComputeInertia(Mass, out var bodyInertia);
             var shape = collider.ShapeIndex;
             var bepuPosition = collider.ShapePosition.FromToBepuPosition().ToNumericsVector3();
 

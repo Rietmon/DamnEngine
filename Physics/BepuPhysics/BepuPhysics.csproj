@@ -87,10 +87,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContactNonconvexTypes.cs</LastGenOutput>
     </None>
-    <None Include="..\Documentation\images\bepuphysicslogo256.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

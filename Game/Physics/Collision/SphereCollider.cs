@@ -8,13 +8,24 @@ namespace DamnEngine
     {
         public Vector3 Center { get; set; } = Vector3.Zero;
         public float Radius { get; set; } = 1;
-        public override bool IsStaticShapeCreated { get; protected set; }
+        public IConvexShape ConvexShape { get; private set; }
 
         public override Bounds Bounds => new(Center, new Vector3(Radius * Transform.Scale.Max()));
 
-        public override IConvexShape Shape => new Sphere(Radius);
+        public override IShape Shape
+        {
+            get
+            {
+                ConvexShape = new Sphere(Radius);
+                return new Sphere(Radius);
+            }
+        }
+        
         public override TypedIndex ShapeIndex => GetShape((Sphere)Shape);
         
         public override Vector3 ShapePosition => Transform.Position + Center;
+
+        internal override void ComputeInertia(float mass, out BodyInertia inertia) =>
+            ConvexShape.ComputeInertia(mass, out inertia);
     }
 }

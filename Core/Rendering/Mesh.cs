@@ -62,6 +62,23 @@ namespace DamnEngine
                 OnMeshChanged?.Invoke();
             }
         }
+        public Triangle[] Triangles
+        {
+            get
+            {
+                var triangles = new Triangle[Indices.Length / 3];
+                for (var i = 0; i < Indices.Length; i += 3)
+                {
+                    var a = Vertices[i + 0];
+                    var b = Vertices[i + 1];
+                    var c = Vertices[i + 2];
+
+                    triangles[i / 3] = new Triangle(a, b, c);
+                }
+
+                return triangles;
+            }
+        }
 
         public Bounds CenteredBounds { get; private set; }
 

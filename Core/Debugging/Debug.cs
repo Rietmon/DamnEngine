@@ -6,6 +6,14 @@ namespace DamnEngine
     public static class Debug
     {
         public static Action OnCrash { get; set; }
+
+        static Debug()
+        {
+            AppDomain.CurrentDomain.FirstChanceException += (obj, e) =>
+            {
+                Crash($"Ooops...\n{e.Exception.Message}\n{e.Exception.StackTrace}");
+            };
+        }
         
         public static void Log(object message) => WriteMessage(message, ConsoleColor.White);
         public static void LogAssert(bool prediction, object message = null) { if (!prediction) Log($"Assert! {message}"); }

@@ -8,10 +8,12 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <OutputPath>../_Binaries/Debug/</OutputPath>
+      <DefineConstants>TRACE;ENABLE_MEMORY_UTILITIES;</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <OutputPath>../_Binaries/Release/</OutputPath>
+      <DefineConstants>TRACE;ENABLE_MEMORY_UTILITIES;</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
