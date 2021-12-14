@@ -53,6 +53,10 @@ namespace DamnEngine
         [SerializeField] private Vector3 localRotation = Vector3.Zero;
         [SerializeField] private Vector3 localScale = Vector3.One;
 
-        public override void Destroy() { }
+        public override void Destroy()
+        {
+            if (GameObject.IsObjectDestroying)
+                OnDestroy();
+        }
     }
 }

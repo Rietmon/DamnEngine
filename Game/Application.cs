@@ -27,40 +27,36 @@ namespace DamnEngine
             var cameraObject = new GameObject("Camera");
             var camera = cameraObject.AddComponent<Camera>();
             camera.AddComponent<GameCamera>();
-            var texture = Texture2D.CreateFromFile("dark.png");
-            var mesh = Mesh.CreateFromFile("Cube.obj").First();
             
-            var obj1 = new GameObject("Plane");
-            var mr = obj1.AddComponent<MeshRenderer>();
-            var material1 = Material.CreateFromShadersFiles("Default");
-            obj1.Transform.Position = new Vector3(0,-4,0);
-            obj1.Transform.LocalScale = new Vector3(100, 1, 100);
-            obj1.AddComponent<BoxCollider>();
-            material1.SetTexture(0, texture);
-            mr.Material = material1;
+            var gridTexture = Texture2D.CreateFromFile("dark.png");
+            var cubeMesh = Mesh.CreateFromFile("Cube.obj").First();
+            var sphereMesh = Mesh.CreateFromFile("Sphere.obj").First();
+
+            var plane = CreateObject("Plane", cubeMesh, gridTexture);
+            plane.Transform.Position = new Vector3(0,-4,0);
+            plane.Transform.LocalScale = new Vector3(100, 1, 100);
+            plane.AddComponent<BoxCollider>();
+
+            var cube = CreateObject("Cube", cubeMesh, gridTexture);
+            cube.AddComponent<BoxCollider>();
+            cube.AddComponent<RigidBody>();
+
+            var sphere = CreateObject("Sphere", sphereMesh, gridTexture);
+            sphere.Transform.Position = new Vector3(0, 2, 0);
+            sphere.AddComponent<SphereCollider>();
+            sphere.AddComponent<RigidBody>();
+            sphere.AddComponent<TestPhysics>();
+        }
+
+        private static GameObject CreateObject(string name, Mesh mesh, Texture texture)
+        {
+            var obj = new GameObject(name);
+            var mr = obj.AddComponent<MeshRenderer>();
+            var material = Material.CreateFromShadersFiles("Default");
+            material.SetTexture(0, texture);
+            mr.Material = material;
             mr.Mesh = mesh;
-            
-            obj1 = new GameObject("Cube");
-            mr = obj1.AddComponent<MeshRenderer>();
-            material1 = Material.CreateFromShadersFiles("Default");
-            obj1.Transform.Position = new Vector3(0,0,0);
-            obj1.AddComponent<TestRotation>();
-            material1.SetTexture(0, texture);
-            mr.Material = material1;
-            mr.Mesh = mesh;
-            var obj2 = obj1;
-            
-            obj1 = new GameObject("SubCube");
-            mr = obj1.AddComponent<MeshRenderer>();
-            material1 = Material.CreateFromShadersFiles("Default");
-            obj1.Transform.Position = new Vector3(0,2,0);
-            obj1.Transform.Parent = obj2;
-            obj1.AddComponent<TestRotation2>();
-            material1.SetTexture(0, texture);
-            mr.Material = material1;
-            mr.Mesh = mesh;
-            
-            File.WriteAllText(Paths.AppDataPath + "test.dat", obj1.SerializationObject.Serialize());
+            return obj;
         }
 
         public static void Update()

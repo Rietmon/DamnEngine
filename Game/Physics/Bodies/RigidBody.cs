@@ -55,8 +55,8 @@ namespace DamnEngine
             if (IsBodyCreated)
                 return;
             
-            if (collider.IsStaticCreated)
-                collider.RemoveStaticShape();
+            if (collider.IsStaticShapeCreated)
+                collider.TryRemoveStaticShape();
             
             collider.Shape.ComputeInertia(Mass, out var bodyInertia);
             var shape = collider.ShapeIndex;
@@ -85,7 +85,7 @@ namespace DamnEngine
                 IsBodyCreated = false;
             }
             
-            collider.CreateStaticShape();
+            collider.TryCreateStaticShape();
         }
 
         protected internal override void OnPostUpdate()

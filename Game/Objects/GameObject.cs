@@ -24,12 +24,14 @@ namespace DamnEngine
                     ForEachComponent((component) => component.OnDisable());
             }
         }
+        
+        public bool IsObjectDestroying { get; private set; }
+        
         public Transform Transform { get; }
         
         internal readonly List<Component> components = new();
 
         private bool isObjectActive = true;
-        private bool destroyingObject;
 
         public GameObject(string name = "GameObject")
         {
@@ -86,7 +88,7 @@ namespace DamnEngine
 
         public bool RemoveComponent<T>(T component) where T : Component
         {
-            if (component is Transform && !destroyingObject)
+            if (component is Transform && !IsObjectDestroying)
                 return false;
             
             component.GameObject = null;
@@ -134,7 +136,7 @@ namespace DamnEngine
 
         protected override void OnDestroy()
         {
-            destroyingObject = true;
+            IsObjectDestroying = true;
             
             while (components.Count != 0)
                 RemoveComponent(components[0]);
