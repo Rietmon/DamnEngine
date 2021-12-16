@@ -110,7 +110,7 @@ namespace DamnEngine
             
             AwakeBody();
             BodyReference.Pose.Position = Transform.Position.FromToBepuPosition().ToNumericsVector3();
-            BodyReference.Pose.Orientation = Quaternion.FromEulerAngles(Transform.RotationInRadians).FromToBepuQuaternion().ToNumericsQuaternion();
+            BodyReference.Pose.Orientation = Transform.RotationInRadians.RotationToBepuQuaternion().ToNumericsQuaternion();
         }
 
         protected internal override void OnDisable()

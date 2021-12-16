@@ -43,7 +43,7 @@ namespace DamnEngine
                 return;
             
             StaticReference.Pose.Position = Transform.Position.FromToBepuPosition().ToNumericsVector3();
-            StaticReference.Pose.Orientation = Quaternion.FromEulerAngles(Transform.RotationInRadians.FromToBepuRotation()).ToNumericsQuaternion();
+            StaticReference.Pose.Orientation = Transform.RotationInRadians.RotationToBepuQuaternion().ToNumericsQuaternion();
             StaticReference.UpdateBounds();
         }
 
@@ -56,12 +56,11 @@ namespace DamnEngine
 
             var shape = ShapeIndex;
             var bepuPosition = ShapePosition.FromToBepuPosition().ToNumericsVector3();
-            var bepuRotation = Quaternion.FromEulerAngles(Transform.RotationInRadians.FromToBepuRotation()).ToNumericsQuaternion();
+            var bepuRotation = Transform.RotationInRadians.RotationToBepuQuaternion().ToNumericsQuaternion();
 
             var collidableDescription = new CollidableDescription(shape, 0.1f);
 
             var staticDescription = new StaticDescription(bepuPosition, bepuRotation, collidableDescription);
-            //var staticDescription = new StaticDescription(bepuPosition, collidableDescription);
 
             staticHandle = Simulation.Statics.Add(staticDescription);
 
