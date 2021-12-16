@@ -37,6 +37,18 @@ namespace DamnEngine
             TryCreateStaticShape();
         }
 
+        public void UpdateColliderTransform()
+        {
+            if (!IsStaticShapeCreated)
+                return;
+            
+            StaticReference.Pose.Position = Transform.Position.FromToBepuPosition().ToNumericsVector3();
+            StaticReference.Pose.Orientation = Quaternion.FromEulerAngles(Transform.RotationInRadians.FromToBepuRotation()).ToNumericsQuaternion();
+            StaticReference.UpdateBounds();
+        }
+
+        internal abstract void ComputeInertia(float mass, out BodyInertia inertia);
+
         internal virtual void TryCreateStaticShape()
         {
             if (IsStaticShapeCreated || !CanCreateShape)
@@ -44,10 +56,12 @@ namespace DamnEngine
 
             var shape = ShapeIndex;
             var bepuPosition = ShapePosition.FromToBepuPosition().ToNumericsVector3();
+            var bepuRotation = Quaternion.FromEulerAngles(Transform.RotationInRadians.FromToBepuRotation()).ToNumericsQuaternion();
 
             var collidableDescription = new CollidableDescription(shape, 0.1f);
 
-            var staticDescription = new StaticDescription(bepuPosition, collidableDescription);
+            var staticDescription = new StaticDescription(bepuPosition, bepuRotation, collidableDescription);
+            //var staticDescription = new StaticDescription(bepuPosition, collidableDescription);
 
             staticHandle = Simulation.Statics.Add(staticDescription);
 
@@ -79,7 +93,13 @@ namespace DamnEngine
             return shapeIndex;
         }
 
-        internal abstract void ComputeInertia(float mass, out BodyInertia inertia);
+        protected internal override void OnTransformChanged()
+        {
+            if (!IsStaticShapeCreated)
+                return;
+            
+            UpdateColliderTransform();
+        }
 
         protected internal override void OnDisable()
         {

@@ -67,7 +67,6 @@ namespace DamnEngine
         internal static Vector3 FromToBepuPosition(this Vector3 vector) => new(vector.X, vector.Z, vector.Y);
         internal static Vector3 FromToBepuRotation(this Vector3 vector) => new(-vector.X, -vector.Y, -vector.Z);
         internal static Quaternion FromToBepuQuaternion(this Quaternion quaternion) => new(quaternion.X, quaternion.Z, quaternion.Y, quaternion.W);
-        internal static Quaternion FromToBepuQuaternionNegative(this Quaternion quaternion) => new(-quaternion.X, -quaternion.Z, -quaternion.Y, quaternion.W);
         internal static Vector3 QuaternionToEulerAngles(this Quaternion quaternion) => quaternion.ToEulerAngles().FromToBepuRotation() * Mathf.Rad2Deg;
 
         #endregion

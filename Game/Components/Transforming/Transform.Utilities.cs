@@ -19,9 +19,9 @@ namespace DamnEngine
             get
             {
                 var matrix = Matrix4.Identity;
+                matrix *= Matrix4.CreateScale(Scale);
                 matrix *= Matrix4Extensions.CreateRotation(LocalRotationInRadians);
                 matrix *= Matrix4.CreateTranslation(Position);
-                matrix *= Matrix4.CreateScale(Scale);
                 return matrix;
             }
         }

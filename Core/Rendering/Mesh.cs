@@ -69,9 +69,9 @@ namespace DamnEngine
                 var triangles = new Triangle[Indices.Length / 3];
                 for (var i = 0; i < Indices.Length; i += 3)
                 {
-                    var a = Vertices[i + 0];
-                    var b = Vertices[i + 1];
-                    var c = Vertices[i + 2];
+                    var a = Vertices[Indices[i + 0]];
+                    var b = Vertices[Indices[i + 1]];
+                    var c = Vertices[Indices[i + 2]];
 
                     triangles[i / 3] = new Triangle(a, b, c);
                 }
