@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepuPhysics", "Physics\Bepu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepuUtilities", "Physics\BepuUtilities\BepuUtilities.csproj", "{18235866-86EE-46ED-BC82-C14BBF291643}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Puzzle", "Demos\Puzzle\Puzzle.csproj", "{C535CABC-9DA0-4432-ABCF-790D8859548F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{E48D13AB-2BBA-490B-B2E5-EB15F647B620}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,9 +54,14 @@ Global
 		{18235866-86EE-46ED-BC82-C14BBF291643}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18235866-86EE-46ED-BC82-C14BBF291643}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18235866-86EE-46ED-BC82-C14BBF291643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C535CABC-9DA0-4432-ABCF-790D8859548F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C535CABC-9DA0-4432-ABCF-790D8859548F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C535CABC-9DA0-4432-ABCF-790D8859548F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C535CABC-9DA0-4432-ABCF-790D8859548F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{40700F6B-6BBF-48B4-87F0-924AA209ED35} = {6207FCC0-35BA-4796-B389-9667D1A0AEDB}
 		{18235866-86EE-46ED-BC82-C14BBF291643} = {6207FCC0-35BA-4796-B389-9667D1A0AEDB}
+		{C535CABC-9DA0-4432-ABCF-790D8859548F} = {E48D13AB-2BBA-490B-B2E5-EB15F647B620}
 	EndGlobalSection
 EndGlobal

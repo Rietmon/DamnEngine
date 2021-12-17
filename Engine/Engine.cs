@@ -1,23 +1,25 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using DamnEngine.Render;
 using OpenTK.Windowing.Common;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace DamnEngine
 {
-    public static class Program
+    public static class Engine
     {
+        public static Action OnEngineStarted { get; set; }
+        
         private static RenderWindow renderWindow;
         
-        private static void Main()
+        public static void Run()
         {
-            Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Starting engine...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(Run)}) Starting engine...");
             Debug.OnCrash += () => OnClosing(null);
             
-            Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Creating window...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(Run)}) Creating window...");
             renderWindow = new RenderWindow("DamnEngine 1.0", 800, 600);
             
-            Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Registering callbacks...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(Run)}) Registering callbacks...");
             renderWindow.Load += OnLoad;
             renderWindow.UpdateFrame += OnUpdateFrame;
             renderWindow.Closing += OnClosing;
@@ -25,26 +27,28 @@ namespace DamnEngine
             renderWindow.KeyDown += (arguments) => Input.OnKeyDown(arguments.Key);
             renderWindow.KeyUp += (arguments) => Input.OnKeyUp(arguments.Key);
 
-            Debug.Log($"[{nameof(Program)}] ({nameof(Main)}) Starting window...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(Run)}) Starting window...");
             renderWindow.Run();
         }
 
         private static void OnLoad()
         {
-            Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing engine...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(OnLoad)}) Initializing engine...");
             
-            Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing input...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(OnLoad)}) Initializing input...");
             Input.Initialize(renderWindow);
             
-            Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing render...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(OnLoad)}) Initializing render...");
             Rendering.Initialize();
 
-            Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Initializing application API...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(OnLoad)}) Initializing application API...");
             Input.MouseState = renderWindow.MouseState;
             Application.Window = renderWindow;
             Application.Initialize();
             
-            Debug.Log($"[{nameof(Program)}] ({nameof(OnLoad)}) Engine has been initialized!");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(OnLoad)}) Engine has been initialized!");
+            
+            OnEngineStarted?.Invoke();
         }
 
         private static void OnUpdateFrame(FrameEventArgs arguments)
@@ -69,7 +73,7 @@ namespace DamnEngine
 
         private static void OnClosing(CancelEventArgs arguments)
         {
-            Debug.Log($"[{nameof(Program)}] ({nameof(OnClosing)}) Shutdown engine...");
+            Debug.Log($"[{nameof(Engine)}] ({nameof(OnClosing)}) Shutdown engine...");
         }
     }
 }

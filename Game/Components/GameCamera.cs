@@ -5,11 +5,6 @@ namespace DamnEngine
 {
     public class GameCamera : Component
     {
-        protected internal override void OnCreate()
-        {
-            Transform.Position = new Vector3(0, 0, -10);
-        }
-
         protected internal override void OnUpdate()
         {
             var speed = 10;

@@ -65,6 +65,8 @@ namespace DamnEngine
             far = 2000f;
 
             UpdateProjectionMatrix();
+            UpdateViewMatrix();
+            UpdateFrustum();
         }
 
         public bool PointInFrustum(Vector3 point)
@@ -122,6 +124,17 @@ namespace DamnEngine
             }
 
             return true;
+        }
+
+        public void SetData(float fov, float aspectRatio, float near, float far)
+        {
+            this.fov = fov;
+            this.aspectRatio = aspectRatio;
+            this.near = near;
+            this.far = far;
+            
+            UpdateProjectionMatrix();
+            UpdateFrustum();
         }
 
         protected internal override void OnTransformChanged()

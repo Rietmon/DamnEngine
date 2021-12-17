@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using OpenTK.Mathematics;
 
 namespace DamnEngine
@@ -176,10 +177,9 @@ namespace DamnEngine
             ResourcesLoader.FreeMesh(OriginalMeshName);
         }
         
-        public static Mesh[] CreateFromFile(string meshName)
-        {
-            return ResourcesLoader.UseMeshes(meshName);
-        }
+        public static Mesh[] CreateMeshesFromFile(string meshName) => ResourcesLoader.UseMeshes(meshName);
+
+        public static Mesh CreateMeshFromFile(string meshName) => CreateMeshesFromFile(meshName).First();
 
         private static bool VerifyMeshChanges(Vector3[] vertices, Vector2[] uv, Vector3[] normals, int[] indices, bool isValid)
         {

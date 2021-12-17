@@ -22,48 +22,48 @@ namespace DamnEngine
             
             Physics.Initialize();
             
-            ScenesManager.SetScene(new Scene("New Scene"));
-
-            var cameraObject = new GameObject("Camera");
-            var camera = cameraObject.AddComponent<Camera>();
-            camera.AddComponent<GameCamera>();
-            
-            var gridTexture = Texture2D.CreateFromFile("dark.png");
-            var cubeMesh = Mesh.CreateFromFile("Cube.obj").First();
-            var sphereMesh = Mesh.CreateFromFile("Sphere.obj").First();
-            var springboardMesh = Mesh.CreateFromFile("Springboard.obj").First();
-
-            var plane = CreateObject("Plane", cubeMesh, gridTexture);
-            plane.Transform.Position = new Vector3(0,-50,0);
-            plane.Transform.LocalScale = new Vector3(100, 1, 100);
-            plane.Transform.LocalRotation = new Vector3(30, 0, 0);
-            plane.AddComponent<BoxCollider>();
-            plane.AddComponent<TestRotation>();
-
-            var springboard = CreateObject("Springboard", springboardMesh, gridTexture);
-            springboard.Transform.Position = new Vector3(0,-30,0);
-            springboard.AddComponent<MeshCollider>().Mesh = springboardMesh;
-
-            var cube = CreateObject("Cube", cubeMesh, gridTexture);
-            cube.AddComponent<BoxCollider>();
-            cube.AddComponent<RigidBody>();
-
-            var sphere = CreateObject("Sphere", sphereMesh, gridTexture);
-            sphere.Transform.Position = new Vector3(0, 0, 0);
-            sphere.AddComponent<SphereCollider>();
-            sphere.AddComponent<RigidBody>();
+            // ScenesManager.SetScene(new Scene("New Scene"));
+            //
+            // var cameraObject = new GameObject("Camera");
+            // var camera = cameraObject.AddComponent<Camera>();
+            // camera.AddComponent<GameCamera>();
+            //
+            // var gridTexture = Texture2D.CreateFromFile("dark.png");
+            // var cubeMesh = Mesh.CreateFromFile("Cube.obj").First();
+            // var sphereMesh = Mesh.CreateFromFile("Sphere.obj").First();
+            // var springboardMesh = Mesh.CreateFromFile("Springboard.obj").First();
+            //
+            // var plane = CreateObject("Plane", cubeMesh, gridTexture);
+            // plane.Transform.Position = new Vector3(0,-50,0);
+            // plane.Transform.LocalScale = new Vector3(100, 1, 100);
+            // plane.Transform.LocalRotation = new Vector3(30, 0, 0);
+            // plane.AddComponent<BoxCollider>();
+            // plane.AddComponent<TestRotation>();
+            //
+            // var springboard = CreateObject("Springboard", springboardMesh, gridTexture);
+            // springboard.Transform.Position = new Vector3(0,-30,0);
+            // springboard.AddComponent<MeshCollider>().Mesh = springboardMesh;
+            //
+            // var cube = CreateObject("Cube", cubeMesh, gridTexture);
+            // cube.AddComponent<BoxCollider>();
+            // cube.AddComponent<RigidBody>();
+            //
+            // var sphere = CreateObject("Sphere", sphereMesh, gridTexture);
+            // sphere.Transform.Position = new Vector3(0, 0, 0);
+            // sphere.AddComponent<SphereCollider>();
+            // sphere.AddComponent<RigidBody>();
         }
 
-        private static GameObject CreateObject(string name, Mesh mesh, Texture texture)
-        {
-            var obj = new GameObject(name);
-            var mr = obj.AddComponent<MeshRenderer>();
-            var material = Material.CreateFromShadersFiles("Default");
-            material.SetTexture(0, texture);
-            mr.Material = material;
-            mr.Mesh = mesh;
-            return obj;
-        }
+        // private static GameObject CreateObject(string name, Mesh mesh, Texture texture)
+        // {
+        //     var obj = new GameObject(name);
+        //     var mr = obj.AddComponent<MeshRenderer>();
+        //     var material = Material.CreateFromShadersFiles("Default");
+        //     material.SetTexture(0, texture);
+        //     mr.Material = material;
+        //     mr.Mesh = mesh;
+        //     return obj;
+        // }
 
         public static void Update()
         {

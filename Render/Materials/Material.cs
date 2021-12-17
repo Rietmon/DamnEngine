@@ -11,6 +11,11 @@ namespace DamnEngine.Render
         public int TexturesCount => textures.Count;
 
         public int[] TexturesPointers => textures.Keys.ToArray();
+
+        public Color ColorProperty
+        {
+            set => SetColor("color", value);
+        }
         
         private readonly Shader shader;
 
