@@ -10,9 +10,7 @@ namespace Puzzle
         public const int WorldSize = 5;
 
         public const int WorldHalfSize = 2;
-        
-        public static Vector3 StartPlayerPoint => Vector3.UnitY;
-        
+
         private static PuzzleLevelCube[,] levelCubes;
 
         public static PuzzleLevelCube GetCube(int x, int z)

@@ -3,7 +3,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace DamnEngine
 {
-    public class GameCamera : Component
+    public class FreeFlyCamera : Component
     {
         protected internal override void OnUpdate()
         {

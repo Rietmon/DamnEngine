@@ -11,6 +11,7 @@ namespace Puzzle
             Transform.LocalRotation = new Vector3(-35, 45, 0);
             
             AddComponent<Camera>();
+            //AddComponent<FreeFlyCamera>();
         }
     }
 }

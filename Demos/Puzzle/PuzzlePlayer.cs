@@ -6,7 +6,7 @@ namespace Puzzle
 {
     public class PuzzlePlayer : Component
     {
-        private PuzzleLevelCube TargetMovingCube => PuzzleLevel.GetCube((int)targetMovingPosition.X, (int)targetMovingPosition.Z);
+        private PuzzleLevelCube StayingCube => PuzzleLevel.GetCube((int)Transform.Position.X, (int)Transform.Position.Z);
         
         private readonly Dictionary<KeyCode, Vector3> inputDirections = new()
         {
@@ -23,7 +23,9 @@ namespace Puzzle
 
         protected override void OnCreate()
         {
-            Transform.Position = PuzzleLevel.StartPlayerPoint;
+            Transform.Position = ConvertCubeToPlayerPosition(Vector3.Zero);
+            Transform.LocalScale = new Vector3(0.9f, 0.9f, 0.9f);
+            StayingCube.Paint();
         }
 
         protected override void OnUpdate()
@@ -43,10 +45,10 @@ namespace Puzzle
                     var playerPosition = Transform.Position;
                     var targetCubePosition = (Vector3i)(playerPosition + direction.Value);
                     var cube = PuzzleLevel.GetCube(targetCubePosition.X, targetCubePosition.Z);
-                    if (cube)
+                    if (cube && !cube.IsPainted)
                     {
                         isMoving = true;
-                        targetMovingPosition = targetCubePosition;
+                        targetMovingPosition = ConvertCubeToPlayerPosition(cube.Transform.Position);
                         return;
                     }
                 }
@@ -59,8 +61,11 @@ namespace Puzzle
             if (Transform.Position == targetMovingPosition)
             {
                 isMoving = false;
-                TargetMovingCube.Paint();
+                StayingCube.Paint();
             }
         }
+
+        private Vector3 ConvertCubeToPlayerPosition(Vector3 cubePosition) =>
+            new(cubePosition.X, cubePosition.Y + 1 - 0.05f, cubePosition.Z);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DamnEngine;
+using OpenTK.Mathematics;
 
 namespace Puzzle
 {
@@ -13,7 +14,7 @@ namespace Puzzle
             
             PuzzleLevel.CreateLevel();
 
-            var player = PuzzleLevel.CreateCube(PuzzleLevel.StartPlayerPoint, "Grid.png");
+            var player = PuzzleLevel.CreateCube(Vector3.Zero, "Grid.png");
             player.AddComponent<PuzzlePlayer>();
         }
     }
