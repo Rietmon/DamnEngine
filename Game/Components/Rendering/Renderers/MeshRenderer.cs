@@ -16,6 +16,7 @@ namespace DamnEngine
                 
                 mesh = value;
                 mesh.OnMeshChanged += OnMeshChanged;
+                meshDiagonalBounds = mesh.CenteredBounds.Diagonal;
                 CreateRenderTask();
             }
         }
@@ -30,18 +31,17 @@ namespace DamnEngine
             }
         }
 
-        public bool IsInFrustum
-        {
-            get
-            {
-                var modelMatrix = Transform.ModelMatrix;
-                return Camera.Main.CubeInFrustum(modelMatrix.GetTRSPosition() + mesh.CenteredBounds.Center,
-                    mesh.CenteredBounds.Diagonal * Transform.Scale);
-            }
-        }
-
         private Mesh mesh;
         private Material material;
+
+        private float meshDiagonalBounds;
+
+        public bool IsInFrustum() => Camera.Main.CubeInFrustum(Transform.ModelMatrix.GetTRSPosition() + mesh.CenteredBounds.Center,
+            meshDiagonalBounds * Transform.Scale);
+        
+        public bool IsInFrustum(Matrix4 modelMatrix) => 
+            Camera.Main.CubeInFrustum(modelMatrix.GetTRSPosition() + mesh.CenteredBounds.Center,
+                meshDiagonalBounds * Transform.Scale);
 
         private void CreateRenderTask()
         {
@@ -53,10 +53,11 @@ namespace DamnEngine
 
         protected override void OnRendering()
         {
-            if (!IsInFrustum)
+            var modelMatrix = Transform.ModelMatrix;
+            if (!IsInFrustum(modelMatrix))
                 return;
             
-            material.SetMatrix4("transform", Transform.ModelMatrix);
+            material.SetMatrix4("transform", modelMatrix);
             material.SetMatrix4("view", Rendering.ViewMatrix);
             material.SetMatrix4("projection", Rendering.ProjectionMatrix);
             RenderTask.Draw();
@@ -65,7 +66,10 @@ namespace DamnEngine
         private void OnMeshChanged()
         {
             if (Mesh.IsValid)
+            {
                 CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.RuntimeId);
+                meshDiagonalBounds = mesh.CenteredBounds.Diagonal;
+            }
         }
     }
 }
