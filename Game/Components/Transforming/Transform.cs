@@ -7,22 +7,19 @@ namespace DamnEngine
     {
         public Vector3 Position
         {
-            get => worldPosition;
+            get => Parent ? Parent.Position + LocalPosition : localPosition;
             set
             {
-                worldPosition = value;
+                localPosition = Parent ? Parent.Position + value : value;
                 CallOnTransformChanged();
             }
         }
         public Vector3 LocalPosition
         {
-            get => Parent ? worldPosition - Parent.Position : worldPosition;
+            get => localPosition;
             set
             {
-                if (Parent)
-                    worldPosition = value + Parent.Position;
-                else
-                    worldPosition = value;
+                localPosition = value;
                 CallOnTransformChanged();
             }
         }
@@ -49,7 +46,7 @@ namespace DamnEngine
             }
         }
 
-        [SerializeField] private Vector3 worldPosition = Vector3.Zero;
+        [SerializeField] private Vector3 localPosition = Vector3.Zero;
         [SerializeField] private Vector3 localRotation = Vector3.Zero;
         [SerializeField] private Vector3 localScale = Vector3.One;
 

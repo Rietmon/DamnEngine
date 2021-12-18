@@ -1,4 +1,6 @@
-﻿using OpenTK.Mathematics;
+﻿using System;
+using System.Collections.Generic;
+using OpenTK.Mathematics;
 
 namespace DamnEngine
 {
@@ -34,7 +36,6 @@ namespace DamnEngine
                 matrix *= Matrix4Extensions.CreateRotation(LocalRotationInRadians);
                 matrix *= Matrix4.CreateTranslation(LocalPosition);
                 matrix *= Matrix4Extensions.CreateRotation(Parent.LocalRotationInRadians);
-                matrix *= Matrix4.CreateTranslation(-LocalPosition);
                 matrix *= Matrix4.CreateScale(LocalScale);
                 return matrix;
             }
@@ -59,7 +60,7 @@ namespace DamnEngine
         
         public void SetTransform(Vector3 position, Vector3 rotation, Vector3 scale)
         {
-            worldPosition = position;
+            localPosition = position;
             localRotation = rotation;
             localScale = scale;
             CallOnTransformChanged();

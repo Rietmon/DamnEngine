@@ -14,7 +14,7 @@ namespace Puzzle
             
             PuzzleLevel.CreateLevel();
 
-            var player = PuzzleLevel.CreateCube(Vector3.Zero, "Grid.png");
+            var player = PuzzleLevel.CreateCube(Vector3.Zero, "Cube.obj", "Grid.png");
             player.AddComponent<PuzzlePlayer>();
         }
     }

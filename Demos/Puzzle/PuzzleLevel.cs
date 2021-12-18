@@ -9,7 +9,7 @@ namespace Puzzle
     {
         public const int WorldSize = 5;
 
-        public const int WorldHalfSize = 2;
+        public const int WorldHalfSize = WorldSize / 2;
 
         private static PuzzleLevelCube[,] levelCubes;
 
@@ -37,22 +37,21 @@ namespace Puzzle
             }
         }
 
-        public static GameObject CreateCube(Vector3 position, string textureName)
+        public static GameObject CreateCube(Vector3 position, string meshName, string textureName)
         {
-            var cube = new GameObject("Cube");
-            
-            cube.Transform.Position = position;
-            
-            var cubeMeshRenderer = cube.AddComponent<MeshRenderer>();
             var material = Material.CreateFromShadersFiles("Default");
+            var material2 = Material.CreateFromShadersFiles("Default");
             material.SetTexture(0, Texture2D.CreateFromFile(textureName));
-            cubeMeshRenderer.Material = material;
-            cubeMeshRenderer.Mesh = Mesh.CreateMeshFromFile("Cube.obj");
+            material2.SetTexture(0, Texture2D.CreateFromFile(textureName));
+
+            var cube = Mesh.CreateMeshesFromFile(meshName).CreateObjectsFromMeshes(new[] { material, material2 });
+
+            cube.Transform.Position = position;
 
             return cube;
         }
 
         private static PuzzleLevelCube CreateLevelCube(Vector3 position) =>
-            CreateCube(position, "Cube.png").AddComponent<PuzzleLevelCube>();
+            CreateCube(position, "PuzzleCube.obj", "Cube.png").AddComponent<PuzzleLevelCube>();
     }
 }

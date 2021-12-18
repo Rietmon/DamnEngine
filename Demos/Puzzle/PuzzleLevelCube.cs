@@ -10,7 +10,7 @@ namespace Puzzle
         public void Paint()
         {
             IsPainted = true;
-            GetComponent<MeshRenderer>().Material.ColorProperty = Color.Aqua;
+            Transform.GetComponentInChild<MeshRenderer>().Material.ColorProperty = Color.Aqua;
         }
     }
 }
