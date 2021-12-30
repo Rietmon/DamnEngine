@@ -13,6 +13,8 @@ namespace DamnEngine
 {
     public partial class Camera : Component
     {
+        public static Camera CurrentRenderingCamera { get; private set; }
+        
         public static Camera Main { get; private set; }
         
         public RenderTexture RenderTexture { get; set; }
@@ -40,9 +42,11 @@ namespace DamnEngine
 
             Rendering.OnBeginRendering += OnBeginRendering;
         }
-        
+
         private void OnBeginRendering()
         {
+            CurrentRenderingCamera = this;
+            
             if (RenderTexture)
             {
                 RenderTexture.UseToFrameBuffer();
@@ -54,6 +58,8 @@ namespace DamnEngine
             {
                 Rendering.RenderFrame();
             }
+
+            CurrentRenderingCamera = null;
         }
 
         protected internal override void OnTransformChanged()
