@@ -4,6 +4,12 @@
         <TargetFramework>netcoreapp3.1-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <LangVersion>9</LangVersion>
+        <Product>DamnEngine</Product>
+        <Company>Rietmon</Company>
+        <Authors>Rietmon</Authors>
+        <Copyright>© Rietmon</Copyright>
+        <PackageProjectUrl>https://github.com/Rietmon/DamnEngine</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Rietmon/DamnEngine</RepositoryUrl>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

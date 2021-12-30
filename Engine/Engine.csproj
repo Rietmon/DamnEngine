@@ -4,6 +4,12 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>DamnEngine</RootNamespace>
         <LangVersion>9</LangVersion>
+        <Company>Rietmon</Company>
+        <Authors>Rietmon</Authors>
+        <Copyright>Rietmon</Copyright>
+        <PackageProjectUrl>https://github.com/Rietmon/DamnEngine</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Rietmon/DamnEngine</RepositoryUrl>
+        <Product>DamnEngine</Product>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
