@@ -33,4 +33,11 @@
       <ProjectReference Include="..\ErrorHandler\ErrorHandler.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="RietmonLibrary\.gitattributes" />
+      <None Remove="RietmonLibrary\.gitignore" />
+      <None Remove="RietmonLibrary\Macros.txt" />
+      <None Remove="RietmonLibrary\README.md" />
+    </ItemGroup>
+
 </Project>

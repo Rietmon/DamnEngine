@@ -5,7 +5,7 @@ using DamnEngine.Serialization;
 namespace DamnEngine
 {
     [Serializable]
-    public class GameObject : DamnObject, ISerializable
+    public sealed class GameObject : DamnObject, ISerializable
     {
         public ISerializationObject SerializationObject => new SerializationGameObject(this);
         

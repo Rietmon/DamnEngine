@@ -7,10 +7,12 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <OutputPath>../_Binaries/Debug/</OutputPath>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <OutputPath>../_Binaries/Release/</OutputPath>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>

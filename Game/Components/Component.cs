@@ -5,7 +5,13 @@ namespace DamnEngine
     public abstract class Component : DamnObject, ISerializable
     {
         public ISerializationObject SerializationObject => new SerializationComponent(this);
-        
+
+        public override string Name
+        {
+            get => GameObject.Name;
+            set => GameObject.Name = value;
+        }
+
         public bool IsObjectActive
         {
             get => GameObject.IsObjectActive;
@@ -26,6 +32,7 @@ namespace DamnEngine
                     OnDisable();
             }
         }
+        
         public GameObject GameObject { get; internal set; }
 
         public Transform Transform => GameObject.Transform;

@@ -11,7 +11,7 @@ namespace DamnEngine.Render
             this.texturePointer = texturePointer;
         }
 
-        public void Use(int textureUnit) => UseTexture(texturePointer, textureUnit);
+        public virtual void Use(int textureUnit = 0) => UseTexture(texturePointer, textureUnit);
 
         protected override void OnDestroy()
         {

@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Drawing;
+using System.Linq;
 using DamnEngine;
 using DamnEngine.Render;
 using OpenTK.Mathematics;
+using Graphics = DamnEngine.Render.Graphics;
 
 namespace Puzzle
 {
@@ -35,9 +37,18 @@ namespace Puzzle
                     levelCubes[x + WorldHalfSize, z + WorldHalfSize] = CreateLevelCube(new Vector3(x, 0, z));
                 }
             }
+
+            CreateMesh(new Vector3(2, 10, 3), "Cube.obj", "Grid.png");
+
+            var material = Material.CreateFromShadersFiles("Texture");
+            material.SetTexture(0, PuzzleCamera.sec.RenderTexture);
+            //material.SetTexture(0, Texture2D.CreateFromFile("Grid.png"));
+            var plane = Mesh.CreateMeshFromFile("Plane.obj").CreateObjectFromMesh(material);
+            plane.Transform.Position = new Vector3(0, 10, 3);
+            plane.Transform.LocalRotation = new Vector3(-90, 0, 0);
         }
 
-        public static GameObject CreateCube(Vector3 position, string meshName, string textureName)
+        public static GameObject CreateMesh(Vector3 position, string meshName, string textureName)
         {
             var material = Material.CreateFromShadersFiles("Default");
             var material2 = Material.CreateFromShadersFiles("Default");
@@ -52,6 +63,6 @@ namespace Puzzle
         }
 
         private static PuzzleLevelCube CreateLevelCube(Vector3 position) =>
-            CreateCube(position, "PuzzleCube.obj", "Cube.png").AddComponent<PuzzleLevelCube>();
+            CreateMesh(position, "PuzzleCube.obj", "Cube.png").AddComponent<PuzzleLevelCube>();
     }
 }

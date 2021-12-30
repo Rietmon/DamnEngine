@@ -40,21 +40,17 @@ namespace DamnEngine.Render
                 bitmapBits.Add(bitmap, bitmapData);
             }
             
-            GL.TexImage2D(TextureTarget.Texture2D,
-                0,
-                PixelInternalFormat.Rgba,
-                bitmap.Width,
-                bitmap.Height,
-                0,
-                PixelFormat.Bgra,
-                PixelType.UnsignedByte,
-                bitmapData.Scan0);
-
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmap.Width, bitmap.Height,
+                0, PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
             
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, 
+                (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, 
+                (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, 
+                (int)TextureWrapMode.Repeat);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, 
+                (int)TextureWrapMode.Repeat);
 
             GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
 

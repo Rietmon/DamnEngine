@@ -65,8 +65,10 @@ namespace DamnEngine
             Application.Update();
             
             Statistics.TotalFacesDrawled = 0;
-
-            Rendering.RenderFrame(renderWindow);
+            
+            Rendering.BeginRender();
+            
+            renderWindow.SwapBuffers();
             
             Input.Update(renderWindow);
         }

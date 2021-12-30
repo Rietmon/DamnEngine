@@ -10,10 +10,10 @@ namespace Puzzle
         
         private readonly Dictionary<KeyCode, Vector3> inputDirections = new()
         {
-            { KeyCode.W, Vector3.UnitZ },
-            { KeyCode.S, -Vector3.UnitZ },
-            { KeyCode.A, Vector3.UnitX },
-            { KeyCode.D, -Vector3.UnitX }
+            // { KeyCode.W, Vector3.UnitZ },
+            // { KeyCode.S, -Vector3.UnitZ },
+            // { KeyCode.A, Vector3.UnitX },
+            // { KeyCode.D, -Vector3.UnitX }
         };
 
         private float movingSpeed = 5;

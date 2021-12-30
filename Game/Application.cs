@@ -12,6 +12,9 @@ namespace DamnEngine
     public static class Application
     {
         public static RenderWindow Window { get; set; }
+
+        public static Vector2i WindowResolution => Window.Size;
+        
         public static Action OnNextFrameUpdate { get; set; }
 
         public static void Initialize()

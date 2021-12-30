@@ -8,7 +8,7 @@ namespace DamnEngine
 
         ISerializationObject ISerializable.SerializationObject => new SerializationDamnObject(this);
         
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         
         public uint RuntimeId { get; }
 
