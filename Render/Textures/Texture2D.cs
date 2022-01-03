@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 
 namespace DamnEngine.Render
@@ -11,8 +12,12 @@ namespace DamnEngine.Render
         private static readonly Dictionary<Bitmap, BitmapData> bitmapBits = new();
         
         public string OriginalTextureName { get; }
+        
         public int Width { get; }
         public int Height { get; }
+
+        public Vector2i Resolution => new(Width, Height);
+        
         public Bitmap Bitmap { get; }
         
         public Texture2D(int texturePointer, int width, int height, Bitmap bitmap, string originalTextureName) : base(texturePointer)

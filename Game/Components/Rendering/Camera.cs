@@ -48,8 +48,7 @@ namespace DamnEngine
             {
                 RenderTexture.UseToFrameBuffer();
                 Rendering.RenderFrame();
-                GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-                Rendering.SetViewport(Vector2i.Zero, Application.WindowResolution);
+                RenderTexture.UnUseFromFrameBuffer(Application.WindowResolution);
             }
             else
             {

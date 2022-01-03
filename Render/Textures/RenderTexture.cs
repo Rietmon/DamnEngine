@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 using Rietmon.Extensions;
 
 namespace DamnEngine.Render
@@ -9,28 +10,31 @@ namespace DamnEngine.Render
         public int TextureSizeInBytes => Width * Height * 4;
         
         public int Width { get; }
-
         public int Height { get; }
-        
-        public int Depth { get; }
+
+        public Vector2i Resolution => new(Width, Height);
 
         private readonly int renderBufferPointer;
         private readonly int frameBufferPointer;
 
-        public RenderTexture(int width, int height, int depth, int texturePointer, int renderBufferPointer, int frameBufferPointer) : base(texturePointer)
+        public RenderTexture(int width, int height, int texturePointer, int renderBufferPointer, int frameBufferPointer) : base(texturePointer)
         {
             Width = width;
             Height = height;
-            Depth = depth;
             this.renderBufferPointer = renderBufferPointer;
             this.frameBufferPointer = frameBufferPointer;
         }
 
         public void UseToFrameBuffer()
         {
-            //Use();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, frameBufferPointer);
-            GL.Viewport(0, 0, Width, Height);
+            Rendering.SetViewport(Vector2i.Zero, Resolution);
+        }
+
+        public void UnUseFromFrameBuffer(Vector2i originalViewportResolution)
+        {
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            Rendering.SetViewport(Vector2i.Zero, originalViewportResolution);
         }
 
         public Color32[] ReadPixels()
@@ -57,7 +61,7 @@ namespace DamnEngine.Render
             GL.DeleteFramebuffer(frameBufferPointer);
         }
 
-        public static RenderTexture Create(int width, int height, int depth)
+        public static RenderTexture Create(int width, int height)
         {
             var frameBufferPointer = GL.GenFramebuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, frameBufferPointer);
@@ -86,7 +90,7 @@ namespace DamnEngine.Render
             
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);  
 
-            return new RenderTexture(width, height, depth, texturePointer, renderBufferPointer, frameBufferPointer);
+            return new RenderTexture(width, height, texturePointer, renderBufferPointer, frameBufferPointer);
         }
     }
 }
