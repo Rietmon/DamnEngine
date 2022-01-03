@@ -1,13 +1,6 @@
-﻿using System.Drawing;
-using System.IO;
-using DamnEngine.Render;
+﻿using DamnEngine.Render;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using OpenTK.Windowing.Common.Input;
-using Rietmon.Extensions;
-using Graphics = DamnEngine.Render.Graphics;
-using Image = System.Drawing.Image;
-using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 namespace DamnEngine
 {
@@ -16,6 +9,8 @@ namespace DamnEngine
         public static Camera CurrentRenderingCamera { get; private set; }
         
         public static Camera Main { get; private set; }
+
+        public RenderingLayers RenderingLayers { get; set; } = RenderingLayers.All;
         
         public RenderTexture RenderTexture { get; set; }
 
@@ -46,6 +41,8 @@ namespace DamnEngine
         private void OnBeginRendering()
         {
             CurrentRenderingCamera = this;
+
+            Rendering.RenderParameters = new RenderParameters(RenderingLayers);
             
             if (RenderTexture)
             {

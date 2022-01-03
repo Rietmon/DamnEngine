@@ -4,6 +4,8 @@ namespace DamnEngine
 {
     public class Renderer : Component
     {
+        public RenderingLayers RenderingLayer { get; set; } = RenderingLayers.Default;
+        
         protected RenderTask RenderTask { get; set; }
 
         protected void CreateRenderTask(float[] renderTaskData, int[] indices, Material material, uint ownerId)

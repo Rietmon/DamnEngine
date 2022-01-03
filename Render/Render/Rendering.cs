@@ -18,6 +18,8 @@ namespace DamnEngine.Render
         public static Action OnRendering { get; set; }
         
         public static Action OnPostRendering { get; set; }
+        
+        public static RenderParameters RenderParameters { get; set; }
 
         public static void SetViewport(Vector2i position, Vector2i size) =>
             GL.Viewport(position.X, position.Y, size.X, size.Y);

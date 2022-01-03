@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BepuPhysics;
+﻿using BepuPhysics;
 using BepuPhysics.Collidables;
 using BepuUtilities.Memory;
 using OpenTK.Mathematics;

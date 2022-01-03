@@ -1,6 +1,5 @@
 ﻿using DamnEngine.Render;
 using OpenTK.Mathematics;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace DamnEngine
 {
@@ -53,6 +52,10 @@ namespace DamnEngine
 
         protected override void OnRendering()
         {
+            var renderingLayers = Rendering.RenderParameters.renderingLayers;
+            if ((renderingLayers & RenderingLayer) == 0 && (renderingLayers & RenderingLayers.All) != 0)
+                return;
+            
             var modelMatrix = Transform.ModelMatrix;
             if (!IsInFrustum(modelMatrix))
                 return;

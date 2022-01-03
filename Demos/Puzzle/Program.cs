@@ -1,5 +1,4 @@
-﻿using System;
-using DamnEngine;
+﻿using DamnEngine;
 
 namespace Puzzle
 {

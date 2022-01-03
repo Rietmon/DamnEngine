@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Drawing;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
 using Rietmon.Extensions;
 
 namespace DamnEngine.Render

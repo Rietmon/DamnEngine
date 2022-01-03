@@ -1,9 +1,6 @@
-﻿using System.Drawing;
-using System.Linq;
-using DamnEngine;
+﻿using DamnEngine;
 using DamnEngine.Render;
 using OpenTK.Mathematics;
-using Graphics = DamnEngine.Render.Graphics;
 
 namespace Puzzle
 {
@@ -46,6 +43,8 @@ namespace Puzzle
             var plane = Mesh.CreateMeshFromFile("Plane.obj").CreateObjectFromMesh(material);
             plane.Transform.Position = new Vector3(0, 10, 3);
             plane.Transform.LocalRotation = new Vector3(-90, 0, 0);
+
+            plane.GetComponent<MeshRenderer>().RenderingLayer = RenderingLayers.Special;
         }
 
         public static GameObject CreateMesh(Vector3 position, string meshName, string textureName)
