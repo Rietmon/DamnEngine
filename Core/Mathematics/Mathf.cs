@@ -20,6 +20,15 @@ namespace DamnEngine
             return value;
         }
 
+        public static int Clamp(int value, int min, int max)
+        {
+            if (value < min)
+                return min;
+            if (value > max)
+                return max;
+            return value;
+        }
+
         public static float Abs(float value) => Math.Abs(value);
 
         public static float Sin(float value) => (float)Math.Sin(value);

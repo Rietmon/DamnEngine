@@ -8,14 +8,30 @@ namespace DamnEngine.Render
 {
     public class Material : DamnObject
     {
+        public static Material DefaultMaterial => CreateFromShadersFiles("Default");
+        
+        public static Material InvalidMaterial => CreateFromShadersFiles("Invalid");
+        
         public int TexturesCount => textures.Count;
 
         public int[] TexturesPointers => textures.Keys.ToArray();
-
-        public Color ColorProperty
-        {
-            set => SetColor("color", value);
-        }
+        
+        #region Quick Properties
+        public Color ColorProperty { set => SetColor("color", value); }
+        public Matrix4 ModelProperty { set => SetMatrix4("model", value); }
+        public Matrix4 ViewProperty { set => SetMatrix4("view", value); }
+        public Matrix4 ProjectionProperty { set => SetMatrix4("projection", value); }
+        public Texture Texture0Property { set => SetTexture(0, value); }
+        public Texture Texture1Property { set => SetTexture(1, value); }
+        public Texture Texture2Property { set => SetTexture(2, value); }
+        public Texture Texture3Property { set => SetTexture(3, value); }
+        public Texture Texture4Property { set => SetTexture(4, value); }
+        public Texture Texture5Property { set => SetTexture(5, value); }
+        public Texture Texture6Property { set => SetTexture(6, value); }
+        public Texture Texture7Property { set => SetTexture(7, value); }
+        public Texture Texture8Property { set => SetTexture(8, value); }
+        public Texture Texture9Property { set => SetTexture(9, value); }
+        #endregion
         
         private readonly Shader shader;
 

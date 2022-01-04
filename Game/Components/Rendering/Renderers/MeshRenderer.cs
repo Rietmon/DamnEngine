@@ -1,4 +1,5 @@
-﻿using DamnEngine.Render;
+﻿using System.Linq;
+using DamnEngine.Render;
 using OpenTK.Mathematics;
 
 namespace DamnEngine
@@ -16,24 +17,32 @@ namespace DamnEngine
                 mesh = value;
                 mesh.OnMeshChanged += OnMeshChanged;
                 meshDiagonalBounds = mesh.CenteredBounds.Diagonal;
-                CreateRenderTask();
+                UpdateRenderTask();
             }
         }
 
         public Material Material
         {
-            get => material;
+            get => materials.FirstOrDefault();
+            set => Materials = new[] { value };
+        }
+
+        public Material[] Materials
+        {
+            get => materials;
             set
             {
-                material = value;
-                CreateRenderTask();
+                materials = value;
+                UpdateRenderTask();
             }
         }
 
         private Mesh mesh;
-        private Material material;
+        private Material[] materials;
 
         private float meshDiagonalBounds;
+
+        private RenderTask[] renderTasks;
 
         public bool IsInFrustum() => Camera.Main.CubeInFrustum(Transform.ModelMatrix.GetTRSPosition() + mesh.CenteredBounds.Center,
             meshDiagonalBounds * Transform.Scale);
@@ -41,14 +50,6 @@ namespace DamnEngine
         public bool IsInFrustum(Matrix4 modelMatrix) => 
             Camera.Main.CubeInFrustum(modelMatrix.GetTRSPosition() + mesh.CenteredBounds.Center,
                 meshDiagonalBounds * Transform.Scale);
-
-        private void CreateRenderTask()
-        {
-            if (Mesh && Material)
-                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.RuntimeId);
-            else
-                DeleteRenderTask();
-        }
 
         protected override void OnRendering()
         {
@@ -59,20 +60,31 @@ namespace DamnEngine
             var modelMatrix = Transform.ModelMatrix;
             if (!IsInFrustum(modelMatrix))
                 return;
-            
-            material.SetMatrix4("transform", modelMatrix);
-            material.SetMatrix4("view", Rendering.ViewMatrix);
-            material.SetMatrix4("projection", Rendering.ProjectionMatrix);
-            RenderTask.Draw();
+
+            foreach (var material in materials)
+            {
+                material.SetMatrix4("transform", modelMatrix);
+                material.SetMatrix4("view", Rendering.ViewMatrix);
+                material.SetMatrix4("projection", Rendering.ProjectionMatrix);
+            }
+            DrawRenderTasks();
         }
 
         private void OnMeshChanged()
         {
             if (Mesh.IsValid)
             {
-                CreateRenderTask(Mesh.RenderTaskData, Mesh.Indices, Material, Mesh.RuntimeId);
+                CreateRenderTasks(Mesh.GetRenderTasksDatas(Materials));
                 meshDiagonalBounds = mesh.CenteredBounds.Diagonal;
             }
+        }
+        
+        private void UpdateRenderTask()
+        {
+            if (Mesh && Material)
+                CreateRenderTasks(Mesh.GetRenderTasksDatas(Materials));
+            else
+                DeleteRenderTasks();
         }
     }
 }

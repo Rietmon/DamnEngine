@@ -6,33 +6,45 @@ namespace DamnEngine
     {
         public RenderingLayers RenderingLayer { get; set; } = RenderingLayers.Default;
         
-        protected RenderTask RenderTask { get; set; }
+        protected RenderTask[] RenderTasks { get; private set; }
 
-        protected void CreateRenderTask(float[] renderTaskData, int[] indices, Material material, uint ownerId)
+        protected void CreateRenderTasks(params RenderTaskData[] renderTaskDatas)
         {
-            if (RenderTask)
-                RenderTask.Destroy();
+            if (RenderTasks != null)
+                DeleteRenderTasks();
             else
                 Rendering.OnRendering += OnRendering;
 
-            RenderTask = RenderTask.Create(renderTaskData, indices, material, ownerId);
+            RenderTasks = new RenderTask[renderTaskDatas.Length];
+            for (var i = 0; i < renderTaskDatas.Length; i++)
+            {
+                var data = renderTaskDatas[i];
+                RenderTasks[i] = RenderTask.Create(data.Data, data.Indices, data.Material, data.OwnerId);
+            }
         }
 
-        protected void DeleteRenderTask()
+        protected void DeleteRenderTasks()
         {
-            if (!RenderTask)
+            if (RenderTasks == null)
                 return;
             
-            RenderTask.Destroy();
-            RenderTask = null;
-            Rendering.OnRendering -= OnRendering;
+            foreach (var renderTask in RenderTasks)
+                renderTask.Destroy();
+
+            RenderTasks = null;
+        }
+
+        protected void DrawRenderTasks()
+        {
+            foreach (var renderTask in RenderTasks)
+                renderTask.Draw();
         }
 
         protected virtual void OnRendering() { }
 
         protected override void OnDestroy()
         {
-            DeleteRenderTask();
+            DeleteRenderTasks();
         }
     }
 }
