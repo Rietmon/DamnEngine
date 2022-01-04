@@ -7,19 +7,29 @@ namespace DamnEngine.Render
 {
     public static class Rendering
     {
-        public static Matrix4 ViewMatrix { get; set; }
+        public static Vector2i Resolution
+        {
+            get => resolution;
+            set
+            {
+                resolution = value;
+                OnResolutionChanged?.Invoke();
+            }
+        }
+        public static Action OnResolutionChanged { get; set; }
         
+        public static Matrix4 ViewMatrix { get; set; }
         public static Matrix4 ProjectionMatrix { get; set; }
 
         public static Action OnBeginRendering { get; set; }
-
-        public static Action OnPreRendering { get; set; }
-
-        public static Action OnRendering { get; set; }
         
+        public static Action OnPreRendering { get; set; }
+        public static Action OnRendering { get; set; }
         public static Action OnPostRendering { get; set; }
         
         public static RenderParameters RenderParameters { get; set; }
+
+        private static Vector2i resolution;
 
         public static void SetViewport(Vector2i position, Vector2i size) =>
             GL.Viewport(position.X, position.Y, size.X, size.Y);

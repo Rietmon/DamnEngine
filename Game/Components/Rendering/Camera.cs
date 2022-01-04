@@ -26,8 +26,8 @@ namespace DamnEngine
             Main = this;
 
             fov = 0.7853982f;
-            var windowSize = Application.Window.Bounds.Max;
-            aspectRatio = (float)windowSize.X / (float)windowSize.Y;
+            var resolution = Rendering.Resolution;
+            aspectRatio = (float)resolution.X / (float)resolution.Y;
             near = 0.01f;
             far = 2000f;
 
@@ -36,6 +36,7 @@ namespace DamnEngine
             UpdateFrustum();
 
             Rendering.OnBeginRendering += OnBeginRendering;
+            Rendering.OnResolutionChanged += OnResolutionChanged;
         }
 
         private void OnBeginRendering()
@@ -48,7 +49,7 @@ namespace DamnEngine
             {
                 RenderTexture.UseToFrameBuffer();
                 Rendering.RenderFrame();
-                RenderTexture.UnUseFromFrameBuffer(Application.WindowResolution);
+                RenderTexture.UnUseFromFrameBuffer();
             }
             else
             {
@@ -56,6 +57,12 @@ namespace DamnEngine
             }
 
             CurrentRenderingCamera = null;
+        }
+
+        private void OnResolutionChanged()
+        {
+            var resolution = Rendering.Resolution;
+            AspectRatio = (float)resolution.X / (float)resolution.Y;
         }
 
         protected internal override void OnTransformChanged()

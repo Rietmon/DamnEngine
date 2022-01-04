@@ -31,10 +31,10 @@ namespace DamnEngine.Render
             Rendering.SetViewport(Vector2i.Zero, Resolution);
         }
 
-        public void UnUseFromFrameBuffer(Vector2i originalViewportResolution)
+        public void UnUseFromFrameBuffer()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-            Rendering.SetViewport(Vector2i.Zero, originalViewportResolution);
+            Rendering.SetViewport(Vector2i.Zero, Rendering.Resolution);
         }
 
         public Color32[] ReadPixels()

@@ -67,7 +67,12 @@ namespace DamnEngine
                 material.SetMatrix4("view", Rendering.ViewMatrix);
                 material.SetMatrix4("projection", Rendering.ProjectionMatrix);
             }
+            
             DrawRenderTasks();
+
+#if ENABLE_STATISTICS
+            Statistics.TotalMeshesDrawled += (uint)RenderTasks.Length;
+#endif
         }
 
         private void OnMeshChanged()

@@ -22,6 +22,7 @@ namespace DamnEngine
             Debug.Log($"[{nameof(Engine)}] ({nameof(Run)}) Registering callbacks...");
             renderWindow.Load += OnLoad;
             renderWindow.UpdateFrame += OnUpdateFrame;
+            renderWindow.Resize += OnWindowResize;
             renderWindow.Closing += OnClosing;
             
             renderWindow.KeyDown += (arguments) => Input.OnKeyDown(arguments.Key);
@@ -39,6 +40,7 @@ namespace DamnEngine
             Input.Initialize(renderWindow);
             
             Debug.Log($"[{nameof(Engine)}] ({nameof(OnLoad)}) Initializing render...");
+            Rendering.Resolution = renderWindow.Size;
             Rendering.Initialize();
 
             Debug.Log($"[{nameof(Engine)}] ({nameof(OnLoad)}) Initializing application API...");
@@ -55,22 +57,31 @@ namespace DamnEngine
         {
             if (Input.IsKeyPress(KeyCode.Escape))
                 renderWindow.Close();
+
+            Time.Update((float)arguments.Time);
             
-            Time.DeltaTime = (float)arguments.Time;
-            
-            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled} | Statics: {Physics.Simulation.Statics.Count} | Bodies: {Physics.Simulation.Bodies.ActiveSet.Count}";
+#if ENABLE_STATISTICS
+            renderWindow.Title = $"DamnEngine 1.0 | FPS: {(int)(1f / Time.DeltaTime)} | Faces: {Statistics.TotalFacesDrawled} | Meshes: {Statistics.TotalMeshesDrawled}";
+#endif
             
             renderWindow.ProcessEvents();
 
             Application.Update();
             
-            Statistics.TotalFacesDrawled = 0;
+#if ENABLE_STATISTICS
+            Statistics.Clear();
+#endif
             
             Rendering.BeginRender();
             
             renderWindow.SwapBuffers();
             
             Input.Update(renderWindow);
+        }
+
+        private static void OnWindowResize(ResizeEventArgs arguments)
+        {
+            Rendering.Resolution = arguments.Size;
         }
 
         private static void OnClosing(CancelEventArgs arguments)

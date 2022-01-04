@@ -32,8 +32,10 @@ namespace DamnEngine.Render
             
             GL.DrawElements(PrimitiveType.Triangles, indicesCount, DrawElementsType.UnsignedInt, 0);
 
+#if ENABLE_STATISTICS
             Statistics.TotalFacesDrawled += (uint)(indicesCount / 3);
-        }
+#endif
+}
 
         public RenderTask Copy(Material overrideMaterial = null) => new(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, overrideMaterial ?? material,
             indicesCount, ownerId);
