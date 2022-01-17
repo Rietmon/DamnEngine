@@ -15,13 +15,23 @@ namespace FallingBall
             Transform.Position = Vector3.UnitY * 10;
             
             var mesh = Mesh.CreateMeshFromFile("Default/Sphere.obj");
+            var texture = Texture2D.CreateFromFile("Grid.png");
             meshRenderer = AddComponent<MeshRenderer>();
             meshRenderer.Mesh = mesh;
-            meshRenderer.Material = Material.DefaultMaterial;
+            var material = Material.DefaultMaterial;
+            material.SetTexture(0, texture);
+            meshRenderer.Material = material;
 
             sphereCollider = AddComponent<SphereCollider>();
 
             rigidBody = AddComponent<RigidBody>();
+        }
+
+        protected override void OnUpdate()
+        {
+            var velocity = rigidBody.BodyReference.Velocity.Linear;
+            velocity.X = Mathf.Clamp(velocity.X, -10f, 0);
+            rigidBody.BodyReference.Velocity.Linear = velocity;
         }
     }
 }

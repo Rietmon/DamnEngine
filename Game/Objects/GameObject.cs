@@ -39,13 +39,16 @@ namespace DamnEngine
 
             Transform = AddComponent<Transform>();
             
-            ScenesManager.RegisterGameObject(this);
+            ScenesManager.OrderObjectToRegister(this);
         }
 
         public T AddComponent<T>() where T : Component, new()
         {
             var component = new T
             {
+#if DEBUG
+                CachedGameObjectName = Name,
+#endif
                 GameObject = this
             };
             component.OnCreate();
@@ -101,16 +104,17 @@ namespace DamnEngine
 
         public void ForEachComponent(Action<Component> componentAction)
         {
-            foreach (var component in components)
+            for (var i = 0; i < components.Count; i++)
             {
-                componentAction.Invoke(component);
+                componentAction.Invoke(components[i]);
             }
         }
 
         public void ForEachEnabledComponent(Action<Component> componentAction)
         {
-            foreach (var component in components)
+            for (var i = 0; i < components.Count; i++)
             {
+                var component = components[i];
                 if (component.IsComponentEnabled)
                     componentAction.Invoke(component);
             }
@@ -118,8 +122,9 @@ namespace DamnEngine
 
         public void ForEachComponent<T>(Action<T> componentAction)
         {
-            foreach (var component in components)
+            for (var i = 0; i < components.Count; i++)
             {
+                var component = components[i];
                 if (component is T result)
                     componentAction.Invoke(result);
             }
@@ -127,8 +132,9 @@ namespace DamnEngine
 
         public void ForEachEnabledComponent<T>(Action<T> componentAction)
         {
-            foreach (var component in components)
+            for (var i = 0; i < components.Count; i++)
             {
+                var component = components[i];
                 if (component.IsComponentEnabled && component is T result)
                     componentAction.Invoke(result);
             }
@@ -149,8 +155,6 @@ namespace DamnEngine
         {
             while (components.Count != 0)
                 RemoveComponent(components[0]);
-            
-            ScenesManager.UnregisterGameObject(this);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace DamnEngine
     public sealed class Scene : DamnObject
     {
         internal List<GameObject> gameObjectsToDestroy = new();
+        internal List<GameObject> gameObjectsToCreate = new();
         
         [SerializeField] internal List<GameObject> gameObjects = new();
 
@@ -16,7 +17,11 @@ namespace DamnEngine
             Name = name;
         }
 
-        public GameObject FindGameObject(Predicate<GameObject> condition) => gameObjects.Find(condition);
+        public GameObject FindGameObject(Predicate<GameObject> condition)
+        {
+            var gameObject = gameObjects.Find(condition);
+            return !gameObject ? gameObjectsToCreate.Find(condition) : gameObject;
+        }
 
         public GameObject FindGameObjectByName(string name) => FindGameObject((gameObject) => gameObject.Name == name);
 

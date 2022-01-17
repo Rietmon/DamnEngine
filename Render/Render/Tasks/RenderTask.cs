@@ -40,12 +40,13 @@ namespace DamnEngine.Render
         public RenderTask Copy(Material overrideMaterial = null) => new(vertexArrayPointer, vertexBufferPointer, elementBufferPointer, overrideMaterial ?? material,
             indicesCount, ownerId);
 
+        // TODO: Now this deleting render task for all references. Ill fix it in near future <3
         protected override void OnDestroy()
         {
-            GL.DeleteBuffer(vertexBufferPointer);
-            GL.DeleteBuffer(elementBufferPointer);
-            GL.DeleteVertexArray(vertexArrayPointer);
-            cachedRenderTasks.Remove(ownerId);
+            // GL.DeleteBuffer(vertexBufferPointer);
+            // GL.DeleteBuffer(elementBufferPointer);
+            // GL.DeleteVertexArray(vertexArrayPointer);
+            // cachedRenderTasks.Remove(ownerId);
         }
 
         public static RenderTask Create(float[] renderTaskData, int[] indices, Material material, uint ownerId)

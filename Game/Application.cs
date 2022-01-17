@@ -14,14 +14,13 @@ namespace DamnEngine
         public static void Initialize()
         {
             Window.VSync = VSyncMode.On;
-            Input.GrabMouse = true;
-            Cursor.Hide();
             
             Physics.Initialize();
         }
 
         public static void Update()
         {
+            ScenesManager.RegisterOrderedObjects();
             ScenesManager.DestroyMarkedObjects();
             
             ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnPreUpdate());

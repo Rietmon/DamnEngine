@@ -7,6 +7,10 @@ namespace DamnEngine
     {
         public ISerializationObject SerializationObject => new SerializationComponent(this);
 
+#if DEBUG
+        public string CachedGameObjectName { get; internal set; }
+#endif
+        
         public override string Name
         {
             get => GameObject.Name;
@@ -65,6 +69,8 @@ namespace DamnEngine
         protected internal virtual void OnPostUpdate() { }
         protected internal virtual void OnTransformChanged() { }
         protected internal virtual void OnDisable() { }
+
+        public void DestroyGameObject() => GameObject.Destroy();
 
         public override void Destroy()
         {

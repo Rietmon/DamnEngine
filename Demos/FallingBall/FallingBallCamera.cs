@@ -5,12 +5,13 @@ namespace FallingBall
 {
     public class FallingBallCamera : Component
     {
-        private readonly Vector3 targetObjectOffset = new Vector3(0, 2, -2);
+        private readonly Vector3 targetObjectOffset = new(7.5f, 20, 0);
         
         private Transform targetObjectTransform;
         
         protected override void OnCreate()
         {
+            Transform.LocalRotation = new Vector3(-60, 270, 0);
             targetObjectTransform = ScenesManager.FindGameObjectByName("Player");
             
             AddComponent<Camera>();

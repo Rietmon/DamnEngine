@@ -10,7 +10,7 @@ namespace FallingBall
     {
         private const float SpawnDistance = 200;
 
-        private const float DestroyDistance = -5;
+        private const float DestroyDistance = -20;
 
         private readonly List<FallingBallSpringBoard> springBoards = new();
         
@@ -26,7 +26,7 @@ namespace FallingBall
             while (true)
             {
                 var springBoard = springBoards.LastOrDefault()?.Transform;
-                if (!springBoard || springBoard.Position.Z - playerTransform.Position.Z >= SpawnDistance)
+                if (!springBoard || Mathf.Abs(springBoard.Position.X) - Mathf.Abs(playerTransform.Position.X) <= SpawnDistance)
                     CreateSpringBoard();
                 else
                     break;
@@ -35,7 +35,7 @@ namespace FallingBall
             while (true)
             {
                 var springBoard = springBoards.First().Transform;
-                if (springBoard.Position.Z - playerTransform.Position.Z <= DestroyDistance)
+                if (Mathf.Abs(springBoard.Position.X) - Mathf.Abs(playerTransform.Position.X) <= DestroyDistance)
                     DestroySpringBoard();
                 else
                     return;
@@ -45,9 +45,13 @@ namespace FallingBall
         private void CreateSpringBoard()
         {
             var lastSpringBoardNullablePosition = springBoards.LastOrDefault()?.Transform?.Position;
-            var lastSpringBoardPosition = lastSpringBoardNullablePosition ?? Vector3.Zero;
-            var newSpringBoardPosition = lastSpringBoardPosition + new Vector3(0, -5, 7);
+            var lastSpringBoardPosition = lastSpringBoardNullablePosition ?? Vector3.Zero - new Vector3(-7, -5, 0);
+            var newSpringBoardPosition = lastSpringBoardPosition + new Vector3(-7, -5, 0);
+            
+            Debug.Log($"[{nameof(FallingBallLevel)}] ({nameof(CreateSpringBoard)}) Created SpringBoard at {newSpringBoardPosition}");
+            
             var springBoardObject = new GameObject($"SpringBoard {newSpringBoardPosition}");
+            springBoardObject.Transform.Position = newSpringBoardPosition;
             var springBoard = springBoardObject.AddComponent<FallingBallSpringBoard>();
             springBoards.Add(springBoard);
         }
@@ -56,7 +60,9 @@ namespace FallingBall
         {
             var springBoard = springBoards.First();
             springBoards.RemoveAt(0);
-            springBoard.Destroy();
+            springBoard.DestroyGameObject();
+            
+            Debug.Log($"[{nameof(FallingBallLevel)}] ({nameof(CreateSpringBoard)}) Destroy SpringBoard at {springBoard.Transform.Position}");
         }
     }
 }

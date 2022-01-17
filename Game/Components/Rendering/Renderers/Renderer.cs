@@ -32,6 +32,7 @@ namespace DamnEngine
                 renderTask.Destroy();
 
             RenderTasks = null;
+            Rendering.OnRendering -= OnRendering;
         }
 
         protected void DrawRenderTasks()
