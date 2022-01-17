@@ -12,6 +12,9 @@ namespace FallingBall
             var player = new GameObject("Player");
             player.AddComponent<FallingBallPlayer>();
 
+            var level = new GameObject("Level");
+            level.AddComponent<FallingBallLevel>();
+
             var camera = new GameObject("MainCamera");
             camera.AddComponent<FallingBallCamera>();
         }

@@ -1,4 +1,5 @@
-﻿using DamnEngine.Serialization;
+﻿using System;
+using DamnEngine.Serialization;
 
 namespace DamnEngine
 {

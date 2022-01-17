@@ -21,8 +21,21 @@ namespace DamnEngine
         public static T FindGameObjectByType<T>() =>
             CurrentScene.FindGameObject((gameObject) => gameObject.GetComponent<T>() != null).GetComponent<T>();
 
+        public static void DestroyMarkedObjects()
+        {
+            foreach (var gameObject in CurrentScene.gameObjectsToDestroy)
+            {
+                gameObject.Internal_Destroy();
+            }
+            
+            CurrentScene.gameObjectsToDestroy.Clear();
+        }
+
         internal static void RegisterGameObject(GameObject gameObject) => CurrentScene.gameObjects.Add(gameObject);
 
         internal static void UnregisterGameObject(GameObject gameObject) => CurrentScene.gameObjects.Remove(gameObject);
+
+        internal static void MarkObjectToDestroy(GameObject gameObject) =>
+            CurrentScene.gameObjectsToDestroy.Add(gameObject);
     }
 }

@@ -1,4 +1,6 @@
-﻿using BepuPhysics;
+﻿using System;
+using System.Collections.Generic;
+using BepuPhysics;
 using BepuPhysics.Collidables;
 using BepuUtilities.Memory;
 using OpenTK.Mathematics;
@@ -6,8 +8,10 @@ using Rietmon.Extensions;
 
 namespace DamnEngine
 {
+    // TODO: Make recalculate mesh data!
     public unsafe class MeshCollider : Collider
     {
+        private static readonly Dictionary<uint, TrianglesData> cachedTrianglesData = new();
         private static readonly BufferPool meshCollidersBufferPool = new();
 
         public override bool CanCreateShape => mesh;
@@ -36,8 +40,8 @@ namespace DamnEngine
         {
             get
             {
-                var trianglesPointer = CreateTrianglesPointer();
-                var buffer = new Buffer<BepuPhysics.Collidables.Triangle>(trianglesPointer, trianglesCount);
+                trianglesData = GetTrianglesData();
+                var buffer = new Buffer<BepuPhysics.Collidables.Triangle>(trianglesData.TrianglesPointer, trianglesData.TrianglesCount);
                 collidableMesh = new BepuPhysics.Collidables.Mesh(buffer, Transform.Scale.ToNumericsVector3(),
                     meshCollidersBufferPool);
                 return collidableMesh;
@@ -49,28 +53,29 @@ namespace DamnEngine
         private BepuPhysics.Collidables.Mesh collidableMesh;
 
         private Mesh mesh;
-        
-        private int trianglesCount;
-        private int trianglesPointerSize;
-        private BepuPhysics.Collidables.Triangle* trianglesPointer;
 
-        private BepuPhysics.Collidables.Triangle* CreateTrianglesPointer()
+        private TrianglesData trianglesData;
+
+        private TrianglesData GetTrianglesData()
         {
-            if (trianglesPointer != null)
-                MemoryUtilities.Free(trianglesPointer);
-
+            if (cachedTrianglesData.TryGetValue(Mesh.RuntimeId, out var trianglesData))
+                return trianglesData;
+            
             var triangles = Mesh.Triangles;
-            trianglesCount = triangles.Length;
-            trianglesPointerSize = trianglesCount * 12 * 3;
-            trianglesPointer = (BepuPhysics.Collidables.Triangle*)MemoryUtilities.Allocate(trianglesPointerSize);
+            var trianglesCount = triangles.Length;
+            var trianglesPointerSize = trianglesCount * 12 * 3;
+            var trianglesPointer = (BepuPhysics.Collidables.Triangle*)MemoryUtilities.Allocate(trianglesPointerSize);
             for (var i = 0; i < trianglesCount; i++)
             {
                 trianglesPointer[i] = new BepuPhysics.Collidables.Triangle(triangles[i].A.FromToBepuPosition().ToNumericsVector3(),
                     triangles[i].B.FromToBepuPosition().ToNumericsVector3(), 
                     triangles[i].C.FromToBepuPosition().ToNumericsVector3());
             }
+
+            trianglesData = new TrianglesData(trianglesCount, trianglesPointer);
+            cachedTrianglesData.Add(Mesh.RuntimeId, trianglesData);
             
-            return trianglesPointer;
+            return trianglesData;
         }
 
         internal override void ComputeInertia(float mass, out BodyInertia inertia) =>
@@ -79,8 +84,31 @@ namespace DamnEngine
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (trianglesPointer != null)
-                MemoryUtilities.Free(trianglesPointer);
+            if (trianglesData.IsValid())
+            {
+                trianglesData.Free();
+                trianglesData = default;
+            }
+        }
+    }
+
+    internal readonly unsafe struct TrianglesData
+    {
+        public int TrianglesCount { get; }
+        public int TrianglesPointerSize => TrianglesCount * 12 * 3;
+        public BepuPhysics.Collidables.Triangle* TrianglesPointer { get; }
+
+        public TrianglesData(int trianglesCount, BepuPhysics.Collidables.Triangle* trianglesPointer)
+        {
+            TrianglesCount = trianglesCount;
+            TrianglesPointer = trianglesPointer;
+        }
+
+        public bool IsValid() => TrianglesCount == 0;
+
+        public void Free()
+        {
+            MemoryUtilities.Free(TrianglesPointer);
         }
     }
 }

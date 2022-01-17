@@ -22,6 +22,8 @@ namespace DamnEngine
 
         public static void Update()
         {
+            ScenesManager.DestroyMarkedObjects();
+            
             ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnPreUpdate());
             
             OnNextFrameUpdate?.Invoke();

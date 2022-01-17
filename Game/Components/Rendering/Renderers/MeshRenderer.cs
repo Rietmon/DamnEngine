@@ -23,7 +23,7 @@ namespace DamnEngine
 
         public Material Material
         {
-            get => materials.FirstOrDefault();
+            get => materials?.FirstOrDefault();
             set => Materials = new[] { value };
         }
 

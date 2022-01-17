@@ -5,8 +5,10 @@ using DamnEngine.Serialization;
 namespace DamnEngine
 {
     [Serializable]
-    public class Scene : DamnObject
+    public sealed class Scene : DamnObject
     {
+        internal List<GameObject> gameObjectsToDestroy = new();
+        
         [SerializeField] internal List<GameObject> gameObjects = new();
 
         public Scene(string name)

@@ -134,10 +134,19 @@ namespace DamnEngine
             }
         }
 
-        protected override void OnDestroy()
+        public override void Destroy()
         {
             IsObjectDestroying = true;
-            
+            ScenesManager.MarkObjectToDestroy(this);
+        }
+
+        internal void Internal_Destroy()
+        {
+            base.Destroy();
+        }
+
+        protected override void OnDestroy()
+        {
             while (components.Count != 0)
                 RemoveComponent(components[0]);
             
