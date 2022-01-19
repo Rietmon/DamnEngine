@@ -48,7 +48,7 @@ namespace FallingBall
             var lastSpringBoardPosition = lastSpringBoardNullablePosition ?? Vector3.Zero - new Vector3(-7, -5, 0);
             var newSpringBoardPosition = lastSpringBoardPosition + new Vector3(-7, -5, 0);
             
-            Debug.Log($"[{nameof(FallingBallLevel)}] ({nameof(CreateSpringBoard)}) Created SpringBoard at {newSpringBoardPosition}");
+            //Debug.Log($"[{nameof(FallingBallLevel)}] ({nameof(CreateSpringBoard)}) Created SpringBoard at {newSpringBoardPosition}");
             
             var springBoardObject = GameObject.CreateObject($"SpringBoard {newSpringBoardPosition}");
             springBoardObject.Transform.Position = newSpringBoardPosition;
@@ -62,7 +62,7 @@ namespace FallingBall
             springBoards.RemoveAt(0);
             springBoard.DestroyGameObject();
             
-            Debug.Log($"[{nameof(FallingBallLevel)}] ({nameof(CreateSpringBoard)}) Destroy SpringBoard at {springBoard.Transform.Position}");
+            //Debug.Log($"[{nameof(FallingBallLevel)}] ({nameof(CreateSpringBoard)}) Destroy SpringBoard at {springBoard.Transform.Position}");
         }
     }
 }

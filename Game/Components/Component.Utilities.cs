@@ -16,6 +16,10 @@
 
         public void DestroyGameObject() => GameObject.Destroy();
 
-        internal void Internal_DestroyFromGameObject() => OnDestroy();
+        internal void Internal_DestroyFromGameObject()
+        {
+            isDestroyingComponent = true;
+            Destroy();
+        }
     }
 }

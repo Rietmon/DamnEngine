@@ -6,7 +6,7 @@ using OpenTK.Mathematics;
 
 namespace DamnEngine.Render
 {
-    public class Material : DamnObject
+    public class Material : LowLevelDamnObject
     {
         public static Material DefaultMaterial => CreateFromShadersFiles("Default");
         
@@ -37,7 +37,7 @@ namespace DamnEngine.Render
 
         private readonly Dictionary<int, Texture> textures = new();
 
-        private Material(Shader shader) : base(PipelineTiming.Now)
+        private Material(Shader shader)
         {
             this.shader = shader;
         }

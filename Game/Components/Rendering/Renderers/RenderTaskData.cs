@@ -1,6 +1,6 @@
 ﻿namespace DamnEngine.Render
 {
-    public class RenderTaskData
+    public class RenderTaskData : LowLevelDamnObject
     {
         public float[] Data { get; }
         public int[] Indices { get; }

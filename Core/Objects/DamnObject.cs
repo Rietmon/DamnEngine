@@ -7,19 +7,18 @@ namespace DamnEngine
     {
         private static uint lastRuntimeId;
 
-        public virtual string Name { get; set; } 
+        public string Name { get; set; } 
         
         public uint RuntimeId { get; }
         
-        public bool IsDestroying { get; private set; }
+        public bool IsDestroying { get; internal set; }
         
         public bool IsRegistered { get; private set; }
 
         protected DamnObject(PipelineTiming timing)
         {
             RuntimeId = lastRuntimeId++;
-            if (timing != PipelineTiming.Never)
-                ForceRegister(timing);
+            ForceRegister(timing);
         }
 
         public void ForceRegister(PipelineTiming timing)
@@ -37,13 +36,15 @@ namespace DamnEngine
 
         internal void Internal_OnDestroy()
         {
+#if ENABLE_WATCHING_DAMN_OBJECTS
+            Debug.Log($"[{nameof(DamnObject)}] ({nameof(Internal_OnDestroy)}) Destroying object {Name}");
+#endif
             IsRegistered = false;
             OnDestroy();
         }
 
         public override void Destroy()
         {
-            IsDestroying = true;
             DamnObjectsFactory.AddObjectToDestroy(this, PipelineTiming.OnEndFrame);
         }
     }

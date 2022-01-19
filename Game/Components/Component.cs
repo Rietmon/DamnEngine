@@ -8,11 +8,7 @@ namespace DamnEngine
     {
         public ISerializationObject SerializationObject => new SerializationComponent(this);
 
-#if DEBUG
-        public string CachedGameObjectName { get; internal set; }
-#endif
-        
-        public override string Name
+        public string GameObjectName
         {
             get => GameObject.Name;
             set => GameObject.Name = value;
@@ -45,10 +41,13 @@ namespace DamnEngine
 
         private bool isComponentEnabled = true;
 
+        private bool isDestroyingComponent;
+
         protected Component() : base(PipelineTiming.Never) { }
 
         protected override void OnRegister()
         {
+            Name = $"{GameObjectName}_{GetType()}";
             OnCreate();
             Application.OnNextFrameUpdate += OnStart;
         }
@@ -62,7 +61,15 @@ namespace DamnEngine
         protected internal virtual void OnTransformChanged() { }
         protected internal virtual void OnDisable() { }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override void Destroy() { }
+        public override void Destroy()
+        {
+            if (isDestroyingComponent)
+                base.Destroy();
+        }
+
+        protected override void OnDestroy()
+        {
+            GameObject = null;
+        }
     }
 }

@@ -46,4 +46,8 @@
       <None Remove="RietmonLibrary\README.md" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Utilities\Attributes" />
+    </ItemGroup>
+
 </Project>

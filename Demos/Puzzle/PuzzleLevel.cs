@@ -51,6 +51,6 @@ namespace Puzzle
         }
 
         private static PuzzleLevelCube CreateLevelCube(Vector3 position) =>
-            CreateMesh(position, "PuzzleCube.obj", "Cube.png").AddComponent<PuzzleLevelCube>();
+            CreateMesh(position, "Puzzle/PuzzleCube.obj", "Cube.png").AddComponent<PuzzleLevelCube>();
     }
 }

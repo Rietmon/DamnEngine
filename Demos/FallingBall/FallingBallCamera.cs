@@ -11,7 +11,6 @@ namespace FallingBall
         
         protected override void OnCreate()
         {
-            Destroy();
             Transform.LocalRotation = new Vector3(-60, 270, 0);
             targetObjectTransform = ScenesManager.FindGameObjectByName("Player");
             

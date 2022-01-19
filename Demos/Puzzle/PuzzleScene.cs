@@ -1,5 +1,7 @@
-﻿using DamnEngine;
+﻿using System.Threading.Tasks;
+using DamnEngine;
 using OpenTK.Mathematics;
+using Rietmon.Extensions;
 
 namespace Puzzle
 {
@@ -14,7 +16,7 @@ namespace Puzzle
             
             PuzzleLevel.CreateLevel();
 
-            var player = PuzzleLevel.CreateMesh(Vector3.Zero, "Cube.obj", "Grid.png");
+            var player = PuzzleLevel.CreateMesh(Vector3.Zero, "Default/Cube.obj", "Grid.png");
             player.AddComponent<PuzzlePlayer>();
         }
     }

@@ -16,32 +16,45 @@ namespace DamnEngine
 
         public static void AddObjectToDestroy(DamnObject damnObject, PipelineTiming timing)
         {
-            if (timing == PipelineTiming.Now)
+            damnObject.IsDestroying = true;
+            switch (timing)
             {
+                case PipelineTiming.Never:
+                    return;
+                case PipelineTiming.Now:
 #if ENABLE_WATCHING_DAMN_OBJECTS
-                DamnObjects.Add(damnObject.RuntimeId, damnObject);
+                    DamnObjects.Remove(damnObject.RuntimeId);
 #endif
-                damnObject.Internal_OnRegister();
-                return;
+                    damnObject.Internal_OnDestroy();
+                    return;
+                default:
+                {
+                    var objects = objectsToDestroy.GetOrAddDefault(timing);
+                    objects.Add(damnObject);
+                    break;
+                }
             }
-            
-            var objects = objectsToDestroy.GetOrAddDefault(timing);
-            objects.Add(damnObject);
         }
 
         public static void AddObjectToRegister(DamnObject damnObject, PipelineTiming timing)
         {
-            if (timing == PipelineTiming.Now)
+            switch (timing)
             {
+                case PipelineTiming.Never:
+                    return;
+                case PipelineTiming.Now:
 #if ENABLE_WATCHING_DAMN_OBJECTS
-                DamnObjects.Remove(damnObject.RuntimeId);
+                    DamnObjects.Add(damnObject.RuntimeId, damnObject);
 #endif
-                damnObject.Internal_OnRegister();
-                return;
+                    damnObject.Internal_OnRegister();
+                    return;
+                default:
+                {
+                    var objects = objectsToRegister.GetOrAddDefault(timing);
+                    objects.Add(damnObject);
+                    break;
+                }
             }
-            
-            var objects = objectsToRegister.GetOrAddDefault(timing);
-            objects.Add(damnObject);
         }
 
         public static void UpdateFactory(PipelineTiming timing)

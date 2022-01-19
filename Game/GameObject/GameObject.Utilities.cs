@@ -9,9 +9,6 @@ namespace DamnEngine
         {
             var component = new T
             {
-#if DEBUG
-                CachedGameObjectName = Name,
-#endif
                 GameObject = this
             };
             component.ForceRegister(PipelineTiming.Now);
@@ -57,7 +54,6 @@ namespace DamnEngine
             if (component is Transform && !IsDestroying)
                 return false;
             
-            component.GameObject = null;
             component.Internal_DestroyFromGameObject();
 
             components.Remove(component);

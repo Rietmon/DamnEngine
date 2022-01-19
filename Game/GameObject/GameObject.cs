@@ -29,10 +29,7 @@ namespace DamnEngine
 
         private bool isObjectActive = true;
 
-        private GameObject(string name = "GameObject") : base(PipelineTiming.Never)
-        {
-            Name = name;
-        }
+        private GameObject() : base(PipelineTiming.Never) { }
 
         protected override void OnRegister()
         {
@@ -40,16 +37,24 @@ namespace DamnEngine
             Transform = AddComponent<Transform>();
         }
 
-        protected override void OnDestroy()
+        public override void Destroy()
         {
+            base.Destroy();
             while (components.Count != 0)
                 RemoveComponent(components[0]);
+        }
+
+        protected override void OnDestroy()
+        {
             ScenesManager.UnregisterGameObject(this);
         }
 
         public static GameObject CreateObject(string name)
         {
-            var gameObject = new GameObject(name);
+            var gameObject = new GameObject
+            {
+                Name = name
+            };
             gameObject.ForceRegister(PipelineTiming.Now);
             return gameObject;
         }
