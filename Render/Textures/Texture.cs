@@ -6,7 +6,7 @@ namespace DamnEngine.Render
     {
         private readonly int texturePointer;
 
-        protected Texture(int texturePointer)
+        protected Texture(int texturePointer) : base(PipelineTiming.Now)
         {
             this.texturePointer = texturePointer;
         }

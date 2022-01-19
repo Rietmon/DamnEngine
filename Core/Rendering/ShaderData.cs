@@ -7,7 +7,7 @@
         public string VertexShaderCode { get; }
         public string FragmentShaderCode { get; }
         
-        public ShaderData(string vertexShaderName, string fragmentShaderName, string vertexShaderCode, string fragmentShaderCode)
+        public ShaderData(string vertexShaderName, string fragmentShaderName, string vertexShaderCode, string fragmentShaderCode) : base(PipelineTiming.Now)
         {
             VertexShaderName = vertexShaderName;
             FragmentShaderName = fragmentShaderName;

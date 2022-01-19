@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace DamnEngine
@@ -15,6 +16,13 @@ namespace DamnEngine
         //         Crash($"Ooops...\n{e.Exception.Message}\n{e.Exception.StackTrace}");
         //     };
         // }
+
+        public static void BreakPoint()
+        {
+#if DEBUG
+            Debugger.Break();
+#endif
+        } 
         
         public static void Log(object message) => WriteMessage(message, ConsoleColor.White);
         public static bool LogAssert(bool prediction, object message = null) { if (!prediction) Log($"Assert! {message}"); return !prediction; }

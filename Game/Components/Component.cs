@@ -1,9 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using DamnEngine.Serialization;
 
 namespace DamnEngine
 {
-    public abstract class Component : DamnObject, ISerializable
+    public abstract partial class Component : DamnObject, ISerializable
     {
         public ISerializationObject SerializationObject => new SerializationComponent(this);
 
@@ -44,22 +45,13 @@ namespace DamnEngine
 
         private bool isComponentEnabled = true;
 
-        protected Component()
+        protected Component() : base(PipelineTiming.Never) { }
+
+        protected override void OnRegister()
         {
+            OnCreate();
             Application.OnNextFrameUpdate += OnStart;
         }
-
-        public T AddComponent<T>() where T : Component, new() => GameObject.AddComponent<T>();
-        
-        public T GetComponent<T>() => GameObject.GetComponent<T>();
-        
-        public T[] GetComponents<T>() => GameObject.GetComponents<T>();
-
-        public bool TryGetComponent<T>(out T component) => GameObject.TryGetComponent(out component);
-        
-        public void RemoveComponent<T>() => GameObject.RemoveComponent<T>();
-        
-        public void RemoveComponent<T>(T component) where T : Component => GameObject.RemoveComponent(component);
         
         protected internal virtual void OnEnable() { }
         protected internal virtual void OnCreate() { }
@@ -70,13 +62,7 @@ namespace DamnEngine
         protected internal virtual void OnTransformChanged() { }
         protected internal virtual void OnDisable() { }
 
-        public void DestroyGameObject() => GameObject.Destroy();
-
-        public override void Destroy()
-        {
-            GameObject?.RemoveComponent(this);
-            
-            base.Destroy();
-        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override void Destroy() { }
     }
 }

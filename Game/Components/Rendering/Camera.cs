@@ -35,7 +35,7 @@ namespace DamnEngine
             UpdateViewMatrix();
             UpdateFrustum();
 
-            Rendering.OnBeginRendering += OnBeginRendering;
+            Rendering.OnBeginRender += OnBeginRendering;
             Rendering.OnResolutionChanged += OnResolutionChanged;
         }
 
@@ -73,7 +73,7 @@ namespace DamnEngine
 
         protected override void OnDestroy()
         {
-            Rendering.OnBeginRendering -= OnBeginRendering;
+            Rendering.OnBeginRender -= OnBeginRendering;
         }
     }
 }

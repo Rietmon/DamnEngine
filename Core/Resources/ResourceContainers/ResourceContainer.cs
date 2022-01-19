@@ -1,6 +1,6 @@
 ﻿namespace DamnEngine
 {
-    public abstract class ResourceContainer : DamnObject
+    public abstract class ResourceContainer : LowLevelDamnObject
     {
         public abstract object Resource { get; }
 

@@ -55,6 +55,8 @@ namespace DamnEngine
 
         private static void OnUpdateFrame(FrameEventArgs arguments)
         {
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.OnBeginFrame);
+            
             if (Input.IsKeyPress(KeyCode.Escape))
                 renderWindow.Close();
 
@@ -76,7 +78,10 @@ namespace DamnEngine
             
             renderWindow.SwapBuffers();
             
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.OnInputUpdate);
             Input.Update(renderWindow);
+            
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.OnEndFrame);
         }
 
         private static void OnWindowResize(ResizeEventArgs arguments)

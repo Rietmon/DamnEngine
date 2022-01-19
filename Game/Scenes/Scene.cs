@@ -7,12 +7,9 @@ namespace DamnEngine
     [Serializable]
     public sealed class Scene : DamnObject
     {
-        internal List<GameObject> gameObjectsToDestroy = new();
-        internal List<GameObject> gameObjectsToCreate = new();
-        
         [SerializeField] internal List<GameObject> gameObjects = new();
 
-        public Scene(string name)
+        public Scene(string name) : base(PipelineTiming.Now)
         {
             Name = name;
         }
@@ -20,22 +17,25 @@ namespace DamnEngine
         public GameObject FindGameObject(Predicate<GameObject> condition)
         {
             var gameObject = gameObjects.Find(condition);
-            return !gameObject ? gameObjectsToCreate.Find(condition) : gameObject;
+            return gameObject;
         }
 
         public GameObject FindGameObjectByName(string name) => FindGameObject((gameObject) => gameObject.Name == name);
 
         public void ForEachGameObject(Action<GameObject> gameObjectAction)
         {
-            foreach (var gameObject in gameObjects)
+            for (var i = 0; i < gameObjects.Count; i++)
             {
+                var gameObject = gameObjects[i];
                 gameObjectAction.Invoke(gameObject);
             }
         }
+        
         public void ForEachActiveGameObject(Action<GameObject> gameObjectAction)
         {
-            foreach (var gameObject in gameObjects)
+            for (var i = 0; i < gameObjects.Count; i++)
             {
+                var gameObject = gameObjects[i];
                 if (gameObject.IsObjectActive)
                     gameObjectAction.Invoke(gameObject);
             }

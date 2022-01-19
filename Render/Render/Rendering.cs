@@ -21,7 +21,7 @@ namespace DamnEngine.Render
         public static Matrix4 ViewMatrix { get; set; }
         public static Matrix4 ProjectionMatrix { get; set; }
 
-        public static Action OnBeginRendering { get; set; }
+        public static Action OnBeginRender { get; set; }
         
         public static Action OnPreRendering { get; set; }
         public static Action OnRendering { get; set; }
@@ -45,7 +45,8 @@ namespace DamnEngine.Render
 
         public static void BeginRender()
         {
-            OnBeginRendering?.Invoke();
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.OnBeginRender);
+            OnBeginRender?.Invoke();
         }
 
         public static void RenderFrame()
@@ -54,10 +55,13 @@ namespace DamnEngine.Render
             
             GL.ClearDepth(1);
 
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.OnPreRendering);
             OnPreRendering?.Invoke();
             
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.OnRendering);
             OnRendering?.Invoke();
             
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.OnPostRendering);
             OnPostRendering?.Invoke();
         }
     }

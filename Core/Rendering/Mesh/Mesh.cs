@@ -5,7 +5,7 @@ using Rietmon.Extensions;
 
 namespace DamnEngine
 {
-    public class Mesh : DamnObject
+    public sealed class Mesh : DamnObject
     {
         public Action OnMeshChanged { get; set; }
         public string OriginalMeshName { get; }
@@ -150,7 +150,7 @@ namespace DamnEngine
         
         private float[][] meshesData;
 
-        public Mesh(string name)
+        public Mesh(string name) : base(PipelineTiming.Now)
         {
             OriginalMeshName = name;
             Name = name;

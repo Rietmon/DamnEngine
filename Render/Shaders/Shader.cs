@@ -5,7 +5,7 @@ using Rietmon.Extensions;
 
 namespace DamnEngine
 {
-    public sealed class Shader : LowLevelDamnObject
+    public sealed class Shader : DamnObject
     {
         public bool IsCompiled => shaderProgramPointer != -1;
 
@@ -15,7 +15,7 @@ namespace DamnEngine
 
         private int shaderProgramPointer = -1;
 
-        private Shader(ShaderData shaderData)
+        private Shader(ShaderData shaderData) : base(PipelineTiming.Now)
         {
             this.shaderData = shaderData;
         }

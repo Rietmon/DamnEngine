@@ -61,8 +61,11 @@ namespace DamnEngine
             var vertexShaderCode = File.ReadAllText(vertexShaderPath);
             var fragmentShaderCode = File.ReadAllText(fragmentShaderPath);
 
-            shaderData = new ShaderData(vertexShaderName, fragmentShaderName, vertexShaderCode, fragmentShaderCode);
-            
+            shaderData = new ShaderData(vertexShaderName, fragmentShaderName, vertexShaderCode, fragmentShaderCode)
+            {
+                Name = shaderDataKey
+            };
+
             RegisterLoadedResource(shaderDataKey, shaderData);
 
             return shaderData;

@@ -20,17 +20,18 @@ namespace DamnEngine
 
         public static void Update()
         {
-            ScenesManager.RegisterOrderedObjects();
-            ScenesManager.DestroyMarkedObjects();
-            
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.BeforePreUpdate);
             ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnPreUpdate());
             
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.BeforeUpdate);
             OnNextFrameUpdate?.Invoke();
             OnNextFrameUpdate = null;
             ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnUpdate());
             
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.BeforePhysicsUpdate);
             Physics.Update(Time.DeltaTime);
             
+            DamnObjectsFactory.UpdateFactory(PipelineTiming.BeforePostUpdate);
             ScenesManager.CurrentScene.ForEachActiveGameObjectEnabledComponent((component) => component.OnPostUpdate());
         }
     }

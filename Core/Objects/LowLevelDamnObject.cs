@@ -2,10 +2,7 @@
 {
     public class LowLevelDamnObject
     {
-        public virtual void Destroy()
-        {
-            OnDestroy();
-        }
+        public virtual void Destroy() => OnDestroy();
         
         protected virtual void OnDestroy() { }
         

@@ -13,7 +13,7 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <OutputPath>../_Binaries/Debug/</OutputPath>
-      <DefineConstants>TRACE;ENABLE_MEMORY_UTILITIES;ENABLE_STATISTICS</DefineConstants>
+      <DefineConstants>TRACE;ENABLE_MEMORY_UTILITIES;ENABLE_STATISTICS;ENABLE_WATCHING_DAMN_OBJECTS;</DefineConstants>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 

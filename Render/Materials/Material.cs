@@ -37,7 +37,7 @@ namespace DamnEngine.Render
 
         private readonly Dictionary<int, Texture> textures = new();
 
-        private Material(Shader shader)
+        private Material(Shader shader) : base(PipelineTiming.Now)
         {
             this.shader = shader;
         }

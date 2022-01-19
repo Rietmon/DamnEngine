@@ -19,7 +19,7 @@ namespace DamnEngine
         
         public static GameObject CreateObjectFromMesh(this Mesh mesh, Material material)
         {
-            var cube = new GameObject(mesh.OriginalMeshName);
+            var cube = GameObject.CreateObject(mesh.OriginalMeshName);
             
             var cubeMeshRenderer = cube.AddComponent<MeshRenderer>();
             cubeMeshRenderer.Material = material;

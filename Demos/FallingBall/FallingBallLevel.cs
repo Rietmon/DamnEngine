@@ -50,7 +50,7 @@ namespace FallingBall
             
             Debug.Log($"[{nameof(FallingBallLevel)}] ({nameof(CreateSpringBoard)}) Created SpringBoard at {newSpringBoardPosition}");
             
-            var springBoardObject = new GameObject($"SpringBoard {newSpringBoardPosition}");
+            var springBoardObject = GameObject.CreateObject($"SpringBoard {newSpringBoardPosition}");
             springBoardObject.Transform.Position = newSpringBoardPosition;
             var springBoard = springBoardObject.AddComponent<FallingBallSpringBoard>();
             springBoards.Add(springBoard);

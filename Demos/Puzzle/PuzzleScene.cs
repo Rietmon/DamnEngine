@@ -9,7 +9,7 @@ namespace Puzzle
         {
             ScenesManager.SetScene(new Scene("Puzzle"));
             
-            var camera = new GameObject("MainCamera");
+            var camera = GameObject.CreateObject("MainCamera");
             camera.AddComponent<PuzzleCamera>();
             
             PuzzleLevel.CreateLevel();

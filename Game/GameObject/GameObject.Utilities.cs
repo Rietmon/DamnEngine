@@ -1,47 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using DamnEngine.Serialization;
 
 namespace DamnEngine
 {
-    [Serializable]
-    public sealed class GameObject : DamnObject, ISerializable
+    public partial class GameObject
     {
-        public ISerializationObject SerializationObject => new SerializationGameObject(this);
-        
-        public bool IsObjectActive
-        {
-            get => isObjectActive;
-            set
-            {
-                if (isObjectActive == value)
-                    return;
-                
-                isObjectActive = value;
-                if (isObjectActive)
-                    ForEachComponent((component) => component.OnEnable());
-                else
-                    ForEachComponent((component) => component.OnDisable());
-            }
-        }
-        
-        public bool IsObjectDestroying { get; private set; }
-        
-        public Transform Transform { get; }
-        
-        internal readonly List<Component> components = new();
-
-        private bool isObjectActive = true;
-
-        public GameObject(string name = "GameObject")
-        {
-            Name = name;
-
-            Transform = AddComponent<Transform>();
-            
-            ScenesManager.OrderObjectToRegister(this);
-        }
-
         public T AddComponent<T>() where T : Component, new()
         {
             var component = new T
@@ -51,7 +14,7 @@ namespace DamnEngine
 #endif
                 GameObject = this
             };
-            component.OnCreate();
+            component.ForceRegister(PipelineTiming.Now);
 
             components.Add(component);
 
@@ -91,11 +54,11 @@ namespace DamnEngine
 
         public bool RemoveComponent<T>(T component) where T : Component
         {
-            if (component is Transform && !IsObjectDestroying)
+            if (component is Transform && !IsDestroying)
                 return false;
             
             component.GameObject = null;
-            component.Destroy();
+            component.Internal_DestroyFromGameObject();
 
             components.Remove(component);
 
@@ -138,23 +101,6 @@ namespace DamnEngine
                 if (component.IsComponentEnabled && component is T result)
                     componentAction.Invoke(result);
             }
-        }
-
-        public override void Destroy()
-        {
-            IsObjectDestroying = true;
-            ScenesManager.MarkObjectToDestroy(this);
-        }
-
-        internal void Internal_Destroy()
-        {
-            base.Destroy();
-        }
-
-        protected override void OnDestroy()
-        {
-            while (components.Count != 0)
-                RemoveComponent(components[0]);
         }
     }
 }

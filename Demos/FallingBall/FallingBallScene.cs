@@ -9,13 +9,13 @@ namespace FallingBall
         {
             ScenesManager.SetScene(new Scene("FallingBall"));
 
-            var player = new GameObject("Player");
+            var player = GameObject.CreateObject("Player");
             player.AddComponent<FallingBallPlayer>();
 
-            var level = new GameObject("Level");
+            var level = GameObject.CreateObject("Level");
             level.AddComponent<FallingBallLevel>();
 
-            var camera = new GameObject("MainCamera");
+            var camera = GameObject.CreateObject("MainCamera");
             camera.AddComponent<FallingBallCamera>();
         }
     }
